@@ -1,5 +1,7 @@
 package com.kgitbank.spring.domain.myprofile.controller;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,11 +15,20 @@ import lombok.RequiredArgsConstructor;
 public class User {
 
 	@NonNull
+	private String id;
+	private String pw;
 	private String name;
-	private String userId;
-	private String nickname;
-	private String email;
 	private String phone;
-	private char gender;
+	private String email;
+	private String profile;
+	private Date reg_date;
+	
+	// 나중에 프로필 파일 필요할수도 있으니깐
+	/*
+	 private int userImgNo;
+	 private String userImgName;
+	 private long userImgSize;
+	 private String userImgType;
+	 */
 	
 }

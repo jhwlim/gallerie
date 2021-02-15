@@ -11,32 +11,23 @@
 	정보수정페이지
 	<hr>
 	<div class="info">
-	<form action="/main/user/info_update">
+	<form action="/update">
 		<div class="form-group">
 			<label for="name">이름</label>
-			<input type="text" class="form-control w200" id="name" 
-				name="name" placeholder="이름" value="${user.name}" />
-		</div>
-		<div class="form-group">
-			<label for="nickname">닉네임</label>
-			<input type="text" class="form-control w200" id="nickname" 
-				name="nickname" placeholder="닉네임" value="${user.nickname}" />
+			<input type="text" id="name" 
+				name="name" placeholder="이름" value="${members.name}" />
 		</div>
 		<div class="form-group">
 			<label for="email">이메일</label>
-			<input type="text" class="form-control w200" id="email" 
-				name="email" placeholder="이메일" value="${user.email}" />
+			<input type="text" id="email" 
+				name="email" placeholder="이메일" value="${members.email}" />
 		</div>
 		<div class="form-group">
 			<label for="phone">전화번호</label>
-			<input type="text" class="form-control w200" id="phone" 
-				name="phone" placeholder="전화번호" value="${user.phone}" />
+			<input type="text" id="phone" 
+				name="phone" placeholder="전화번호" value="${members.phone}" />
 		</div>
-		<div class="form-group">
-			<label for="gender">성별</label>
-			<input type="text" class="form-control w200" id="gender" 
-				name="gender" placeholder="성별" value="${user.gender}" />
-		</div>
+		
 		<button type="submit" class="btn btn-default">제출</button>
 	</form>
 </div>
