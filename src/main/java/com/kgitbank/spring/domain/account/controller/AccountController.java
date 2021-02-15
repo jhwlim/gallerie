@@ -27,7 +27,6 @@ public class AccountController {
 	public String join() {
 		return "account/signUp";
 	}
-	
 	@Setter(onMethod_ = {@Autowired})
 	private AccountService service;	
 	
@@ -41,4 +40,5 @@ public class AccountController {
 		
 		return "account/success";
 	}
+
 }
