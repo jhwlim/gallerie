@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	Hello world!  ${user.name}
 </h1>
 
 </body>

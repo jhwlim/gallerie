@@ -2,6 +2,7 @@ package com.kgitbank.spring.domain.account.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /*
  * 회원가입 처리
@@ -9,10 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
  * 프로필
  */
 @Controller(value = "/account")
-public class AccountController {
+public class accountController {
 	
 	@GetMapping(value = "/join")
 	public String join() {
 		return "account/signUp";
 	}
+	
 }

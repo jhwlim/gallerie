@@ -8,22 +8,24 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- 
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521/XEPDB1" />
-		<property name="username" value="hr" />
-		<property name="password" value="1234" />
+
+	<bean id = "hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521/XE" ></property>
+		<property name="username" value="hr" ></property>
+		<property name="password" value="1234" ></property>
 	</bean>
 	
+	
+	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
-		<constructor-arg ref="hikariConfig" />
+		<constructor-arg ref="hikariConfig"></constructor-arg>
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-	  	<property name="dataSource" ref="dataSource" />
-	</bean>
-		 -->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
 	
 	<context:component-scan base-package="com.kgitbank.spring.domain.**.service" />
 	
