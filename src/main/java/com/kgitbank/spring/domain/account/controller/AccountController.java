@@ -15,4 +15,5 @@ public class AccountController {
 	public String join() {
 		return "account/signUp";
 	}
+	
 }
