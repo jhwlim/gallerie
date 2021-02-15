@@ -31,8 +31,4 @@
 	<mybatis-spring:scan base-package="com.kgitbank.spring.domain.**.mapper" />
 	
 	 
-<<<<<<< HEAD
 </beans>
-=======
-</beans>
->>>>>>> branch 'develop' of https://github.com/jhwlim/2021-02_TeamProject.git
