@@ -18,9 +18,9 @@
 				name="name" placeholder="이름" value="${user.name}" />
 		</div>
 		<div class="form-group">
-			<label for="website">닉네임</label>
-			<input type="text" class="form-control w200" id="website" 
-				name="website" placeholder="닉네임" value="${user.nickname}" />
+			<label for="nickname">닉네임</label>
+			<input type="text" class="form-control w200" id="nickname" 
+				name="nickname" placeholder="닉네임" value="${user.nickname}" />
 		</div>
 		<div class="form-group">
 			<label for="email">이메일</label>
