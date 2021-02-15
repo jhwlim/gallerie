@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration 
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
@@ -7,4 +8,15 @@
 		<!-- 자동으로 카멜케이스 규칙으로 변환 -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 자동으로 카멜케이스 규칙으로 변환 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+>>>>>>> branch 'develop' of https://github.com/jhwlim/2021-02_TeamProject.git
 </configuration>
