@@ -14,7 +14,7 @@
 	  	SET
   		 	name = #{name},
   		 	email = #{email},
-  		 	phone = #{phone},
+  		 	phone = #{phone}
   		 WHERE
   		 	id = 'abc1234'
 	  </update>
