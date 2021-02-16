@@ -7,16 +7,5 @@
 	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.MemberVO">
 		SELECT * FROM members
 	</select>
-	
-	 <update id="updateMyprofile">
-	  	UPDATE
-	  		members
-	  	SET
-  		 	name = #{name},
-  		 	email = #{email},
-  		 	phone = #{phone}
-  		 WHERE
-  		 	id = 'abc1234'
-	  </update>
 
 </mapper>

@@ -11,6 +11,6 @@ public interface MemberMapper {
 //	@Select("SELECT * FROM members")
 	public List<MemberVO> selectAll();
 	
-	// UPDATE members SET name = #{name}, email = #{email}, phone = #{phone} WHERE id = 'abc1234'
-	public List<MemberVO> updateMyprofile();
+	// UPDATE members SET name = #{name}, email = #{email}, phone = #{phone} WHERE id = #{id}
+	public void updateMyprofile(MemberVO vo);
 }

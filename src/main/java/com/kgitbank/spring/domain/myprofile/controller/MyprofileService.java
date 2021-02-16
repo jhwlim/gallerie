@@ -1,21 +1,23 @@
 package com.kgitbank.spring.domain.myprofile.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kgitbank.spring.domain.model.MemberVO;
-import com.kgitbank.spring.domain.test.mapper.MemberMapper;
+import com.kgitbank.spring.domain.myprofile.mapper.MyprofileMapper;
 
 @Service
 public class MyprofileService {
 
 	@Autowired
-	public MemberMapper mapper;
+	public MyprofileMapper mapper;
 	
-	public List<MemberVO> updateMyprofile() {
-		return mapper.updateMyprofile(); 
+	public int updateMyprofile(MemberVO vo) {
+		return mapper.updateMyprofile(vo);
+	}
+	
+	public int updatePW(MemberVO vo) {
+		return mapper.updatePW(vo);
 	}
 
 	
