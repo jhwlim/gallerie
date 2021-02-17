@@ -28,9 +28,5 @@ public class MybatisConfigTests {
 		log.info(mapper.selectAll());
 	}
 	
-//	@Test
-//	public void updateMyprofile() {
-//		
-//	}
 	
 }

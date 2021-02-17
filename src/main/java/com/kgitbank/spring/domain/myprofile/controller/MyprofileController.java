@@ -48,7 +48,12 @@ public class MyprofileController {
 	
 	@PostMapping(value = "/updatepw")
 	public String updatePW(MemberVO vo) {
+//		log.info("접속완료");
+				
+//		vo.setPw("1113");
 		vo.setId("abc5678");
+		
+//		int result; // 0, 1로 원래비밀번호 맞는지 확인하려고 남겨둠
 		
 		return "redirect:/myprofile/updatepw";
 	}

@@ -11,7 +11,7 @@
 	<div class="contents">
 		<div class="nav">
 			<span class="title"> 
-				<a href="/main/user/${user.id}" class="title_ft">${user.userId}</a>
+				<a class="title_ft">${members.id}</a>
 			</span>
 		</div>
 
@@ -26,8 +26,9 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
+			
 			<div class="fix">
-				<a href="<c:url value='/myprofile/update' />" class="btn btn-default">프로필 수정</a>
+				<a href="<c:url value='/myprofile/update' />" class="btn btn-default">프로필 편집</a>
 			</div>
 
 			<div class="txt">

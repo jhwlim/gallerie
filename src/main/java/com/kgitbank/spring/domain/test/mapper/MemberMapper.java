@@ -13,4 +13,8 @@ public interface MemberMapper {
 	
 	// UPDATE members SET name = #{name}, email = #{email}, phone = #{phone} WHERE id = #{id}
 	public void updateMyprofile(MemberVO vo);
+	
+	// UPDATE members SET pw = #{pw} WHERE id = #{id} and pw = #{pw}
+	public int updatePW(MemberVO vo);
+	
 }

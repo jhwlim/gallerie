@@ -10,6 +10,15 @@
 <body>
 	<div class="info">
 	<form action="<c:url value='/myprofile/update' />" method="POST">
+			<ul class="accountMenu" style="padding-left: 0px;">
+				<li>
+					<a class="eachMenu hoverMenu" href="<c:url value='/myprofile/update' />">프로필 편집</a>
+				</li>
+				<li>
+					<a class="eachMenu hoverMenu" href="<c:url value='/myprofile/updatepw' />">비밀번호 변경</a>
+				</li>
+			</ul>
+	
 		<div class="form-group">
 			<label for="name">이름</label>
 			<input type="text" id="name" 

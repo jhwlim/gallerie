@@ -1,5 +1,6 @@
 package com.kgitbank.spring.domain.myprofile.service;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class MyprofileServiceTest {
 	@Autowired
 	MyprofileService service;
 	
-	@Test
+	@Test @Ignore
 	public void servicetest() {
 		MemberVO mv = new MemberVO();
 		
@@ -37,6 +38,21 @@ public class MyprofileServiceTest {
 		service.updateMyprofile(mv);
 		log.info(mv);
 	}
+	
+	@Test
+	public void servicetest1() {
+		MemberVO mv = new MemberVO();
+		
+		mv.setPw("1113");
+		mv.setId("abc5678");
+		mv.setPw("1114");
+		
+		service.updatePW(mv);
+		log.info(mv);
+	}
+	
+	
+	
 	
 }
 

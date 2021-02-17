@@ -22,6 +22,19 @@
   		 	pw = #{pw}
   		 WHERE
   		 	id = #{id}
-	  </update>
+  		 AND
+			pw = #{pw};
+	   </update>
+	  
+	  <select id="getCurrentPw">
+	  	SELECT
+		    pw
+		FROM 
+			members
+		WHERE 
+			id = #{id}
+	  </select>
 
 </mapper>
+
+
