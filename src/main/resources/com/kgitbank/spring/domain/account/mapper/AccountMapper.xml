@@ -4,14 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.account.mapper.AccountMapper">
 	
+	<!-- 회원가입 -->
 	<insert id="signUp">
-		INSERT INTO userAccount VALUES(
-		#{emailAddr},
-		#{userName},
-		#{userId},
-		#{userPw}
+		INSERT INTO members VALUES(
+		
+		#{id},
+		#{pw},
+		#{name},
+		#{phone},
+		#{email},
+		#{profile},
+		sysdate
 		
 		)
 	</insert>
+	
+	<!-- 아이디 중복검사 -->
+	<select id="idCheck" resultType="int">
+	
+		SELECT count(*) FROM members WHERE ID = #{id} 
+	
+	</select>
 
 </mapper>

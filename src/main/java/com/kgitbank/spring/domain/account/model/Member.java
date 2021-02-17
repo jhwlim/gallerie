@@ -1,5 +1,9 @@
 package com.kgitbank.spring.domain.account.model;
 
+import java.sql.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +17,12 @@ import lombok.RequiredArgsConstructor;
 public class Member {
 
 	@NonNull
-	private String emailAddr;
-	private String userName;
-	private String userId;
-	private String userPw;
+	private String id;
+	private String pw;
+	private String name;
+	private String phone;
+	private String email;
+	private String profile;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date reg_date;
 }

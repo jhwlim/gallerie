@@ -1,342 +1,300 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-       function sendIt() {
-        var email = document.f.mail.value;
-        var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-          var jumin1 = document.f.personnumber1.value.substr(0,6);
-          var jumin2 = document.f.personnumber2.value.substr(0,1);
-          var yy     = jumin1.substr(0,2);        // 년도
-          var mm     = jumin1.substr(2,2);        // 월
-          var dd     = jumin1.substr(4,2);        // 일
-          var genda  = jumin2.substr(0,1);        // 성별
-          var msg, ss, cc;
-          //정규표현식
- 
-        //아이디 입력여부 검사
-        if (f.id.value == "") {
-            alert("아이디를 입력하지 않았습니다.")
-            f.id.focus();
-            return false;
-        }
-        //아이디 유효성 검사 (영문소문자, 숫자만 허용)
-       for (var i = 0; i < document.f.id.value.length; i++) {
-            ch = document.f.id.value.charAt(i)
-            if (!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z')&&!(ch >= 'A' && ch <= 'Z')) {
-                alert("아이디는 영문 대소문자, 숫자만 입력가능합니다.")
-                document.f.id.focus();
-                document.f.id.select();
-                return false;
-            }
-        }
-        //아이디에 공백 사용하지 않기
-        if (document.f.id.value.indexOf(" ") >= 0) {
-            alert("아이디에 공백을 사용할 수 없습니다.")
-            document.f.id.focus();
-            document.f.id.select()
-            return false;
-        }
-        //아이디 길이 체크 (4~12자)
-       if (document.f.id.value.length<4 || document.f.id.value.length>12) {
-            alert("아이디를 4~12자까지 입력해주세요.")
-            document.f.id.focus();
-            document.f.id.select();
-            return false;
-        }
-           //비밀번호 입력여부 체크
-        if (document.f.password.value == "") {
-            alert("비밀번호를 입력하지 않았습니다.")
-            document.f.password.focus();
-            return false;
-        }
-        if (f.password.value == f.id.value) {
-            alert("아이디와 비밀번호가 같습니다.")
-            document.f.password.focus();
-            return false;
-        }
-        //비밀번호 길이 체크(4~8자 까지 허용)
-        if (document.f.password.value.length<4 || document.f.password.value.length>12) {
-            alert("비밀번호를 4~12자까지 입력해주세요.")
-            document.f.password.focus();
-            document.f.password.select();
-            return false;
-        }
-        //비밀번호와 비밀번호 확인 일치여부 체크
-        if (document.f.password.value != document.f.password1.value) {
-            alert("비밀번호가 일치하지 않습니다")
-            document.f.password1.value = ""
-            document.f.password1.focus();
-            return false;
-        }
- 
-        if (document.f.mail.value == "") {
-            alert("이메일을 입력하지 않았습니다.")
-            document.mail.focus();
-            return false;
-        }
-        if (regex.test(mail) === false) {
-            alert("잘못된 이메일 형식입니다.");
-            document.f.mail.value=""
-            document.f.mail.focus();
-            return false;
-        }
- 
-        for (var i = 0; i < document.f.mail.value.length; i++) {
-            chm = document.f.mail.value.charAt(i)
-            if (!(chm >= '0' && chm <= '9') && !(chm >= 'a' && chm <= 'z')&&!(chm >= 'A' && chm <= 'Z')) {
-                alert("이메일은 영문 대소문자, 숫자만 입력가능합니다.")
-                document.f.mail.focus();
-                document.f.mail.select();
-                return false;
-            }
-        }
- 
-        if (document.f.name.value == "") {
-            alert("이름을 입력하지 않았습니다.")
-            document.f.name.focus();
-            return false;
-        }
- 
-        if(document.f.name.value.length<2){
-            alert("이름을 2자 이상 입력해주십시오.")
-            document.f.name.focus();
-            return false;
-        }
- 
-        if (document.f.personnumber1.value == "") {
-            alert("주민번호를 입력하지 않았습니다.");
-            document.f.personnumber1.focus();
-            return false;
-        }
- 
-        if (document.f.personnumber2.value == "") {
-            alert("주민번호를 입력하지 않았습니다.");
-            document.f.personnumber2.focus();
-            return false;
-        }
- 
-        if (document.f.personnumber1.value.length<6||document.f.personnumber1.value.length>6) {
-            alert("주민번호 길이가 맞지 않습니다.");
-            document.f.personnumber1.value = "";
-            document.f.personnumber1.focus();
-            return false;
-        }
- 
-        if (document.f.personnumber2.value.length<7||document.f.personnumber2.value.length>7) {
-            alert("주민번호 길이가 맞지 않습니다.");
-            document.f.personnumber2.value = "";
-            document.f.personnumber2.focus();
-            return false;
-        }
-    
- 
-          // 숫자가 아닌 것을 입력한 경우
-        if (!isNumeric(jumin1)) {
-            alert("주민번호는 숫자로 입력하세요.");
-            document.f.personnumber1.value = "";
-            document.f.personnumber1.focus();
-            return false;
-        }
-          
-          // 첫번째 자료에서 연월일(YYMMDD) 형식 중 기본 구성 검사
-        if (yy < "00" 
-              || yy > "99" 
-              || mm < "01" 
-              || mm > "12" 
-              || dd < "01" 
-              || dd > "31") {
-            alert("주민등록번호다시 입력하세요.");
-            document.f.personnumber1.value = "";
-                document.f.personnumber1.focus();
-            return false;
-        }
-          
-          // 숫자가 아닌 것을 입력한 경우
-        if (!isNumeric(jumin2)) {
-            alert("주민등록번호는 숫자로 입력하세요.");
-            document.f.personnumber2.value = "";
-                document.f.personnumber2.focus();
-            return false;
-        }
-          
-        // 성별부분이 1 ~ 4 가 아닌 경우
-        if (genda < "1" || genda > "4") {
-            alert("주민등록번호 다시 입력하세요.");
-            document.f.personnumber2.value = "";
-            document.f.personnumber2.focus();
-            return false;
-        }
-        
-        f.birthyy.value ="19" +jumin1.charAt(0) + jumin1.charAt(1);
-        f.birthmm.value = parseInt(jumin1.charAt(2))+parseInt(jumin1.charAt(3));
-        f.birthday.value = parseInt(jumin1.charAt(4)+jumin1.charAt(5));
- 
-        if(document.f.hobby[0].checked==false && 
-           document.f.hobby[1].checked==false && 
-           document.f.hobby[2].checked==false && 
-           document.f.hobby[3].checked==false && 
-           document.f.hobby[4].checked==false){
-            alert("관심분야를 체크해 주세요");
-            return false;
-        }
-        
-        if(document.f.intro.value== ""){
-              alert("자기소개를 입력해주십시오.");
-              document.f.intro.focus();
-              return false;
-        }
- 
-        if(document.f.intro.length>100){
-              alert("자기소개는 100자 이내입니다.");
-              document.f.intro.focus();
-              return false;
-        }
- 
-    }
-    function isNumeric(s) { 
-          for (i=0; i<s.length; i++) { 
-            c = s.substr(i, 1); 
-            if (c < "0" || c > "9") return false; 
-          } 
-          return true; 
-    }
-         
-    function isSSN(s1, s2) {
-          n = 2;
-          sum = 0;
-          for (i=0; i<s1.length; i++)
-            sum += parseInt(s1.substr(i, 1)) * n++;
-          for (i=0; i<s2.length-1; i++) {
-            sum += parseInt(s2.substr(i, 1)) * n++;
-            if (n == 10) n = 2;
-        };
-          
-          c = 11 - sum % 11;
-          if (c == 11) c = 1;
-          if (c == 10) c = 0;
-          if (c != parseInt(s2.substr(6, 1))) return false;
-          else return true;
- 
-         document.f.submit();
-    }
-   </script>
+<link rel="stylesheet" href="/spring/resources/css/member/join.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+	crossorigin="anonymous"></script>
+
 </head>
 <body>
-<form name="f" action="./success" method="post" onsubmit="return sendIt();">
-     <table align="center" border="1" bordercolor="skyblue">
-         <tr>
-             <td colspan="2" align="center" bgcolor="skyblue">
-                 회원 기본 정보
-             </td>
-         </tr>
-         <tr>
-             <td align="center" bgcolor="pink"> 아이디 :</td>
-             <td> <input type="text" id="id" name="id" maxlength="8" size="8"> 4~8자의 영문 대소문자와 숫자로만 입력</td>
-         </tr>
-         <tr>
-             <td align="center" bgcolor="pink"> 비밀번호 : </td>
-             <td><input type="password" id="password" name="password" maxlength="12" size="12"> 4~12자리의 영문 대소문자와 숫자로만 입력</td>
-         </tr>
-         <tr>
-             <td align="center" bgcolor="pink"> 비밀번호 확인 : </td>
-             <td> <input type="password" id="password1" name="password1" maxlength="12" size="12"> </td>
-         </tr>
-         <tr>
-             <td align="center" bgcolor="pink"> E-mail</td>
-             <td><input type="text" id="mail" name="mail" size="10"> @ 
-                 <select>
-                     <option>naver.com</option>
-                     <option>google.com</option>
-                     <option>daum.net</option>
-                 </select> ex) id@mail.com</td>
-         </tr>
-         <tr>
-             <td align="center" bgcolor="pink"> 이름 : </td>
-             <td><input type="text" id="name" name="name" size="7"></td>
-         </tr>
-         <tr>
-             <td colspan="2" align="center" bgcolor="skyblue"> 개인 신상 정보 </td>
-         </tr>
-         <tr>
-             <td align="center" bgcolor="pink">주민등록번호 : </td>
-             <td> <input type="text" id="personnumber1" name="personnumber1" maxlength="6" size="6"> - <input type="password" id="personnumber2" name="personnumber2" maxlength="7" size="7"> ex)123456-1234567</td>
-         </tr>
-         <tr>
-             <td align="center" bgcolor="pink">생일 : </td>
-             <td><input type="text" id="birthyy" name="birthyy" size="5">년 
-                 <select id="birthmm" name="birthmm" >
-                     <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                 </select>월 
-                 <select id="birthday" name="birthday">
-                     <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>                
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>                    
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>                
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>            
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                 </select>일</td>
-         </tr>
-         <tr>
-             <td align="center" bgcolor="pink">관심분야 : </td>
-             <td> <input type="checkbox" id="hobby" name="hobby" value="컴퓨터" checked="true"> 컴퓨터
-                 <input type="checkbox" id="hobby" name="hobby" value="인터넷"> 인터넷
-                 <input type="checkbox" id="hobby" name="hobby" value="여행"> 여행
-                 <input type="checkbox" id="hobby" name="hobby" value="영화감상"> 영화감상
-                 <input type="checkbox" id="hobby" name="hobby" value="음악감상"> 음악감상
-             </td>
-         </tr>
-         <tr>
-             <td align="center" bgcolor="pink">자기소개 : </td>
-             <td><textarea cols="60" id="intro" name="intro"></textarea></td>
-         </tr>
-     </table>
-     <center>
-         <input type="submit" name="submit" value="회원가입">
-        <input type="reset" name="reset" value="다시입력">
-    </center>
-</form>
- 
+	<div class="wrapper">
+		<form id="join_form" method="post">
+			<div class="wrap">
+				<div class="subjecet">
+					<span>회원가입</span>
+				</div>
+				<div class="id_wrap">
+					<div class="id_name">아이디</div>
+					<div class="id_input_box">
+						<input class="id" name="id">
+					</div>
+					<span class="id_input_re_1">사용 가능한 아이디입니다.</span>
+					<span class="id_input_re_2">아이디가 이미 존재합니다.</span>
+					<span class="final_id_ck">아이디를 입력해주세요.</span>
+				</div>
+				<div class="pw_wrap">
+					<div class="pw_name">비밀번호</div>
+					<div class="pw_input_box">
+						<input class="pw" name="pw">
+					</div>
+					<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
+					
+				</div>
+				<div class="pwck_wrap">
+					<div class="pwck_name">비밀번호 확인</div>
+					<div class="pwck_input_box">
+						<input class="pwck_input">
+					</div>
+					<span class="final_pwck_ck">비밀번호 확인을 입력해주세요</span>
+					<span class="pwck_input_re_1">비밀번호가 일치합니다.</span>
+                	<span class="pwck_input_re_2">비밀번호가 일치하지 않습니다.</span>
+				</div>
+
+				<div class="user_wrap">
+					<div class="user_name">이름</div>
+					<div class="user_input_box">
+						<input class="name" name="name">
+					</div>
+					<span class="final_name_ck">이름을 입력해주세요.</span>
+				</div>
+
+				<div class="user_wrap">
+					<div class="user_name">전화번호</div>
+					<div class="user_input_box">
+						<input class="phone" name="phone">
+					</div>
+					<span class="final_phone_ck">전화번호를 입력해주세요.</span>
+				</div>
+
+				<div class="mail_wrap">
+					<div class="mail_name">이메일</div>
+					<div class="mail_input_box">
+						<input class="email" name="email">
+					</div>
+					<span class="final_mail_ck">이메일을 입력해주세요.</span>
+					<div class="mail_check_wrap">
+						<div class="mail_check_input_box" id="mail_check_input_box_false">
+							<input class="mail_check_input" disabled="disabled">
+						</div>
+						<div class="mail_check_button">
+							<span>인증번호 전송</span>
+						</div>
+						<div class="clearfix"></div>
+						<span id="mail_check_input_box_warn"></span>
+					</div>
+				</div>
+				<div class="address_wrap">
+					<div class="profile_name">자기소개</div>
+					<div class="address_input_3_wrap">
+						<div class="address_input_3_box">
+							<input class="profile" name="profile">
+						</div>
+					</div>
+				</div>
+				<div class="join_button_wrap">
+					<input type="button" class="join_button" value="가입하기">
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script>
+	
+	/* 유효성 검사 통과유무 변수 */
+	 var idCheck = false;            // 아이디
+	 var idckCheck = false;            // 아이디 중복 검사
+	 var pwCheck = false;            // 비번
+	 var pwckCheck = false;            // 비번 확인
+	 var pwckcorCheck = false;        // 비번 확인 일치 확인
+	 var nameCheck = false;            // 이름
+	 var phoneCheck = false;			// 전화번호 확인
+	 var mailCheck = false;            // 이메일
+	 var mailnumCheck = false;        // 이메일 인증번호 확인
+	 var addressCheck = false         // 주소
+	 									
+	
+	var code = "";	//이메일전송 인증번호 저장위한 코드
+	
+	$(document).ready(function(){
+		//회원가입 버튼(회원가입 기능 작동)
+	    $(".join_button").click(function(){
+	    	
+	    	 var id = $('.id').val();				// id 입력란
+	         var pw = $('.pw').val();				// 비밀번호 입력란
+	         var pwck = $('.pwck_input').val();		// 비밀번호 확인 입력란
+	         var name = $('.name').val();           // 이름 입력란
+	         var phone = $('.phone').val();			// 전화번호 확인 입력란
+	         var mail = $('.email').val();          // 이메일 입력란
+	         
+	         /* 아이디 유효성검사 */
+	         if(id == ""){
+	             $('.final_id_ck').css('display','block');
+	             idCheck = false;
+	         }else{
+	             $('.final_id_ck').css('display', 'none');
+	             idCheck = true;
+	         }
+	         
+	         /* 비밀번호 유효성 검사 */
+	         if(pw == ""){
+	             $('.final_pw_ck').css('display','block');
+	             pwCheck = false;
+	         }else{
+	             $('.final_pw_ck').css('display', 'none');
+	             pwCheck = true;
+	         }
+	         
+	         /* 비밀번호 확인 유효성 검사*/ 
+	         if(pwck == ""){
+	             $('.final_pwck_ck').css('display','block');
+	             pwckCheck = false;
+	         }else{
+	             $('.final_pwck_ck').css('display', 'none');
+	             pwckCheck = true;
+	         }
+	         
+	         
+	         /* 이름 유효성 검사 */
+	         if(name == ""){
+	             $('.final_name_ck').css('display','block');
+	             nameCheck = false;
+	         }else{
+	             $('.final_name_ck').css('display', 'none');
+	             nameCheck = true;
+	         }
+	         
+	         /* 전화번호 유효성 검사 */
+	         if(phone == ""){
+	             $('.final_phone_ck').css('display','block');
+	             phoneCheck = false;
+	         }else{
+	             $('.final_phone_ck').css('display', 'none');
+	             phoneCheck = true;
+	         }
+	         
+	         /* 이메일 유효성 검사 */
+	         if(mail == ""){
+	             $('.final_mail_ck').css('display','block');
+	             mailCheck = false;
+	         }else{
+	             $('.final_mail_ck').css('display', 'none');
+	             mailCheck = true;
+	         }
+	         
+	         /* 최종 유효성 검사 */
+	         if(idCheck&&idckCheck&&pwCheck&&pwckCheck&&pwckcorCheck&&nameCheck&&phoneCheck&&mailCheck&&mailnumCheck ){
+	        	 $("#join_form").attr("action", "./success");
+		 	     $("#join_form").submit(); 
+	         } 
+
+	         return false;
+	 	        
+	    });
+	});
+		
+	
+		$('.id').on("propertychange change keyup paste input", function() {
+
+			/*console.log("keyup 테스트");*/
+
+			var id = $('.id').val(); // .id_input에 입력되는 값 
+			var data = {id : id} // '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
+			
+			$.ajax({ 
+				type : "post",
+				url : "./memberIdChk",
+				data : data,
+				success : function(result){
+					//console.log("성공 여부" + result);
+					if(result != 'fail'){
+						$('.id_input_re_1').css("display","inline-block");
+						$('.id_input_re_2').css("display", "none"); 
+						idckCheck = true;
+					} else {
+						$('.id_input_re_2').css("display","inline-block");
+						$('.id_input_re_1').css("display", "none");
+						idckCheck = false;
+					}
+
+
+					
+				}// success 종료
+
+			
+				
+			}); // ajax 종료
+
+		});// function 종료
+		
+		/* 인증번호 이메일 전송 */
+		$(".mail_check_button").click(function(){
+		    
+			var email = $(".email").val();        		// 입력한 이메일
+			var checkBox = $(".mail_check_input");		// 인증번호 입력란
+			var boxWrap = $(".mail_check_input_box");	// 인증번호 입력란 박스
+			
+			
+			$.ajax({
+		        
+		        type:"GET",
+		        url:"mailCheck?email=" + email,
+		        success:function(data){
+		        	
+		        	/*console.log("data : " + data);*/
+		        	checkBox.attr("disabled",false);
+		        	boxWrap.attr("id", "mail_check_input_box_true");
+		        	code = data;
+		        }
+		                
+		    });
+			
+		});
+		
+		/* 인증번호 비교 */
+		$(".mail_check_input").blur(function(){
+			
+			var inputCode = $(".mail_check_input").val();        // 입력코드    
+		    var checkResult = $("#mail_check_input_box_warn");    // 비교 결과     
+		    
+		    
+		    if(inputCode == code){                            // 일치할 경우
+		        checkResult.html("인증번호가 일치합니다.");
+		        checkResult.attr("class", "correct");
+		        mailnumCheck = true;
+		    } else {                                            // 일치하지 않을 경우
+		        checkResult.html("인증번호를 다시 확인해주세요.");
+		        checkResult.attr("class", "incorrect");
+		        mailnumCheck = false;
+		    }  
+		    
+		});
+
+		/* 비밀번호 확인 일치 유효성 검사 */
+		 
+		$('.pwck_input').on("propertychange change keyup paste input", function(){
+		        
+			var pw = $('.pw').val();
+		    var pwck = $('.pwck_input').val();
+		    $('.final_pwck_ck').css('display', 'none');
+		    
+		    if(pw == pwck){
+		        $('.pwck_input_re_1').css('display','block');
+		        $('.pwck_input_re_2').css('display','none');
+		        pwckcorCheck = true;
+		    }else{
+		        $('.pwck_input_re_1').css('display','none');
+		        $('.pwck_input_re_2').css('display','block');
+		        pwckcorCheck = false;
+		    }        
+			
+		});    
+		 
+
+
+		
+
+		
+		
+	</script>
+
+
 </body>
 </html>
+
+
