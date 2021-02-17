@@ -26,6 +26,7 @@
 
 	
 	<context:component-scan base-package="com.kgitbank.spring.domain.**.service" />
+	<context:component-scan base-package="com.kgitbank.spring.global.util" />
 	
 	
 	<mybatis-spring:scan base-package="com.kgitbank.spring.domain.**.mapper" />
