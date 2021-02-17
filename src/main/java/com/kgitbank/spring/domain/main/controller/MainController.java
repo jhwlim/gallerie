@@ -15,4 +15,10 @@ public class MainController {
 		return "main/login";
 	}
 	
+	@GetMapping(value="/main")
+	public String home() {
+		return "main/home";
+	}
+	
+	
 }

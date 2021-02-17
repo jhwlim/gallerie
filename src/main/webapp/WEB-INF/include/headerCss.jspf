@@ -1,0 +1,2 @@
+<%-- include 하는 jsp파일의 최상위에서 include 필요 : /WEB-INF/include/jstl.jspf --%>
+<link rel="stylesheet" href="<c:url value='/resources/css/include/header.css' />">
