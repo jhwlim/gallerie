@@ -41,30 +41,27 @@ public class MyprofileController {
 	
 	
 	// 비밀번호 변경하는 페이지
-	@RequestMapping(value = "/updatepw")
-	public String updatePW() {
+//	@RequestMapping(value = "/updatepw")
+//	public String updatepw() {
+//		return "myprofile/updatepw";
+//	}
+//	
+//	@PostMapping(value = "/updatepw")
+//	public String updatepw(MemberVO vo) {
+//		vo.setId("abc5678");
+//		return "redirect:/myprofile/updatepw";
+//	}
+	
+	@GetMapping(value = "/updatepw")
+	public String currentpw() {
 		return "myprofile/updatepw";
 	}
 	
 	@PostMapping(value = "/updatepw")
-	public String updatePW(String pw) {
-//		log.info("접속완료");
-		MemberVO vo = new MemberVO();
-				
-//		vo.setPw("1113");
+	public String updatepw(MemberVO vo) {
 		vo.setId("abc5678");
-		
-//		int result; // 0, 1로 원래비밀번호 맞는지 확인하려고 남겨둠
-		
-		vo.setPw(pw);
-		
-		service.updatePW(vo);
-		
 		return "redirect:/myprofile/updatepw";
 	}
-	
-	
-	
 	
 	
 }

@@ -15,7 +15,7 @@
   		 	id = #{id}
 	  </update>
 	  
-	  <update id="updatePW">
+	  <update id="updatepw">
 	  	UPDATE
 	  		members
 	  	SET
@@ -23,6 +23,16 @@
   		 WHERE
   		 	id = #{id}
 	   </update>
+	   
+	   <select id="currentpw">
+	    SELECT
+	   		pw
+	    FROM
+	   		members
+	   	WHERE
+	   		id = #{id}
+	   </select>
+	   
 
 </mapper>
 

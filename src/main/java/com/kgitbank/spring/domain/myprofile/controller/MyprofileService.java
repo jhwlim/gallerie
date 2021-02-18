@@ -16,10 +16,13 @@ public class MyprofileService {
 		return mapper.updateMyprofile(vo);
 	}
 	
-	public int updatePW(MemberVO vo) {
-		return mapper.updatePW(vo);
+	public int updatepw(MemberVO vo) {
+		return mapper.updatepw(vo);
 	}
 	
+	public String currentpw(MemberVO vo) {
+		return mapper.currentpw(vo);
+	}
 
 	
 }

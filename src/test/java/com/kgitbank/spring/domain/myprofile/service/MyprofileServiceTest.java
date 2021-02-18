@@ -42,12 +42,12 @@ public class MyprofileServiceTest {
 	@Test
 	public void servicetest1() {
 		MemberVO mv = new MemberVO();
-		
-		mv.setPw("1113");
+
+//		mv.setPw("1113");
 		mv.setId("abc5678");
 		mv.setPw("1114");
 		
-		service.updatePW(mv);
+		service.updatepw(mv);
 		log.info(mv);
 	}
 	
