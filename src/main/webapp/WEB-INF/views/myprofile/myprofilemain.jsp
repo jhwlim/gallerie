@@ -11,7 +11,7 @@
 	<div class="contents">
 		<div class="nav">
 			<span class="title"> 
-				<a class="title_ft">${members.id}</a>
+				<a class="title_ft">${myprofile.id}</a>
 			</span>
 		</div>
 
@@ -19,16 +19,19 @@
 			<div class="title_image">
 				<c:choose>
 					<c:when test="${user.profile_photo == null}">
-						<img src="/images/noimage.png" class="profile_image">
+						<img src="/images/logo.png" class="profile_image">
 					</c:when>
 					<c:otherwise>
-						<img src="/images/profile/${user.profile_photo}" class="profile_image">
+						<img src="/images/${user.profile_photo}" class="profile_image">
 					</c:otherwise>
 				</c:choose>
 			</div>
 			
 			<div class="fix">
 				<a href="<c:url value='/myprofile/update' />" class="btn btn-default">프로필 편집</a>
+			</div>
+			<div class="fix">
+				<a href="<c:url value='' />" class="btn btn-default">사진 편집</a>
 			</div>
 
 			<div class="txt">

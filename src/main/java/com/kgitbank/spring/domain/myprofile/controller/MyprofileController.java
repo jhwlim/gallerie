@@ -47,13 +47,18 @@ public class MyprofileController {
 	}
 	
 	@PostMapping(value = "/updatepw")
-	public String updatePW(MemberVO vo) {
+	public String updatePW(String pw) {
 //		log.info("접속완료");
+		MemberVO vo = new MemberVO();
 				
 //		vo.setPw("1113");
 		vo.setId("abc5678");
 		
 //		int result; // 0, 1로 원래비밀번호 맞는지 확인하려고 남겨둠
+		
+		vo.setPw(pw);
+		
+		service.updatePW(vo);
 		
 		return "redirect:/myprofile/updatepw";
 	}

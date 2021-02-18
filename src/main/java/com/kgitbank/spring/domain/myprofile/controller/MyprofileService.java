@@ -20,9 +20,6 @@ public class MyprofileService {
 		return mapper.updatePW(vo);
 	}
 	
-//	public String getCurrentPw(MemberVO vo) {
-//		return mapper.getCurrentPw(vo);
-//	}
 
 	
 }

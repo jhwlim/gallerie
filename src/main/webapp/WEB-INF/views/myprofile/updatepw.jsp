@@ -19,25 +19,83 @@
 			</li>
 		</ul>
 	
-		<div class="form-group">
-			<label for="pw">이전 비밀번호</label>
-			<input type="text" id="pw" 
-				name="pw" placeholder="이전 비밀번호" value="${myprofile.pw}" />
-		</div>
-		<div class="form-group">
-			<label for="pw">새 비밀번호</label>
-			<input type="text" id="pw" 
-				name="newpw" placeholder="새 비밀번호" value="${myprofile.pw}" />
-		</div>
-		<div class="form-group">
-			<label for="pw">새 비밀번호 확인</label>
-			<input type="text" id="pw"
-				name="pw" placeholder="새 비밀번호 확인" value="${myprofile.pw}" />
-		</div>
-		
-		<button type="submit" class="btn btn-default">비밀번호 변경</button>
+	<!-- 비밀번호 변경 기능만 확인하기 위해 잠시 주석처리
+			<div class="pwd">
+				<div class="password_1">이전 비밀번호</div>
+			</div>
+			<div class="pwd2">
+				<input id="old_pwd" name="old_pwd" class="p1_t" type="password" size="60" />
+			</div>
+	-->	
+
+			<div class="pwd">
+				<div class="password_1">새 비밀번호</div>
+			</div>
+			<div class="pwd2">
+				<input id="new_pwd" name="new_pwd" type="password" size="60"></input>
+			</div>
+
+
+			<div class="pwd">
+				<div class="password_1">새 비밀번호 확인</div>
+			</div>
+			<div class="pwd2">
+				<input id="new_pwd2" type="password" size="60"></input>
+			</div>
+			<div class="ok_">
+				<input type="submit" value="비밀번호 변경" ></input>
+			</div>
 	</form>
 	</div>
+	
+	<!--
+	<script>
+		function oldPwdCheck() {
+			var old_pwd = document.querySelector("#old_pwd");
+				
+				let url = '/passwordCheck';
+				
+				fetch(url,{
+					method: "POST"
+					alert("비밀번호 완료");
+					
+					
+				})/* .then(function(res){
+					console.log(res);
+					return res.text();
+				}).then(function(result){
+					if(result === 'ok'){
+						alert('성공');
+						return true;
+					}else{
+						alert('실패');
+						return false;
+					} 
+				})*/.catch();
+			
+		}
+		function checkPwd() {
+			
+			var new_pwd = document.querySelector("#new_pwd");
+			var new_pwd2 = document.querySelector("#new_pwd2");
+			console.log(new_pwd.value);
+			console.log(new_pwd2.value);
+			if (new_pwd.value === new_pwd2.value) {
+				if(oldPwdCheck()){
+					return true;	
+				}
+				
+					return false;
+			} else {
+				new_pwd.value = "";
+				new_pwd2.value = "";
+				new_pwd.focus();
+				alert("비밀번호가 일치하지 않습니다.");
+				return false;
+			}
+		}
+	</script>
+	-->
 
 </body>
 </html>
