@@ -6,6 +6,7 @@
 	
 	<!-- 회원가입 -->
 	<insert id="signUp">
+	
 		INSERT INTO members VALUES(
 		
 		#{id},
@@ -17,6 +18,7 @@
 		sysdate
 		
 		)
+		
 	</insert>
 	
 	<!-- 아이디 중복검사 -->
@@ -25,5 +27,32 @@
 		SELECT count(*) FROM members WHERE ID = #{id} 
 	
 	</select>
-
+	
+	<!-- 유저 정보 인증 -->
+	<select id="userAuth" resultType="com.kgitbank.spring.domain.model.MemberVO">
+	
+		SELECT * FROM members WHERE ID = #{id}
+	
+	</select>
+	
+	<!-- 비밀번호 재설정 -->
+	<select id="resetPw" resultType="com.kgitbank.spring.domain.model.MemberVO">
+		
+		SELECT * FROM members WHERE ID = #{id}
+		
+	</select>
+	
+	<!-- 비밀번호 변경 완료 -->
+	<update id="changedPw">
+	
+		UPDATE
+			members
+		SET
+			pw = #{pw}
+			
+		WHERE
+			id = #{id}	
+				
+	</update>
+	
 </mapper>

@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class Member {
 
+	// 테스트용
 	@NonNull
 	private String id;
 	private String pw;
