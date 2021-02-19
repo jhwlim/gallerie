@@ -136,7 +136,7 @@ input[type=submit] {
 
 	<form action="<c:url value='/myprofile/changepw' />" method="POST">
 			<div class="pwd">
-				<div class="password_1">새 비밀번호</div>
+				<div class="password1">새 비밀번호</div>
 			</div>
 			<div class="pwd2">
 				<input id="pw1" name="newPassword" type="password" size="60"></input>
@@ -144,7 +144,7 @@ input[type=submit] {
 			<br>
 		
 			<div class="pwd">
-				<div class="password_1">새 비밀번호 확인</div>
+				<div class="password1">새 비밀번호 확인</div>
 			</div>
 			<div class="pwd2">
 				<input id="pw2" type="password" size="60"></input>
@@ -168,7 +168,7 @@ function validateJoin() {
 		pw2.value = "";
 		pw1.focus();
 		alert('비밀번호가 일치하지않습니다.');
-
+		
 		return false;
 	}
 }
