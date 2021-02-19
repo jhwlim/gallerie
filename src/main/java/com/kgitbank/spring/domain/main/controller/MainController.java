@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /*
- * ë¡œê·¸ì¸ í™”ë©´
- * ë©”ì¸ í™”ë©´(ê²Œì‹œë¬¼ ì¡°íšŒ)
+ * ·Î±×ÀÎ È­¸é
+ * ¸ŞÀÎ È­¸é (°Ô½Ã¹° Á¶È¸)
  */
 @Controller
 public class MainController {
