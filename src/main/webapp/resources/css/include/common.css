@@ -1,0 +1,6 @@
+.wrapper {background-color: #f6f6f6;}
+.container {
+    margin: 0 auto;
+    padding: 0 10px;
+    max-width: 768px;
+}
