@@ -24,7 +24,7 @@
   		 	id = #{id}
 	   </update>
 	   
-	   <select id="currentpw">
+	   <select id="currentpw" resultType="String">
 	    SELECT
 	   		pw
 	    FROM

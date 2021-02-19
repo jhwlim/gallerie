@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kgitbank.spring.domain.model.MemberVO;
 
@@ -34,22 +35,19 @@ public class MyprofileController {
 	public String update(MemberVO vo) {
 		vo.setId("abc5678");
 		
-//		int result = service.updateMyprofile(vo);
-		
 		return "redirect:/myprofile/update";
 	}
 	
-	
-	// 비밀번호 변경하는 페이지
-//	@RequestMapping(value = "/updatepw")
-//	public String updatepw() {
-//		return "myprofile/updatepw";
-//	}
-//	
-//	@PostMapping(value = "/updatepw")
-//	public String updatepw(MemberVO vo) {
-//		vo.setId("abc5678");
-//		return "redirect:/myprofile/updatepw";
+//	@GetMapping(value = "/updatepw")
+//	@ResponseBody
+//	public String currentpw(MemberVO vo) {
+//		String resultAlert = "";
+//		if (service.currentpw(vo).equals("1114")) {
+//			resultAlert="<script>alert('확인완료');location.href='/myprofile/updatepw'</script>";
+//		} else {
+//			resultAlert="<script>alert('잘못된 비밀번호입니다');location.href='/myprofile/changepw'</script>";
+//		}
+//		return resultAlert;
 //	}
 	
 	@GetMapping(value = "/updatepw")
@@ -58,9 +56,27 @@ public class MyprofileController {
 	}
 	
 	@PostMapping(value = "/updatepw")
+	public String currentpw(MemberVO vo) {
+		vo.setId("abc5678");
+		String result = "1114"; // 페이지넘어가나 확인하려고 지정해둠
+		
+		if (result.equals(service.currentpw(vo))) {
+			return "myprofile/changepw";
+		} else {
+			return "redirect:/myprofile/updatepw";
+		}
+	}
+	
+	
+	@GetMapping(value = "/changepw")
+	public String updatepw() {
+		return "myprofile/changepw";
+	}
+	
+	@PostMapping(value = "/changepw")
 	public String updatepw(MemberVO vo) {
 		vo.setId("abc5678");
-		return "redirect:/myprofile/updatepw";
+		return "redirect:/myprofile/changepw";
 	}
 	
 	
