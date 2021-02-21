@@ -1,11 +1,11 @@
 package com.kgitbank.spring.domain.myprofile.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kgitbank.spring.domain.model.MemberVO;
 
@@ -34,7 +34,7 @@ public class MyprofileController {
 	@PostMapping(value = "/update")
 	public String update(MemberVO vo) {
 		vo.setId("abc5678");
-		
+//		log.info("업데이트 완료");
 		return "redirect:/myprofile/update";
 	}
 	
@@ -78,6 +78,11 @@ public class MyprofileController {
 		vo.setId("abc5678");
 		return "redirect:/myprofile/changepw";
 	}
+	
+	
+	
+	
+	
 	
 	
 }

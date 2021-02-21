@@ -93,17 +93,17 @@ main>div {
 		<div class="form-group">
 			<label for="name">이름</label>
 			<input type="text" id="name" 
-				name="name" placeholder="이름" value="${myprofile.name}" />
+				name="name" placeholder="이름" value="${member.name}" />
 		</div>
 		<div class="form-group">
 			<label for="email">이메일</label>
 			<input type="text" id="email" 
-				name="email" placeholder="이메일" value="${myprofile.email}" />
+				name="email" placeholder="이메일" value="${member.email}" />
 		</div>
 		<div class="form-group">
 			<label for="phone">전화번호</label>
 			<input type="text" id="phone" 
-				name="phone" placeholder="전화번호" value="${myprofile.phone}" />
+				name="phone" placeholder="전화번호" value="${member.phone}" />
 		</div>
 		
 		<button type="submit" class="btn btn-default">제출</button>

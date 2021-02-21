@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,24 +135,23 @@ input[type=submit] {
 		</div>
 	</div> 
 
-	<form action="<c:url value='/myprofile/changepw' />" method="POST">
+	<form action="<c:url value='/myprofile/changepw' />" method="POST" onsubmit="return validateJoin()">
 			<div class="pwd">
-				<div class="password1">새 비밀번호</div>
+				<div  class="password_1">새 비밀번호</div>
 			</div>
 			<div class="pwd2">
 				<input id="pw1" name="newPassword" type="password" size="60"></input>
 			</div>
 			<br>
-		
+
 			<div class="pwd">
-				<div class="password1">새 비밀번호 확인</div>
+				<div  class="password_1">새 비밀번호 확인</div>
 			</div>
-			<div class="pwd2">
-				<input id="pw2" type="password" size="60"></input>
+			<div  class="pwd2">
+				<input id="pw2" type="password" size="60" value="${myprofile.pw}"></input>
 			</div>
-		
 			<div class="ok_">
-				<input type="submit" value="본인확인" ></input>
+				<input type="submit" value="비밀번호 변경"></input>
 			</div>
 	</form>
 </main>
@@ -162,6 +162,7 @@ function validateJoin() {
 	var pw2 = document.querySelector("#pw2");
 
 	if (pw1.value === pw2.value) {
+		alert('변경 완료');
 		return true;
 	} else {
 		pw1.value = "";
