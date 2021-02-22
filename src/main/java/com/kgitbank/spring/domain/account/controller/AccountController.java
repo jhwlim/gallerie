@@ -22,11 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-/*
-//회원가입
 
-
- */
 @Controller(value = "/account")
 @AllArgsConstructor
 @Log4j
@@ -166,7 +162,7 @@ public class AccountController {
         logger.info("인증번호 " + checkNum);
 
         /* 이메일 보내기 */
-        String setFrom = "youremail@naver.com";
+        String setFrom = "qswaz98@naver.com";
         String toMail = email;
         String title = "회원가입 인증 이메일 입니다.";
         String content = 
@@ -211,7 +207,7 @@ public class AccountController {
         logger.info("인증번호 " + checkNum);
 
         /* 이메일 보내기 */
-        String setFrom = "youremail@naver.com";
+        String setFrom = "qswaz98@naver.com";
         String toMail = email;
         String title = "비밀번호 재설정 인증 이메일 입니다.";
         String content = 
