@@ -36,6 +36,18 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
+	public int emailCheck(String email) throws Exception {
+		
+		return accMapper.emailCheck(email);
+	}
+	
+	@Override
+	public MemberVO viewIdList(String email) throws Exception {
+		
+		return accMapper.viewIdList(email);
+	}
+	
+	@Override
 	public MemberVO userAuth(String id) throws Exception {
 		
 		return accMapper.userAuth(id);
