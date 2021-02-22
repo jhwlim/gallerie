@@ -1,6 +1,7 @@
 package com.kgitbank.spring.domain.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,5 +20,7 @@ public class MemberVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regDate;
 	private String imgPath;
-	private String autoLogin;
+	private String sessionkey;
+	private Timestamp sessionlimit;
+	
 }

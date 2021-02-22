@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j;
 	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 })
 @Log4j
-public class CommentTests {
+public class CommentMapperTests {
 	
 	@Autowired
 	CommentMapper mapper;
