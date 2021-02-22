@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.79.0">
-    <title>Signin Template · Bootstrap v5.0</title>
+    <title>login page</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
 
@@ -41,21 +41,30 @@
     
 <main class="form-signin">
   <form method="post" action="/spring/">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 fw-normal">로그인</h1>
     <label for="inputEmail" class="visually-hidden">Email address</label>
-    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+    <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
     <label for="inputPassword" class="visually-hidden">Password</label>
     <input type="password" id="inputPassword" name="pw" class="form-control" placeholder="Password" required>
     <div class="checkbox mb-3">
       <label>
-        <input type="checkbox" value="remember-me"> Remember me
+        <input type="checkbox" value="remember-me" name="remember"> 자동로그인
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
   </form>
+  <div style="margin-top: 10px">
+  <button class="w-50 btn btn-sm">아이디 찾기</button>
+  <button class="w-50 btn btn-sm">비밀번호 찾기</button>
+  <button class="w-50 btn btn-sm">회원가입</button>
+  
+  </div>
+  
 </main>
 
+<script type="text/javascript"> 
 
+</script>
     
   </body>
 </html>

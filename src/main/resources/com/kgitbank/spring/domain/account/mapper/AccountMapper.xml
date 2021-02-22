@@ -13,4 +13,12 @@
 		]]>		
 	</select>
 	
+	<update id="keepLogin">
+		update member set sessionkey = #{sessionId}, sessionlimit = #{next} where email=#{email}
+	</update>
+	
+	<select id="checkUserWithSessionkey" resultType="com.kgitbank.spring.model.Member">
+		select * from member where sessionkey = #{sessionId} and sessionLimit > sysdate
+	</select>
+	
 </mapper>
