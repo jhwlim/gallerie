@@ -2,10 +2,12 @@ package com.kgitbank.spring.domain.account.controller;
 
 import java.util.Random;
 
+import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +39,9 @@ public class AccountController {
 	@Autowired
 	private JavaMailSender mailSender;
 
+	@Resource(name="mailSender")
+	private JavaMailSenderImpl jms;
+	
 	@GetMapping(value = "/login")
 	public String login() {
 		return "main/login";
@@ -153,7 +158,9 @@ public class AccountController {
 		log.info("인증번호 " + checkNum);
 
 		/* 이메일 보내기 */
-		String setFrom = "youremail@naver.com";
+//		String setFrom = "youremail@naver.com";
+		String setFrom = jms.getUsername() + "@naver.com";
+		log.info("setFrom=" + setFrom);
 		String toMail = email;
 		String title = "회원가입 인증 이메일 입니다.";
 		String content = 
@@ -198,7 +205,9 @@ public class AccountController {
 		log.info("인증번호 " + checkNum);
 
 		/* 이메일 보내기 */
-		String setFrom = "youremail@naver.com";
+//		String setFrom = "youremail@naver.com";
+		String setFrom = jms.getUsername() + "@naver.com";
+		
 		String toMail = email;
 		String title = "비밀번호 재설정 인증 이메일 입니다.";
 		String content = 

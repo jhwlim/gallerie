@@ -7,6 +7,8 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
+	<context:property-placeholder location="classpath:/config/**.properties"/>
+	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -22,15 +24,15 @@
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
 	  	<property name="dataSource" ref="dataSource" />
-	  	<property name="configLocation" value="classpath:/mybatis-config.xml" />
+	  	<property name="configLocation" value="classpath:/config/mybatis-config.xml" />
 	</bean>
 
 	<!-- navermail설정 -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
-	    <property name="host" value="smtp.naver.com"/> <!-- 메이서버 호스트 -->
-	    <property name="port" value="465"/> <!-- 메이서버 포트번호 -->
-	    <property name="username" value="youremail@naver.com"/> <!-- 자신의 이메일 아이디 -->
-	    <property name="password" value="yourpassword"/> <!-- 자신의 비밀번호 -->
+	    <property name="host" value="${spring.mailSender.host}"/> <!-- 메이서버 호스트 -->
+	    <property name="port" value="${spring.mailSender.port}"/> <!-- 메이서버 포트번호 -->
+	    <property name="username" value="${spring.mailSender.username}"/> <!-- 자신의 이메일 아이디 -->
+	    <property name="password" value="${spring.mailSender.password}"/> <!-- 자신의 비밀번호 -->
 	      <!-- 보안연결 SSL과 관련된 설정 -->
 	    <property name="javaMailProperties">
 	     <props>
