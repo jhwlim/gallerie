@@ -78,7 +78,7 @@ public class LoginController {
 				System.out.println(loginMember);
 				service.keepLogin(key);
 			}
-			return "/main/home";
+			return "main/home";
 		}else {
 			System.out.println("로그인실패");
 		}

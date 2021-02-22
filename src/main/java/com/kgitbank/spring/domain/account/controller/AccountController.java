@@ -20,18 +20,19 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+
 /*
 	- 회원가입
 	- 로그인
 	- 아이디/비밀번호 찾기
  */
+
 @Controller(value = "/account")
 @AllArgsConstructor
 @Log4j
 public class AccountController {
 
 	@Setter(onMethod_ = {@Autowired})
-	@Autowired
 	private AccountService service;	
 
 	@Autowired
@@ -39,7 +40,7 @@ public class AccountController {
 
 	@GetMapping(value = "/login")
 	public String login() {
-		return "main/login";
+		return "account/login";
 	}
 
 	@GetMapping(value = "/signup")
@@ -80,7 +81,7 @@ public class AccountController {
 
 		int result = service.changedPw(mem);
 
-		return "main/login";
+		return "account/login";
 	}
 
 	@PostMapping(value = "/viewidlist")
@@ -143,6 +144,7 @@ public class AccountController {
 	@ResponseBody
 	public String mailCheckGET(String email) throws Exception{
 
+
 		/* 뷰(View)로부터 넘어온 데이터 확인 */
 		log.info("이메일 데이터 전송 확인");
 		log.info("인증번호 : " + email);
@@ -153,7 +155,7 @@ public class AccountController {
 		log.info("인증번호 " + checkNum);
 
 		/* 이메일 보내기 */
-		String setFrom = "youremail@naver.com";
+		String setFrom = "qswaz98@naver.com";
 		String toMail = email;
 		String title = "회원가입 인증 이메일 입니다.";
 		String content = 
@@ -162,6 +164,7 @@ public class AccountController {
 				"인증 번호는 " + checkNum + "입니다." + 
 				"<br>" + 
 				"해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+
 
 		try {
 
@@ -183,6 +186,7 @@ public class AccountController {
 		return num;     
 	}
 
+
 	/* 이메일 인증 */
 	@RequestMapping(value="/mailCheckPw", method = RequestMethod.GET)
 	@ResponseBody
@@ -198,7 +202,7 @@ public class AccountController {
 		log.info("인증번호 " + checkNum);
 
 		/* 이메일 보내기 */
-		String setFrom = "youremail@naver.com";
+		String setFrom = "qswaz98@naver.com";
 		String toMail = email;
 		String title = "비밀번호 재설정 인증 이메일 입니다.";
 		String content = 
@@ -207,7 +211,6 @@ public class AccountController {
 						"인증 번호는 " + checkNum + "입니다." + 
 						"<br>" + 
 						"해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-
 		try {
 
 			MimeMessage message = mailSender.createMimeMessage();
