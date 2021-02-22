@@ -3,10 +3,12 @@ package com.kgitbank.spring.domain.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
+@Alias("MemberVO")
 @Data
 public class MemberVO {
 	

@@ -24,7 +24,7 @@ public class FileMapperTests {
 	@Autowired
 	FileMapper mapper;
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectAllTest() {
 		log.info(mapper.selectAll());
@@ -47,6 +47,7 @@ public class FileMapperTests {
 		log.info("saveFileTest - Complete");
 	}
 	
+	@Ignore
 	@Test
 	public void createFileSamples() {
 		
