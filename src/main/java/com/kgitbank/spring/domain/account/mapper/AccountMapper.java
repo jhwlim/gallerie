@@ -1,19 +1,15 @@
 package com.kgitbank.spring.domain.account.mapper;
 
-import com.kgitbank.spring.model.Member;
-import com.kgitbank.spring.model.Sessionkey;
+import com.kgitbank.spring.domain.account.dto.Sessionkey;
 import com.kgitbank.spring.domain.model.MemberVO;
-import org.apache.ibatis.annotations.Mapper;
-
-
 
 public interface AccountMapper {
 	
-	public Member getLogin(Member member);
+	public MemberVO getLogin(MemberVO member);
 	
 	public void keepLogin(Sessionkey key);
 	
-	public Member checkUserWithSessionkey(String sessionId);
+	public MemberVO checkUserWithSessionkey(String sessionId);
 	
 	// 회원가입
 	public int signUp(MemberVO mem);
@@ -35,6 +31,5 @@ public interface AccountMapper {
 	
 	// 비밀번호 변경 완료
 	public int changedPw(MemberVO mem);
-
 
 }
