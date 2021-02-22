@@ -3,7 +3,24 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.account.mapper.AccountMapper">
+	<select id="getLogin" resultType="com.kgitbank.spring.model.Member">
+		<![CDATA[
+			SELECT
+	    		*
+			FROM 
+				member 
+			WHERE email = #{email} AND pw = #{pw}
+		]]>		
+	</select>
 	
+	<update id="keepLogin">
+		update member set sessionkey = #{sessionId}, sessionlimit = #{next} where email=#{email}
+	</update>
+	
+	<select id="checkUserWithSessionkey" resultType="com.kgitbank.spring.model.Member">
+		select * from member where sessionkey = #{sessionId} and sessionLimit > sysdate
+	</select>
+
 	<!-- 회원가입 -->
 	<insert id="signUp">
 	
@@ -25,6 +42,20 @@
 	<select id="idCheck" resultType="int">
 	
 		SELECT count(*) FROM members WHERE ID = #{id} 
+	
+	</select>
+	
+	<!-- 이메일 중복검사 -->
+	<select id="emailCheck" resultType="int">
+		
+		SELECT count(*) FROM members WHERE EMAIL = #{email}
+	
+	</select>
+	
+	<!-- 아이디 정보 인증 -->
+	<select id="viewIdList" resultType="com.kgitbank.spring.domain.model.MemberVO">
+		
+		SELECT * FROM members WHERE EMAIL = #{email}
 	
 	</select>
 	
