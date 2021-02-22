@@ -143,7 +143,8 @@ input[type=submit] {
 				<div class="pw">이전 비밀번호</div>
 			</div>
 			<div class="pw">
-				<input id="pw" type="password" size="60"></input>
+				<input id="pw" type="password" size="60"
+				name="pw" placeholder="현재 비밀번호 입력" value="${myprofile.pw}"></input>
 			</div>
 			
 			<div class="ok_">

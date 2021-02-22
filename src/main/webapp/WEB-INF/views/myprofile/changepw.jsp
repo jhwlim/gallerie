@@ -140,7 +140,8 @@ input[type=submit] {
 				<div  class="password_1">새 비밀번호</div>
 			</div>
 			<div class="pwd2">
-				<input id="pw1" name="newPassword" type="password" size="60"></input>
+				<input id="pw1" name="newPassword" type="password" size="60" 
+				placeholder="새 비밀번호 입력"></input>
 			</div>
 			<br>
 
@@ -148,7 +149,8 @@ input[type=submit] {
 				<div  class="password_1">새 비밀번호 확인</div>
 			</div>
 			<div  class="pwd2">
-				<input id="pw2" type="password" size="60" value="${myprofile.pw}"></input>
+				<input id="pw" type="password" size="60" 
+				name="pw" placeholder="새 비밀번호 입력" value="${myprofile.pw}"></input>
 			</div>
 			<div class="ok_">
 				<input type="submit" value="비밀번호 변경"></input>
@@ -159,14 +161,14 @@ input[type=submit] {
 function validateJoin() {
 
 	var pw1 = document.querySelector("#pw1");
-	var pw2 = document.querySelector("#pw2");
+	var pw = document.querySelector("#pw");
 
-	if (pw1.value === pw2.value) {
+	if (pw1.value === pw.value) {
 		alert('변경 완료');
 		return true;
 	} else {
 		pw1.value = "";
-		pw2.value = "";
+		pw.value = "";
 		pw1.focus();
 		alert('비밀번호가 일치하지않습니다.');
 		
