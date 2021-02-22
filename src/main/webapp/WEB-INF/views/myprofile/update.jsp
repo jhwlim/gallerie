@@ -259,8 +259,6 @@ input[type=submit] {
 		<div>
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
-		<div></div>
-
 	</footer>
 </body>
 </html>

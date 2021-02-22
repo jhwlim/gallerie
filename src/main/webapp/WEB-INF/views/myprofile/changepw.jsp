@@ -71,6 +71,15 @@ main>div {
 	border-left-color: gainsboro;
 }
 
+footer {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	font-size: 12px;
+	text-align: center;
+	height: 100px;
+	margin: 0 15%;
+}
+
 input:focus {
 	outline: none;
 }
@@ -79,8 +88,29 @@ input[type=text]:focus {
 	text-align: start;
 }
 
+.copyright {
+	color: gainsboro;
+}
+
 .menu2 {
 	border-left-color: black !important;
+}
+
+.user_ {
+	/* margin: 20px 0px 0px 0px;
+    padding: 0px 0px 0px 10%;
+    border: 0; */
+	margin-top: 3%;
+	align-items: center;
+	font-size: 24px
+}
+
+.j_from {
+	width: 80%;
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 20px;
+	margin: 5% 3% 0 2%;
 }
 
 .pwd {
@@ -133,8 +163,11 @@ input[type=submit] {
 		<div class="menu2">
 			<a href="/spring/myprofile/updatepw">비밀번호 변경</a>
 		</div>
+		<div class="menu3">
+				<a href="#">로그인 활동</a>
+		</div>
 	</div> 
-
+	<div class="main2">
 	<form action="<c:url value='/myprofile/changepw' />" method="POST" onsubmit="return validateJoin()">
 			<div class="pwd">
 				<div  class="password_1">새 비밀번호</div>
@@ -149,14 +182,55 @@ input[type=submit] {
 				<div  class="password_1">새 비밀번호 확인</div>
 			</div>
 			<div  class="pwd2">
-				<input id="pw" type="password" size="60" 
+				<input id="pw2" type="password" size="60" 
 				name="pw" placeholder="새 비밀번호 입력" value="${myprofile.pw}"></input>
 			</div>
 			<div class="ok_">
 				<input type="submit" value="비밀번호 변경"></input>
 			</div>
 	</form>
+	</div>
 </main>
+<footer>
+		<div>
+			<a href="#">INSTARGRAM 정보</a>
+		</div>
+		<div>
+			<a href="#">지원</a>
+		</div>
+		<div>
+			<a href="#">홍보 센터</a>
+		</div>
+		<div>
+			<a href="#">API</a>
+		</div>
+		<div>
+			<a href="#">채용 정보</a>
+		</div>
+
+		<div>
+			<a href="#">개인정보처리방침</a>
+		</div>
+		<div>
+			<a href="#">약관</a>
+		</div>
+		<div>
+			<a href="#">디렉터리</a>
+		</div>
+		<div>
+			<a href="#">프로필</a>
+		</div>
+		<div>
+			<a href="#">해시태그</a>
+		</div>
+
+		<div>
+			<a href="#">언어</a>
+		</div>
+		<div>
+			<p class="copyright">©️2021 INSTARGRAM</p>
+		</div>
+</footer>
 <script type="text/javascript">
 function validateJoin() {
 

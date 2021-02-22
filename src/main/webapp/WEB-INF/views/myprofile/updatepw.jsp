@@ -72,12 +72,25 @@ main>div {
 	border-left-color: gainsboro;
 }
 
+footer {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	font-size: 12px;
+	text-align: center;
+	height: 100px;
+	margin: 0 15%;
+}
+
 input:focus {
 	outline: none;
 }
 
 input[type=text]:focus {
 	text-align: start;
+}
+
+.copyright {
+	color: gainsboro;
 }
 
 .menu2 {
@@ -89,6 +102,23 @@ input[type=text]:focus {
 	text-align: left;
 	font-size: 15px;
 	width: 100px;
+}
+
+.user_ {
+	/* margin: 20px 0px 0px 0px;
+    padding: 0px 0px 0px 10%;
+    border: 0; */
+	margin-top: 3%;
+	align-items: center;
+	font-size: 24px
+}
+
+.j_from {
+	width: 80%;
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 20px;
+	margin: 5% 3% 0 2%;
 }
 
 .pwd2 {
@@ -125,7 +155,6 @@ input[type=submit] {
 
 </head>
 <body>
-
 		<main>
 		<div class="main1">
 			<div class="menu1">
@@ -138,27 +167,62 @@ input[type=submit] {
 				<a href="#">로그인 활동</a>
 			</div>
 		</div>
-		
-		<div class="info">
-	<form action="<c:url value='/myprofile/updatepw' />" method="POST" >
-	
+		<div class="main2">
+			<form class="j_from" action="<c:url value='/myprofile/updatepw' />" method="POST" >
+				<div class="pwd">
+					<div class="password_1">이전 비밀번호</div>
+				</div>
+				<div class="pwd2">
+					<input class="p1_t" id="pw" type="password" size="60"
+					name="oldPassword" placeholder="현재 비밀번호 입력"></input>
+					<span class="error_next_box" id="pwMsg" style="margin-top: 15px;"></span>
+				</div>
+				<div class="ok_">
+					<input type="submit" value="본인확인" ></input>
+				</div>
+			</form>
+		</div>
+		</main>
+	<footer>
+		<div>
+			<a href="#">INSTARGRAM 정보</a>
+		</div>
+		<div>
+			<a href="#">지원</a>
+		</div>
+		<div>
+			<a href="#">홍보 센터</a>
+		</div>
+		<div>
+			<a href="#">API</a>
+		</div>
+		<div>
+			<a href="#">채용 정보</a>
+		</div>
 
-			<div class="pwd">
-				<div class="pw">이전 비밀번호</div>
-			</div>
-			<div class="pw">
-				<input id="pw" type="password" size="60"
-				name="pw" placeholder="현재 비밀번호 입력"></input>
-				<span class="error_next_box" id="pwMsg" style="margin-top: 15px;"></span>
-			</div>
-			
-			<div class="ok_">
-				<input type="submit" value="본인확인" ></input>
-			</div>
-	</form>
-	</div>
-	</main>
-	
+		<div>
+			<a href="#">개인정보처리방침</a>
+		</div>
+		<div>
+			<a href="#">약관</a>
+		</div>
+		<div>
+			<a href="#">디렉터리</a>
+		</div>
+		<div>
+			<a href="#">프로필</a>
+		</div>
+		<div>
+			<a href="#">해시태그</a>
+		</div>
+
+		<div>
+			<a href="#">언어</a>
+		</div>
+		<div>
+			<p class="copyright">©️2021 INSTARGRAM</p>
+		</div>
+	</footer>
 <script type="text/javascript">
 <!-- 
 $(function() {

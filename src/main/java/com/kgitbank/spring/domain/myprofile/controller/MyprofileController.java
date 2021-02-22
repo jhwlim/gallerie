@@ -70,6 +70,12 @@ public class MyprofileController {
 		return "redirect:/myprofile/changepw";
 	}
 	
+	// 로그인활동 페이지
+	@GetMapping(value = "/login_activity")
+	public String login_activity() {
+		return "myprofile/login_activity";
+	}
+	
 	
 	
 	
