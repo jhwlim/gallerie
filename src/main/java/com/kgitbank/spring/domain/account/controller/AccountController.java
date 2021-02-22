@@ -42,9 +42,19 @@ public class AccountController {
 	@Autowired
     private JavaMailSender mailSender;
 	
+	@GetMapping(value = "/login")
+	public String login() {
+		return "main/login";
+	}
+	
 	@GetMapping(value = "/signup")
 	public String join() {
 		return "account/signUp";
+	}
+	
+	@GetMapping(value = "/findid")
+	public String findId() {
+		return "account/findId";
 	}
 	
 	//비밀번호 찾기 아이디 입력
@@ -78,7 +88,14 @@ public class AccountController {
 		return "main/login";
 	}
 	
-	
+	@PostMapping(value = "/viewidlist")
+	public String viewIdList(String email, Model model, MemberVO mem) throws Exception{
+		
+		model.addAttribute("member", service.viewIdList(email));
+		
+		return "account/viewIdList";
+	}
+
 	
 	@PostMapping(value = "/success")
 	public String signUp(MemberVO mem) throws Exception {
@@ -112,6 +129,28 @@ public class AccountController {
 	
 	}// memberIdChkPOST() 종료
 	
+	// 이메일 중복 검사
+		@RequestMapping(value = "/memberEmailChk", method = RequestMethod.POST)
+		@ResponseBody
+		public String memberEmailChkPOST(String email) throws Exception{
+			
+		
+			logger.info("memberEmailChk() 진입");
+			int result = service.emailCheck(email);
+			
+			
+			logger.info("결과값 = " + result);
+			if(result != 0) {
+				
+				return "fail"; // 중복 이메일이 존재 
+				
+			} else {
+				
+				return "success"; // 중복 이메일 x 
+			}
+		
+		}// memberEmailChkPOST() 종료
+	
 	/* 이메일 인증 */
     @RequestMapping(value="/mailCheck", method = RequestMethod.GET)
     @ResponseBody
@@ -127,7 +166,7 @@ public class AccountController {
         logger.info("인증번호 " + checkNum);
 
         /* 이메일 보내기 */
-        String setFrom = "yourEmail@naver.com";
+        String setFrom = "youremail@naver.com";
         String toMail = email;
         String title = "회원가입 인증 이메일 입니다.";
         String content = 
@@ -172,7 +211,7 @@ public class AccountController {
         logger.info("인증번호 " + checkNum);
 
         /* 이메일 보내기 */
-        String setFrom = "qswaz98@naver.com";
+        String setFrom = "youremail@naver.com";
         String toMail = email;
         String title = "비밀번호 재설정 인증 이메일 입니다.";
         String content = 

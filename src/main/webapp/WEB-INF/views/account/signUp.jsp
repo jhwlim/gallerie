@@ -67,6 +67,8 @@
 					<div class="mail-input-box">
 						<input class="email" name="email">
 					</div>
+					<span class="email-input-re-1">사용 가능한 이메일입니다.</span>
+					<span class="email-input-re-2">이 이메일은 이미 존재합니다.</span>
 					<span class="final-mail-ck">이메일을 입력해주세요.</span>
 					<span class="mail-input-box-warn"></span>
 					<div class="mail-check-wrap">
@@ -106,6 +108,7 @@
 	var nameCheck = false;            // 이름
 	var phoneCheck = false;			// 전화번호 확인
 	var mailCheck = false;            // 이메일
+	var mailckCheck = false;		 // 이메일 중복 검사
 	var mailnumCheck = false;        // 이메일 인증번호 확인
 	var addressCheck = false         // 주소
 	
@@ -178,7 +181,7 @@
 	         }
 	         
 	         /* 최종 유효성 검사 */
-	         if(idCheck&&idckCheck&&pwCheck&&pwckCheck&&pwckcorCheck&&nameCheck&&phoneCheck&&mailCheck&&mailnumCheck ){
+	         if(idCheck&&idckCheck&&pwCheck&&pwckCheck&&pwckcorCheck&&nameCheck&&phoneCheck&&mailCheck&mailckCheck&&mailnumCheck ){
 	        	 $("#joinForm").attr("action", "./success");
 		 	     $("#joinForm").submit(); 
 	         } 
@@ -208,6 +211,35 @@
 						$('.id-input-re-2').css("display","inline-block");
 						$('.id-input-re-1').css("display", "none");
 						idckCheck = false;
+					}
+
+
+					
+				}// success 종료
+				
+			}); // ajax 종료
+
+		});// function 종료
+		
+		$('.email').on("propertychange change keyup paste input", function() {
+
+			var mail = $('.email').val(); // .id에 입력되는 값 
+			var data = {email : mail} 	 // '컨트롤에 넘길 데이터 이름' : '데이터(.email에 입력되는 값) var mail에 들어가있는 값'
+			
+			$.ajax({ 
+				type : "post",
+				url : "./memberEmailChk",
+				data : data,
+				success : function(result){
+				
+					if(result != 'fail'){
+						$('.email-input-re-1').css("display","inline-block");
+						$('.email-input-re-2').css("display", "none"); 
+						mailckCheck = true;
+					} else {
+						$('.email-input-re-2').css("display","inline-block");
+						$('.email-input-re-1').css("display", "none");
+						mailckCheck = false;
 					}
 
 
