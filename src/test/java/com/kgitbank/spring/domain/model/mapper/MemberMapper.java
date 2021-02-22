@@ -1,4 +1,4 @@
-package com.kgitbank.spring.domain.test.mapper;
+package com.kgitbank.spring.domain.model.mapper;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import com.kgitbank.spring.domain.model.MemberVO;
 
 public interface MemberMapper {
 	
-//	@Select("SELECT * FROM members")
 	public List<MemberVO> selectAll();
+	
+	public void insertMember(MemberVO member);
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.kgitbank.spring.domain.model.mapper.MemberMapper">
+
+	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.MemberVO">
+		SELECT * FROM members
+	</select>
+
+	<insert id="insertMember">
+		INSERT INTO
+			members(seq_id, id, pw, name, phone, email, profile, reg_date)
+		VALUES (
+			member_seq.nextval, #{id}, #{pw}, #{name}, #{phone}, #{email}, #{profile}, sysdate
+		)
+	</insert>
+
+</mapper>
