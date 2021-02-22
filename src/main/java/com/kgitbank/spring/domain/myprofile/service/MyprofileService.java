@@ -7,7 +7,7 @@ public interface MyprofileService {
 
 	public int updateMyprofile(MemberVO vo);
 	
-	public int currentpw(MemberVO vo);
+	public String currentpw(MemberVO vo);
 
 	public int updatepw(MemberVO vo);
 	

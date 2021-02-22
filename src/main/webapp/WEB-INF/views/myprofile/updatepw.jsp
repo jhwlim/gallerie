@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -136,7 +137,7 @@ input[type=submit] {
 		</div>
 		
 		<div class="info">
-	<form action="<c:url value='/myprofile/updatepw' />" method="POST">
+	<form action="<c:url value='/myprofile/updatepw' />" method="POST" >
 	
 
 			<div class="pwd">
@@ -144,7 +145,8 @@ input[type=submit] {
 			</div>
 			<div class="pw">
 				<input id="pw" type="password" size="60"
-				name="pw" placeholder="현재 비밀번호 입력" value="${myprofile.pw}"></input>
+				name="pw" placeholder="현재 비밀번호 입력"></input>
+				<span class="error_next_box" id="pwMsg" style="margin-top: 15px;"></span>
 			</div>
 			
 			<div class="ok_">
@@ -153,6 +155,57 @@ input[type=submit] {
 	</form>
 	</div>
 	</main>
+	
+<script type="text/javascript">
+$(function() {
+	let chk1 = false;
+	$('#pw').on('keyup', function() {
+		if($("#pw").val() === ""){
+			$('#pwMsg').html('비밀번호를 입력해주세요.');
+			chk1 = false;
+		} else {
+			const pw = $('#pw').val();
+			$.ajax({
+				type: "POST",
+				url: "./updatepw",
+				headers: {
+					"Content-Type": "application/json",
+	                "X-HTTP-Method-Override": "POST"
+				},
+				data: pw,
+				datatype: "json",
+				success: function(result) {
+					console.log(result);
+					if(result === "ok") {
+						$('#pwMsg').html('');
+						chk1 = true;
+					} else {
+						$('#pwMsg').html('');
+						alert('비밀번호가 일치하지않습니다.');
+						chk1 = false;
+					}
+				},
+				error : function(error) {
+	                console.log("error : " + error);
+	            }
+			});
+		}
+	});
+</script>	
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

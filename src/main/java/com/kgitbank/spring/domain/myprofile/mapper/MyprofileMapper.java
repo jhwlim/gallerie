@@ -8,7 +8,7 @@ public interface MyprofileMapper {
 	public int updateMyprofile(MemberVO vo);
 	
 	// SELECT pw FROM members WHERE id = #{id}
-	public int currentpw(MemberVO vo);
+	public String currentpw(MemberVO vo);
 	
 	// UPDATE members SET pw = #{pw} WHERE id = #{id}
 	public int updatepw(MemberVO vo);

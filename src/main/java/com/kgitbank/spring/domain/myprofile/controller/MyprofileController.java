@@ -1,14 +1,18 @@
 package com.kgitbank.spring.domain.myprofile.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.mail.Session;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.service.MyprofileService;
+import com.kgitbank.spring.global.util.SecurityPwEncoder;
 
 import lombok.extern.log4j.Log4j;
 
@@ -19,6 +23,8 @@ import lombok.extern.log4j.Log4j;
 public class MyprofileController {
 	@Autowired
 	private MyprofileService service;
+	@Autowired
+	SecurityPwEncoder encoder;
 	
 	// 프로필 메인 페이지
 	@GetMapping(value = "/myprofilemain")
@@ -60,6 +66,7 @@ public class MyprofileController {
 	@PostMapping(value = "/updatepw")
 	public String currentpw(MemberVO vo) {
 		vo.setId("abc5678");
+		log.info(vo);
 //		String result = "3333"; // 페이지넘어가나 확인하려고 지정해둠
 //		
 //		if (result.equals(service.currentpw(vo))) {
@@ -67,8 +74,17 @@ public class MyprofileController {
 //		} else {
 //			return "redirect:/myprofile/updatepw";
 //		}
-		int result = service.currentpw(vo);
-		if (result > 0) {
+		
+//		int result = service.currentpw(vo);
+//		if (result > 0) {
+//			return "myprofile/changepw";
+//		} else {
+//			return "redirect:/myprofile/updatepw";
+//		}
+		
+		String result = null;
+		
+		if (encoder.matches(vo.getPw(), service.currentpw(vo))) {
 			return "myprofile/changepw";
 		} else {
 			return "redirect:/myprofile/updatepw";

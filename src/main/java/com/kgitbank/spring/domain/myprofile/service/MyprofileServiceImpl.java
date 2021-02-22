@@ -3,7 +3,6 @@ package com.kgitbank.spring.domain.myprofile.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kgitbank.spring.domain.account.mapper.AccountMapper;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.mapper.MyprofileMapper;
 import com.kgitbank.spring.global.util.SecurityPwEncoder;
@@ -26,12 +25,17 @@ public class MyprofileServiceImpl implements MyprofileService {
 	}
 	
 	// 현재 비밀번호 비교하려고 가져오는 쿼리문
-	public int currentpw(MemberVO vo) {
+	public String currentpw(MemberVO vo) {
 		return mapper.currentpw(vo);
 	}
 
 	// 비밀번호 수정
 	public int updatepw(MemberVO vo) {
+		
+		String rawPassword = vo.getPw();
+		String encPassword = encoder.encode(rawPassword);
+		vo.setPw(encPassword);
+		
 		return mapper.updatepw(vo);
 	}
 	
