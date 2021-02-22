@@ -1,4 +1,4 @@
-package com.kgitbank.spring.model;
+package com.kgitbank.spring.domain.account.dto;
 
 import java.sql.Date;
 
