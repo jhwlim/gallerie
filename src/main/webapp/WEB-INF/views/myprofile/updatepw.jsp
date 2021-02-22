@@ -157,6 +157,7 @@ input[type=submit] {
 	</main>
 	
 <script type="text/javascript">
+<!-- 
 $(function() {
 	let chk1 = false;
 	$('#pw').on('keyup', function() {
@@ -191,6 +192,7 @@ $(function() {
 			});
 		}
 	});
+-->
 </script>	
 
 </body>
