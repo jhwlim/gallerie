@@ -19,10 +19,7 @@ import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.model.Member;
 import com.kgitbank.spring.model.Sessionkey;
 
-/*
- * 로그인 화면
- * 메인 화면(게시물 조회)
- */
+
 @Controller
 public class MainController {
 	
@@ -50,7 +47,7 @@ public class MainController {
 		}
 		return "main/login";
 	}
-	
+
 	@PostMapping(value = "/")
 	public String mainsignin(Member member, HttpSession session, Model model, HttpServletRequest req, HttpServletResponse rep) {
 		
@@ -101,5 +98,5 @@ public class MainController {
 		}
 		return "redirect:/";
 	}
-	
+
 }

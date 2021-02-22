@@ -1,0 +1,25 @@
+<%-- include 하는 jsp파일의 최상위에서 include 필요 : /WEB-INF/include/jstl.jspf --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<header id="header" class="header">
+    <a href="<c:url value='/main'/>" class="header__item header__logo">Instagram</a>
+    <div class="header__item search">
+        <input type="text" placeholder="검색" class="search__box"></input>
+        <span class="material-icons search-box__icon search-box__icon--search">search</span>
+        <span class="material-icons search-box__icon search-box__icon--clear">cancel</span>
+    </div>
+    <ul class="header__item navigator">
+        <li class="navigator--item"><a href="<c:url value='/main'/>" class="material-icons navigator--icon">home</a></li>
+        <li class="navigator--item"><a href="#" class="material-icons navigator--icon">add</a></li>
+        <li class="navigator--item"><a href="#" class="material-icons navigator--icon">send</a></li>    
+        <li class="navigator--item"><a href="#" class="material-icons navigator--icon">notifications</a></li>
+        <li class="navigator--item dropdown">
+            <span class="material-icons navigator--icon">account_circle</span>
+            <div class="dropdown--content">
+                <a href="<c:url value='/myprofile'/>" class="dropdown--item">프로필</a>
+                <a href="<c:url value='/myprofile/setting'/>" class="dropdown--item">설정</a>
+                <a href="<c:url value='/logout'/>" class="dropdown--item dropdown--item__topborder">로그아웃</a>
+            </div>
+        </li>
+    </ul>
+</header>
