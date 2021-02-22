@@ -40,7 +40,7 @@ public class AccountController {
 
 	@GetMapping(value = "/login")
 	public String login() {
-		return "main/login";
+		return "account/login";
 	}
 
 	@GetMapping(value = "/signup")
@@ -81,7 +81,7 @@ public class AccountController {
 
 		int result = service.changedPw(mem);
 
-		return "main/login";
+		return "account/login";
 	}
 
 	@PostMapping(value = "/viewidlist")
@@ -155,7 +155,7 @@ public class AccountController {
 		log.info("인증번호 " + checkNum);
 
 		/* 이메일 보내기 */
-		String setFrom = "youremail@naver.com";
+		String setFrom = "qswaz98@naver.com";
 		String toMail = email;
 		String title = "회원가입 인증 이메일 입니다.";
 		String content = 
@@ -202,7 +202,7 @@ public class AccountController {
 		log.info("인증번호 " + checkNum);
 
 		/* 이메일 보내기 */
-		String setFrom = "youremail@naver.com";
+		String setFrom = "qswaz98@naver.com";
 		String toMail = email;
 		String title = "비밀번호 재설정 인증 이메일 입니다.";
 		String content = 
