@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ include file="/WEB-INF/include/jstl.jspf" %>
->>>>>>> refs/heads/develop
+
 <html>
 <head>
 <title>Home</title>
@@ -13,11 +11,10 @@
 <%@ include file="/WEB-INF/include/header.jspf" %>
 </head>
 <body>
-<<<<<<< HEAD
-<h1>
-	Hello world! <%=session.getAttribute("user") %>
-</h1>
 
+<h1>
+	Hello world!
+</h1>
 
 <div class="wrapper">
     <div class="container">
@@ -26,10 +23,6 @@
     </div>    
 </div>
 
-
-<form action="/spring/logout" method="post">
-    <button class="w-100 btn btn-lg btn-primary" type="submit">로그아웃</button>
- </form>
 
 </body>
 </html>
