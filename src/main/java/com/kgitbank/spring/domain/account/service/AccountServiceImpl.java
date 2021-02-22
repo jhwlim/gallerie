@@ -10,7 +10,7 @@ import com.kgitbank.spring.model.Sessionkey;
 
 
 @Service
-public class AccountServiceImpl implements accountService {
+public class AccountServiceImpl implements AccountService {
 	
 	@Autowired
 	private AccountMapper mapper;

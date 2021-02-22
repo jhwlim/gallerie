@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
-import com.kgitbank.spring.domain.account.service.accountService;
+import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.model.Member;
 import com.kgitbank.spring.model.Sessionkey;
 
@@ -27,7 +27,7 @@ import com.kgitbank.spring.model.Sessionkey;
 public class MainController {
 	
 	@Autowired
-	accountService service;
+	AccountService service;
 	
 	@GetMapping(value = "/")
 	public String main(HttpServletRequest req, HttpServletResponse rep, HttpSession session) {

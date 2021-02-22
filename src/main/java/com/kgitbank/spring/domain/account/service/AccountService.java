@@ -5,7 +5,7 @@ import com.kgitbank.spring.model.Member;
 import com.kgitbank.spring.model.Sessionkey;
 
 
-public interface accountService {
+public interface AccountService {
 	
 	public Member getLogin (Member member);
 	
