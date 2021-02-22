@@ -4,12 +4,10 @@ package com.kgitbank.spring.domain.account.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kgitbank.spring.domain.account.dto.Sessionkey;
 import com.kgitbank.spring.domain.account.mapper.AccountMapper;
-import com.kgitbank.spring.model.Member;
-import com.kgitbank.spring.model.Sessionkey;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.global.util.SecurityPwEncoder;
-import lombok.AllArgsConstructor;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -24,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
 	private SecurityPwEncoder encoder;
 
 	@Override
-	public Member getLogin(Member member) {
+	public MemberVO getLogin(MemberVO member) {
 		
 		return mapper.getLogin(member);
 	}
@@ -36,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public Member checkUserWithSessionkey(String sessionId) {
+	public MemberVO checkUserWithSessionkey(String sessionId) {
 		return mapper.checkUserWithSessionkey(sessionId);
 	}
 	

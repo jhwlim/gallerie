@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.kgitbank.spring.domain.model.mapper.FileMapper">
+
+	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.FileVO">
+		SELECT * FROM files
+	</select>
+	
+	<insert id="saveFile">
+		INSERT INTO
+			files
+		VALUES
+			(#{articleId}, #{imgPath})
+	</insert>
+	
+</mapper>

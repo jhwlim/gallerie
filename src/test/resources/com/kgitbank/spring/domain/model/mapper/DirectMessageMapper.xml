@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.kgitbank.spring.domain.model.mapper.DirectMessageMapper">
+
+	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.DirectMessageVO">
+		SELECT * FROM direct_messages
+	</select>
+	
+	<insert id="createNewMessage">
+		INSERT INTO
+			direct_messages
+		VALUES
+			(direct_message_seq.nextval, #{senderSeqId}, #{receiverSeqId}, #{content}, sysdate)
+	</insert>
+	
+</mapper>

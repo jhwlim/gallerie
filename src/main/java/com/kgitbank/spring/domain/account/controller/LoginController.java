@@ -1,4 +1,4 @@
-package com.kgitbank.spring.domain.main.controller;
+package com.kgitbank.spring.domain.account.controller;
 
 
 import java.sql.Date;
@@ -14,22 +14,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
+import com.kgitbank.spring.domain.account.dto.Sessionkey;
 import com.kgitbank.spring.domain.account.service.AccountService;
-import com.kgitbank.spring.model.Member;
-import com.kgitbank.spring.model.Sessionkey;
+import com.kgitbank.spring.domain.model.MemberVO;
+
+import lombok.extern.log4j.Log4j;
 
 
 @Controller
-public class MainController {
+@Log4j
+public class LoginController {
 	
 	@Autowired
 	AccountService service;
-	
+
 	@GetMapping(value = "/")
 	public String main(HttpServletRequest req, HttpServletResponse rep, HttpSession session) {
 		
-		Member loginMember = null;
+		MemberVO loginMember = null;
 		
 		Cookie[] cookies = req.getCookies();
 		String sessionId;
@@ -45,17 +47,18 @@ public class MainController {
 				}
 			}
 		}
-		return "main/login";
+		return "account/login";
 	}
 
 	@PostMapping(value = "/")
-	public String mainsignin(Member member, HttpSession session, Model model, HttpServletRequest req, HttpServletResponse rep) {
+	public String mainsignin(MemberVO member, HttpSession session, Model model, HttpServletRequest req, HttpServletResponse rep) {
 		
-		Member loginMember = null;
+		MemberVO loginMember = null;
 
 		if(session.getAttribute("login") != null)session.removeAttribute("user");
 		
 		loginMember = service.getLogin(member);
+		log.info(loginMember);
 		
 		if(loginMember != null) {
 			session.setAttribute("user", loginMember);
@@ -75,7 +78,7 @@ public class MainController {
 				System.out.println(loginMember);
 				service.keepLogin(key);
 			}
-			return "/main/home";
+			return "main/home";
 		}else {
 			System.out.println("로그인실패");
 		}

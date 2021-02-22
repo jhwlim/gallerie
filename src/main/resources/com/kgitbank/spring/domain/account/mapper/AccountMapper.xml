@@ -3,22 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.account.mapper.AccountMapper">
-	<select id="getLogin" resultType="com.kgitbank.spring.model.Member">
+	<select id="getLogin" resultType="com.kgitbank.spring.domain.model.MemberVO">
 		<![CDATA[
 			SELECT
 	    		*
 			FROM 
-				member 
+				members
 			WHERE email = #{email} AND pw = #{pw}
 		]]>		
 	</select>
 	
 	<update id="keepLogin">
-		update member set sessionkey = #{sessionId}, sessionlimit = #{next} where email=#{email}
+		update members set sessionkey = #{sessionId}, sessionlimit = #{next} where email=#{email}
 	</update>
 	
-	<select id="checkUserWithSessionkey" resultType="com.kgitbank.spring.model.Member">
-		select * from member where sessionkey = #{sessionId} and sessionLimit > sysdate
+	<select id="checkUserWithSessionkey" resultType="com.kgitbank.spring.domain.model.MemberVO">
+		select * from members where sessionkey = #{sessionId} and sessionLimit > sysdate
 	</select>
 
 	<!-- 회원가입 -->
@@ -26,13 +26,17 @@
 	
 		INSERT INTO members VALUES(
 		
+		member_seq.nextval,
 		#{id},
 		#{pw},
 		#{name},
 		#{phone},
 		#{email},
 		#{profile},
-		sysdate
+		sysdate,
+		null,
+		null,
+		null
 		
 		)
 		
