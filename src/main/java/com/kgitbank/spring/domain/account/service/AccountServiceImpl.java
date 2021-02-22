@@ -1,24 +1,44 @@
 package com.kgitbank.spring.domain.account.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kgitbank.spring.domain.account.mapper.AccountMapper;
-import com.kgitbank.spring.domain.account.model.Member;
+import com.kgitbank.spring.model.Member;
+import com.kgitbank.spring.model.Sessionkey;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.global.util.SecurityPwEncoder;
-
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
-
+	
+	@Autowired
+	private AccountMapper mapper;
+	
 	@Autowired
 	private AccountMapper accMapper;
 	
 	@Autowired
 	private SecurityPwEncoder encoder;
+
+	@Override
+	public Member getLogin(Member member) {
+		
+		return mapper.getLogin(member);
+	}
+
+	@Override
+	public void keepLogin(Sessionkey key) {
+		mapper.keepLogin(key);
+		
+	}
+
+	@Override
+	public Member checkUserWithSessionkey(String sessionId) {
+		return mapper.checkUserWithSessionkey(sessionId);
+	}
 	
 	@Override
 	public int signUp(MemberVO mem) throws Exception{
@@ -33,6 +53,18 @@ public class AccountServiceImpl implements AccountService {
 	public int idCheck(String id) throws Exception {
 	
 		return accMapper.idCheck(id);
+	}
+	
+	@Override
+	public int emailCheck(String email) throws Exception {
+		
+		return accMapper.emailCheck(email);
+	}
+	
+	@Override
+	public MemberVO viewIdList(String email) throws Exception {
+		
+		return accMapper.viewIdList(email);
 	}
 	
 	@Override
@@ -55,4 +87,6 @@ public class AccountServiceImpl implements AccountService {
 		mem.setPw(encPassword);
 		return accMapper.changedPw(mem);
 	}
+
+
 }
