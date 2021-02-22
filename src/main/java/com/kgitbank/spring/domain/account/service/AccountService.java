@@ -1,10 +1,18 @@
 package com.kgitbank.spring.domain.account.service;
 
-import com.kgitbank.spring.domain.account.model.Member;
+
+import com.kgitbank.spring.model.Member;
+import com.kgitbank.spring.model.Sessionkey;
 import com.kgitbank.spring.domain.model.MemberVO;
 
 public interface AccountService {
-
+	
+	public Member getLogin (Member member);
+	
+	public void keepLogin(Sessionkey key);
+	
+	public Member checkUserWithSessionkey(String sessionId);
+	
 	// 회원가입
 	public int signUp(MemberVO mem) throws Exception;
 	
@@ -19,4 +27,5 @@ public interface AccountService {
 	
 	// 비밀번호 변경 완료
 	public int changedPw(MemberVO mem) throws Exception;
+
 }
