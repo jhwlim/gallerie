@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.kgitbank.spring.domain.account.dto.Sessionkey;
 import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.domain.model.MemberVO;
+import com.kgitbank.spring.global.util.SecurityPwEncoder;
 
 import lombok.extern.log4j.Log4j;
 
@@ -27,6 +28,9 @@ public class LoginController {
 	
 	@Autowired
 	AccountService service;
+	
+	@Autowired
+	SecurityPwEncoder encoder;
 
 	@GetMapping(value = "/")
 	public String main(HttpServletRequest req, HttpServletResponse rep, HttpSession session) {
@@ -35,29 +39,39 @@ public class LoginController {
 		
 		Cookie[] cookies = req.getCookies();
 		String sessionId;
-		for(Cookie cookie : cookies) {
-			if(cookie.getName().equals("loginCookie") && cookie.getValue() != null) {
-				System.out.println("쿠키발견 ! : " + cookie.getName() + " = "+ cookie.getValue());
-				sessionId=cookie.getValue();
-				loginMember = service.checkUserWithSessionkey(sessionId);
-				System.out.println(loginMember);
-				if(loginMember != null) {
-					session.setAttribute("user", loginMember);
-					return "/main/home";
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("loginCookie") && cookie.getValue() != null) {
+					System.out.println("쿠키발견 ! : " + cookie.getName() + " = "+ cookie.getValue());
+					sessionId=cookie.getValue();
+					loginMember = service.checkUserWithSessionkey(sessionId);
+					System.out.println(loginMember);
+					if(loginMember != null) {
+						session.setAttribute("user", loginMember);
+						return "/main/home";
+					}
 				}
 			}
 		}
+		
 		return "account/login";
 	}
 
 	@PostMapping(value = "/")
 	public String mainsignin(MemberVO member, HttpSession session, Model model, HttpServletRequest req, HttpServletResponse rep) {
 		
+		
+		
 		MemberVO loginMember = null;
 
 		if(session.getAttribute("login") != null)session.removeAttribute("user");
 		
 		loginMember = service.getLogin(member);
+		if(!(encoder.matches(member.getPw(), loginMember.getPw()))) {
+			loginMember = null;
+		}
+		
+		
 		log.info(loginMember);
 		
 		if(loginMember != null) {

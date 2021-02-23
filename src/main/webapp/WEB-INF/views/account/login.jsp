@@ -43,7 +43,7 @@
   <form method="post" action="/spring/">
     <h1 class="h3 mb-3 fw-normal">로그인</h1>
     <label for="inputEmail" class="visually-hidden">Email address</label>
-    <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+    <input type="text" id="inputEmail" name="id" class="form-control" placeholder="id" required autofocus>
     <label for="inputPassword" class="visually-hidden">Password</label>
     <input type="password" id="inputPassword" name="pw" class="form-control" placeholder="Password" required>
     <div class="checkbox mb-3">

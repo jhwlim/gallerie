@@ -9,9 +9,10 @@
 	    		*
 			FROM 
 				members
-			WHERE email = #{email} AND pw = #{pw}
+			WHERE id = #{id}
 		]]>		
 	</select>
+	
 	
 	<update id="keepLogin">
 		update members set sessionkey = #{sessionId}, sessionlimit = #{next} where email=#{email}

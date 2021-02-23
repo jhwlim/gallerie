@@ -7,6 +7,7 @@ public interface AccountMapper {
 	
 	public MemberVO getLogin(MemberVO member);
 	
+	
 	public void keepLogin(Sessionkey key);
 	
 	public MemberVO checkUserWithSessionkey(String sessionId);
