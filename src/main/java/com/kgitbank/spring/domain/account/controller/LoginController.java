@@ -67,9 +67,12 @@ public class LoginController {
 		if(session.getAttribute("login") != null)session.removeAttribute("user");
 		
 		loginMember = service.getLogin(member);
-		if(!(encoder.matches(member.getPw(), loginMember.getPw()))) {
-			loginMember = null;
+		if(loginMember != null) {
+			if(!(encoder.matches(member.getPw(), loginMember.getPw()))) {
+				loginMember = null;
+			}
 		}
+		
 		
 		
 		log.info(loginMember);
