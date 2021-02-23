@@ -141,6 +141,7 @@ input[type=text]:focus {
 }
 
 </style>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 <body>
 	<main>
@@ -152,20 +153,34 @@ input[type=text]:focus {
 			<a href="/spring/myprofile/updatepw">비밀번호 변경</a>
 		</div>
 		<div class="menu3">
-			<a href="/spring/myprofile/login_activity">로그인 활동</a>
+			<a href="/spring/myprofile/loginActivity">로그인 활동</a>
 		</div>
 	</div>
 	<div class="main2">
+	<form action="<c:url value='/myprofile/loginActivity' />" method="POST">
 		<div class="login_form">
 			<h2 class="">로그인 활동</h2>
 		</div>
 		<div class="login_form2">
-			<h4 class="">로그인한 위치</h4>
+			<h4 id="login_place">로그인한 위치</h4>
+			<br>
+			<div id="map_canvas" style="width:500px;height:300px;"></div>
+			<br>
+				<div>
+					<div><i class="fas fa-map-marker"></i></div>
+						<div>
+							<div id="location" name="location" font-size=14px>위치</div>
+							<div id="login_date" name="login_date" font-size=14px>날짜</div>
+						</div>
+				</div>	
+				
+				<c:forEach items="${loginActivity }" var="login" >
+			        ${login.location }
+			        ${login.loginDate } <br>
+			    </c:forEach>
+			   
 		</div>
-		<div>
-			<div id="map" style="width:800px;height:400px;"></div>
-		</div>
-		<div></div>
+	</form>
 	</div>
 	</main>
 	<footer>
@@ -208,9 +223,34 @@ input[type=text]:focus {
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
 	</footer>
-	
-	<script type="text/javascript">
-	 
-	</script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyC4rw11RhDxupVZthhGLLJnBLsOgHGyKhks"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		if(!navigator.geolocation) {
+			document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
+			return;
+		}
+		navigator.geolocation.getCurrentPosition(function(position){
+			var lat = position.coords.latitude;
+			var lon = position.coords.longitude;
+			
+			//마장동주소
+			//var lat = 37.567986415251;
+			//var lon = 127.03721964556;
+			
+			console.log('위도 : ' + lat);
+			console.log('경도 : ' + lon);
+			
+			var initLoc = new google.maps.LatLng(lat,lon);
+			
+			var map = new google.maps.Map(document.getElementById('map_canvas'),{
+				zoom:10,
+	            mapTypeId : google.maps.MapTypeId.ROADMAP
+			});
+	         map.setCenter(initLoc);
+	         var marker = new google.maps.Marker({position:initLoc,map:map,title:'현재위치'})
+		});
+	};
+</script>
 </body>
 </html>

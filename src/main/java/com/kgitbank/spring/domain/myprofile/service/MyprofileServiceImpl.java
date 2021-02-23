@@ -1,8 +1,11 @@
 package com.kgitbank.spring.domain.myprofile.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kgitbank.spring.domain.model.LoginVO;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.mapper.MyprofileMapper;
 import com.kgitbank.spring.global.util.SecurityPwEncoder;
@@ -38,5 +41,11 @@ public class MyprofileServiceImpl implements MyprofileService {
 		
 		return mapper.updatepw(vo);
 	}
+	
+	// 위치 정보 가져오는 쿼리문
+	public List<LoginVO> getLoginActivityList(MemberVO mv, LoginVO lv) {
+		return mapper.getLoginActivityList(mv, lv);
+	}
+	
 	
 }
