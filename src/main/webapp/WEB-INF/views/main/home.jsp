@@ -8,9 +8,11 @@
 
 <%@ include file="/WEB-INF/include/commonCss.jspf" %>
 <%@ include file="/WEB-INF/include/headerCss.jspf" %>
-<%@ include file="/WEB-INF/include/header.jspf" %>
 </head>
 <body>
+
+
+<%@ include file="/WEB-INF/include/header.jspf" %>
 
 <h1>
 	Hello world!
@@ -23,6 +25,9 @@
     </div>    
 </div>
 
+<form action="/spring/logout" method="post">
+    <button class="w-100 btn btn-lg btn-primary" type="submit">로그아웃</button>
+</form>
 
 </body>
 </html>

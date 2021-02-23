@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.kgitbank.spring.domain.model.mapper.ArticleLikeMapper">
+
+	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.ArticleLikeVO">
+		SELECT * FROM article_like
+	</select>
+	
+	<insert id="like">
+		INSERT INTO
+			article_like
+		VALUES
+			(#{articleId}, #{memberSeqId})
+	</insert>
+	
+</mapper>
