@@ -164,7 +164,7 @@ input[type=submit] {
 			<a href="/spring/myprofile/updatepw">비밀번호 변경</a>
 		</div>
 		<div class="menu3">
-			<a href="/spring/myprofile/login_activity">로그인 활동</a>
+			<a href="/spring/myprofile/loginActivity">로그인 활동</a>
 		</div>
 	</div> 
 	<div class="main2">

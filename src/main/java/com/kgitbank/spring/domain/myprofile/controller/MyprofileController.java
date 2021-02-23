@@ -1,11 +1,15 @@
 package com.kgitbank.spring.domain.myprofile.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kgitbank.spring.domain.model.LoginVO;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.service.MyprofileService;
 import com.kgitbank.spring.global.util.SecurityPwEncoder;
@@ -71,22 +75,42 @@ public class MyprofileController {
 	}
 	
 	// 로그인활동 페이지
-	@GetMapping(value = "/login_activity")
-	public String login_activity() {
-		return "myprofile/login_activity";
+	@GetMapping(value = "/loginActivity")
+	public String loginActivity(Model model) {
+		MemberVO mv = new MemberVO();
+		mv.setSeqId(1);
+		LoginVO lv = new LoginVO();
+		lv.setMemberSeqId(1);
+		
+		List<LoginVO> list = service.getLoginActivityList(mv, lv);
+		log.info(list);
+//		return service.getLoginActivityList();
+		model.addAttribute("loginActivity", list);
+		return "myprofile/loginActivity";
 	}
 	
+	/*
+	@PostMapping(value = "/loginActivity")
+	public void getLoginActivityList(Model model) {
+		MemberVO mv = new MemberVO();
+		mv.setSeqId(1);
+		LoginVO lv = new LoginVO();
+		lv.setMemberSeqId(1);
+		
+		List<LoginVO> list = service.getLoginActivityList(mv, lv);
+		log.info(list);
+//		return service.getLoginActivityList();
+		model.addAttribute("loginActivity", list);
+	}
+	*/
 	
 	
 	
-	
-	
+// ----------------------------------------------------------------------------------
+	// 기능 확인용
+	@GetMapping(value = "/test")
+	public String test() {	
+		return "myprofile/test";
+	}
 	
 }
-
-
-
-
-
-
-
