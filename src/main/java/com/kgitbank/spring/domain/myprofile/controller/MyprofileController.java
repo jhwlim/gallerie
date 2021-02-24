@@ -54,9 +54,12 @@ public class MyprofileController {
 	@PostMapping(value = "/updatepw")
 	public String currentpw(MemberVO vo) {
 		vo.setId("abc5678");
+		// 1234로 설정했었음
 		if (encoder.matches(vo.getPw(), service.currentpw(vo))) {
+			log.info("일치");
 			return "myprofile/changepw";
 		} else {
+			log.info("불일치");
 			return "redirect:/myprofile/updatepw";
 		}
 	}
