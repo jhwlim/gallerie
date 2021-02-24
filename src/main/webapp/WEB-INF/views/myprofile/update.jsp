@@ -173,8 +173,8 @@ input[type=submit] {
 			<a href="/spring/myprofile/loginActivity">로그인 활동</a>
 		</div>
 	</div>
-	<form action="<c:url value='/myprofile/update' />" method="POST" >
 	<div class="main2">
+	<form action="<c:url value='/myprofile/update' />" method="POST" onsubmit="return validateUpdate()">
 		<div class="liner">
 		<!--  
 			<div class="profile">
@@ -260,5 +260,19 @@ input[type=submit] {
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
 	</footer>
+	<script>
+		function validateUpdate() {
+			
+			var name = document.querySelector("#name");
+			var email = document.querySelector("#email");
+			var phone = document.querySelector("#phone");
+			
+			if (name.value === "" || email.value === "" || phone.value === "") {
+				alert('내용을 입력해주세요.');
+				return false;
+			}
+			
+		}
+	</script>
 </body>
 </html>
