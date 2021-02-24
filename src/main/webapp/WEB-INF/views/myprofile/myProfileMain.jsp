@@ -100,7 +100,7 @@
 </div>
 
 <form method="POST" action="<c:url value='/myprofile/upload' />" enctype="multipart/form-data" id="uploadForm">
-	<input type="file" name="file" class="file-upload" id="ajax-file" />
+	<input type="file" accept="image/jpeg, image/png" name="file" class="file-upload" />
 	<input type="hidden" name="seqId" value="${member.seqId}" />
 </form>
 
@@ -127,11 +127,19 @@ $('#uploadForm').ajaxForm({
 		$status.html('uploading...');
 		$percent.html(percentComplete + '%');
 	},
-	success: function(result) {
-		console.log(result);
-		$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + result + "/");
+	success: function(result, status, xhr) {
+		// console.log("result=", result, ", status=", status, ", xhr=", xhr);
+		switch (status) {
+		case "nocontent" :
+			console.log("no content")
+			break;
+		case "success" :
+			$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + result + "/");
+			break;
+		}
+
 	},
-	error: function(xhr) {
+	error: function() {
 		console.log("upload Fail");
 	}
 	

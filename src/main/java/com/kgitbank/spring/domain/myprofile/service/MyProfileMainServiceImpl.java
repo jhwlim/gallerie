@@ -1,16 +1,21 @@
 package com.kgitbank.spring.domain.myprofile.service;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.mapper.MyProfileMainMapper;
-import com.kgitbank.spring.global.util.FileUtil;
+import com.kgitbank.spring.global.util.FileUtils;
 
 import lombok.extern.log4j.Log4j;
 
@@ -21,6 +26,9 @@ public class MyProfileMainServiceImpl implements MyProfileMainService {
 	@Resource(name="profileUploadPath")
 	private String uploadPath;
 	
+	@Resource(name="profileDefaultImgFileName")
+	private String defaultImgFile;
+	
 	@Autowired
 	MyProfileMainMapper mapper;
 
@@ -30,23 +38,12 @@ public class MyProfileMainServiceImpl implements MyProfileMainService {
 	}
 
 	@Override
-	public int updateProfileImgBySeqId(MemberVO member) {
-		
-		return mapper.updateProfileImgBySeqId(member);
-	}
-
-	@Override
-	public String selectProfileImgBySeqId(int seqId) {
-		return mapper.selectProfileImgBySeqId(seqId);
-	}
-
-	@Override
 	public String uploadProfileImg(MultipartFile file, int seqId) {
 		
 		// 파일에 대한 유효성 검사하기
 		log.info("contentType=" + file.getContentType());
-		log.info("isImageFile ? " + FileUtil.isImageFile(file));
-		if (!FileUtil.isImageFile(file)) {
+		log.info("isImageFile ? " + FileUtils.isImageFile(file));
+		if (!FileUtils.isImageFile(file)) {
 			return null;
 		}
 		
@@ -63,11 +60,38 @@ public class MyProfileMainServiceImpl implements MyProfileMainService {
 		
 		// 파일 업로드 및 DB에 정보 업데이트
 		MemberVO member = new MemberVO(seqId);
-		String savedFileName = FileUtil.uploadFile(file, uploadPath);
+		String savedFileName = FileUtils.uploadFile(file, uploadPath);
 		member.setImgPath(savedFileName);
 		mapper.updateProfileImgBySeqId(member);
 		
 		return savedFileName;
+	}
+
+	@Override
+	public byte[] getImage(String savedFileName) {
+		
+		byte[] imgBytes = null;
+		InputStream in = null;
+		
+		try {
+			in = new FileInputStream(uploadPath + savedFileName);
+		} catch (FileNotFoundException e) {
+			log.warn(e.getMessage());
+			savedFileName = defaultImgFile;
+			try {
+				in = new FileInputStream(uploadPath + savedFileName);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
+
+		try {
+			imgBytes = IOUtils.toByteArray(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return imgBytes;
 	}
 
 	
