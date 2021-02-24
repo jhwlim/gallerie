@@ -1,6 +1,7 @@
 package com.kgitbank.spring.domain.account.mapper;
 
 import com.kgitbank.spring.domain.account.dto.Sessionkey;
+import com.kgitbank.spring.domain.model.LoginVO;
 import com.kgitbank.spring.domain.model.MemberVO;
 
 public interface AccountMapper {
@@ -11,6 +12,8 @@ public interface AccountMapper {
 	public void keepLogin(Sessionkey key);
 	
 	public MemberVO checkUserWithSessionkey(String sessionId);
+	
+	public void loginHistory(LoginVO history);
 	
 	// 회원가입
 	public int signUp(MemberVO mem);

@@ -28,8 +28,12 @@
 
 
 <form action="/spring/logout" method="post">
-    <button class="w-100 btn btn-lg btn-primary" type="submit">로그아웃</button>
- </form>
+    <button type="submit">로그아웃</button>
+</form>
+<form action="/spring/sessiondel" method="post">
+    <button type="submit">세션삭제 후 리다이렉트</button>
+</form>
+
 
 </body>
 </html>
