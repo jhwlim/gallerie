@@ -174,7 +174,7 @@ input[type=submit] {
 				</div>
 				<div class="pwd2">
 					<input class="p1_t" id="pw" type="password" size="60"
-					name="oldPassword" placeholder="현재 비밀번호 입력"></input>
+					name="pw" placeholder="현재 비밀번호 입력"></input>
 					<span class="error_next_box" id="pwMsg" style="margin-top: 15px;"></span>
 				</div>
 				<div class="ok_">
