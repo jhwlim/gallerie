@@ -6,4 +6,8 @@ public interface MyProfileMainService {
 	
 	public MemberVO selectMemberById(String id);
 	
+	public int updateProfileImgBySeqId(MemberVO member);
+
+	public String selectProfileImgBySeqId(int seqId);
+
 }

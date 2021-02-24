@@ -16,6 +16,16 @@ public class MyProfileMainServiceImpl implements MyProfileMainService {
 	public MemberVO selectMemberById(String id) {
 		return mapper.selectMemberById(id);
 	}
+
+	@Override
+	public int updateProfileImgBySeqId(MemberVO member) {
+		return mapper.updateProfileImgBySeqId(member);
+	}
+
+	@Override
+	public String selectProfileImgBySeqId(int seqId) {
+		return mapper.selectProfileImgBySeqId(seqId);
+	}
 	
 	
 }

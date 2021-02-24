@@ -9,4 +9,15 @@
 		WHERE id = #{id}
 	</select>
 	
+	<update id="updateProfileImgBySeqId">
+		UPDATE members
+		SET img_path = #{imgPath}
+		WHERE seq_id = #{seqId}
+	</update>
+	
+	<select id="selectProfileImgBySeqId" resultType="String">
+		SELECT img_path FROM members
+		WHERE seq_id = #{seqId}
+	</select>
+	
 </mapper>
