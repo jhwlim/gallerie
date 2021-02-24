@@ -1,5 +1,7 @@
 package com.kgitbank.spring.domain.myprofile.controller;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class MyProfileMainController {
 	
+	@Resource(name="profileDefaultImgFileName")
+	private String defaultImgFile;
+	
 	@Autowired
 	MyProfileMainService service;
 	
@@ -25,6 +30,9 @@ public class MyProfileMainController {
 		log.info("URL : /myprofile/" + id + " - GET");
 		
 		MemberVO member = service.selectMemberById(id);
+		if (member.getImgPath() == null) {
+			member.setImgPath(defaultImgFile);
+		}
 		log.info("member=" + member);
 		
 		model.addAttribute("member", member);

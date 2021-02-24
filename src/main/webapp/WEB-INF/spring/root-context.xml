@@ -45,6 +45,14 @@
 	    </property>
     </bean>
 	
+	<bean id="profileUploadPath" class="java.lang.String">
+		<constructor-arg value="D:\file\profile\" /> 
+	</bean>
+	
+	<bean id="profileDefaultImgFileName" class="java.lang.String">
+		<constructor-arg value="blank.png"/>
+	</bean>
+	
 	<context:component-scan base-package="com.kgitbank.spring.domain.**.service" />
 
 	<context:component-scan base-package="com.kgitbank.spring.global.util" />

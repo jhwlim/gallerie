@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-public class FileUploadUtil {
+public class FileUtil {
 	
 	public static String uploadFile(MultipartFile file, String uploadPath) {
 		String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
@@ -20,6 +20,14 @@ public class FileUploadUtil {
 		}
 		
 		return fileName;
+	}
+	
+	public static boolean isImageFile(MultipartFile file) {
+		String contentType = file.getContentType();
+		
+		contentType = contentType.substring(0, contentType.indexOf("/")); 
+		
+		return contentType.equals("image");
 	}
 	
 }

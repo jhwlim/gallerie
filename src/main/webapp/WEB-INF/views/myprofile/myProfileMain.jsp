@@ -70,7 +70,7 @@
     <div class="container">
     	<div class="summary">
     		<figure class="summary__image-area profile-upload">
-    			<img src="<c:url value = '/myprofile/image/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
+    			<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
     		</figure>
     		<div class="summary__content">
     			<div class="summary__row">
@@ -127,10 +127,14 @@ $('#uploadForm').ajaxForm({
 		$status.html('uploading...');
 		$percent.html(percentComplete + '%');
 	},
-	complete: function(xhr) {
-		console.log(xhr.responseText);
-		$("#profileImg").attr("src", "<c:url value = '/myprofile/image/' />" + xhr.responseText + "/");
+	success: function(result) {
+		console.log(result);
+		$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + result + "/");
+	},
+	error: function(xhr) {
+		console.log("upload Fail");
 	}
+	
 });
 </script>
 

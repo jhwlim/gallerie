@@ -26,9 +26,6 @@
 		<beans:property name="maxUploadSize" value="10485760" />
 	</beans:bean>
 	
-	<beans:bean id="profileUploadPath" class="java.lang.String">
-		<beans:constructor-arg value="D:\file\profile\" /> 
-	</beans:bean>
 	
 	<context:component-scan base-package="com.kgitbank.spring.domain.**.controller" />
 	
