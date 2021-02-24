@@ -34,11 +34,7 @@ a {
 
 
 hr {
-	height: 40px;
-	width: 0;
-	background-color: black;
-	border-color: black;
-	display: inline-block;
+	background-color: LightGray;
 }
 
 main {
@@ -166,18 +162,16 @@ input[type=text]:focus {
 			<br>
 			<div id="map_canvas" style="width:500px;height:300px;"></div>
 			<br>
-				<div>
+				<div onclick="test()">
+					<c:forEach items="${loginActivity }" var="login" >
+						<br>
 					<div><i class="fas fa-map-marker"></i></div>
-						<div>
-							<div id="location" name="location" font-size=14px>위치</div>
-							<div id="login_date" name="login_date" font-size=14px>날짜</div>
-						</div>
-				</div>	
-				
-				<c:forEach items="${loginActivity }" var="login" >
-			        ${login.location }
-			        ${login.loginDate } <br>
-			    </c:forEach>
+				        ${login.location }
+				        ${login.loginDate } 
+				        <br><br>
+				        <hr>
+			    	</c:forEach>
+				</div>
 			   
 		</div>
 	</form>
@@ -223,14 +217,14 @@ input[type=text]:focus {
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
 	</footer>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyC4rw11RhDxupVZthhGLLJnBLsOgHGyKhks"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyC4rw11RhDxupVZthhGLLJnBLsOgHGyKhk"></script>
 <script type="text/javascript">
-	window.onload = function(){
+	window.onload = function() {
 		if(!navigator.geolocation) {
 			document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
 			return;
 		}
-		navigator.geolocation.getCurrentPosition(function(position){
+		navigator.geolocation.getCurrentPosition(function(position) {
 			var lat = position.coords.latitude;
 			var lon = position.coords.longitude;
 			
@@ -244,7 +238,36 @@ input[type=text]:focus {
 			var initLoc = new google.maps.LatLng(lat,lon);
 			
 			var map = new google.maps.Map(document.getElementById('map_canvas'),{
-				zoom:10,
+				zoom:16,
+	            mapTypeId : google.maps.MapTypeId.ROADMAP
+			});
+	         map.setCenter(initLoc);
+	         var marker = new google.maps.Marker({position:initLoc,map:map,title:'현재위치'})
+		});
+	};
+	
+	
+	
+	function test() {
+		if(!navigator.geolocation) {
+			document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
+			return;
+		}
+		navigator.geolocation.getCurrentPosition(function(position) {
+			//var lat = position.coords.latitude;
+			//var lon = position.coords.longitude;
+			
+			// 실험
+			var lat = 37.559667;
+			var lon = 126.997199;
+			
+			console.log('위도 : ' + lat);
+			console.log('경도 : ' + lon);
+			
+			var initLoc = new google.maps.LatLng(lat,lon);
+			
+			var map = new google.maps.Map(document.getElementById('map_canvas'),{
+				zoom:16,
 	            mapTypeId : google.maps.MapTypeId.ROADMAP
 			});
 	         map.setCenter(initLoc);
