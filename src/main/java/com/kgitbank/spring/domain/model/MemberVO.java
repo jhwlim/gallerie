@@ -6,12 +6,20 @@ import java.sql.Timestamp;
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Alias("MemberVO")
 @Data
+@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberVO {
 	
+	@NonNull
 	private int seqId;
 	private String id;
 	private String pw;

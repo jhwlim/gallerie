@@ -26,13 +26,17 @@
 	
 		INSERT INTO members VALUES(
 		
+		member_seq.nextval,
 		#{id},
 		#{pw},
 		#{name},
 		#{phone},
 		#{email},
 		#{profile},
-		sysdate
+		sysdate,
+		null,
+		null,
+		null
 		
 		)
 		
