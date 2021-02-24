@@ -5,7 +5,7 @@
 <mapper
 	namespace="com.kgitbank.spring.domain.model.mapper.TagMapper">
 
-	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.TagVO">
+	<select id="selectAll" resultType="TagVO">
 		SELECT * FROM tag
 	</select>
 	

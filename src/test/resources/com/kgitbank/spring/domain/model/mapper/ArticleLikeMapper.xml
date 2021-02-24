@@ -5,7 +5,7 @@
 <mapper
 	namespace="com.kgitbank.spring.domain.model.mapper.ArticleLikeMapper">
 
-	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.ArticleLikeVO">
+	<select id="selectAll" resultType="ArticleLikeVO">
 		SELECT * FROM article_like
 	</select>
 	
