@@ -173,8 +173,8 @@ input[type=submit] {
 				<div  class="password_1">새 비밀번호</div>
 			</div>
 			<div class="pwd2">
-				<input id="pw1" name="newPassword" type="password" size="60" 
-				placeholder="새 비밀번호 입력"></input>
+				<input id="pw1" name="pw1" type="password" size="60" 
+				placeholder="새 비밀번호 입력" ></input>
 			</div>
 			<br>
 
@@ -182,7 +182,7 @@ input[type=submit] {
 				<div  class="password_1">새 비밀번호 확인</div>
 			</div>
 			<div  class="pwd2">
-				<input id="pw2" type="password" size="60" 
+				<input id="pw" type="password" size="60" 
 				name="pw" placeholder="새 비밀번호 입력" value="${myprofile.pw}"></input>
 			</div>
 			<div class="ok_">
@@ -234,10 +234,17 @@ input[type=submit] {
 <script type="text/javascript">
 function validateJoin() {
 
+	var oldPw = "${oldpw}";
 	var pw1 = document.querySelector("#pw1");
 	var pw = document.querySelector("#pw");
-
-	if (pw1.value === pw.value) {
+	
+	if (pw1.value == "" || pw.value == "") {
+		alert('비밀번호를 입력해주세요');
+		return false;
+	} else if (pw1.value == oldPw) {
+		alert('현재 비밀번호와 다른 비밀번호를 설정해주세요');
+		return false;
+	} else if (pw1.value === pw.value) {
 		alert('변경 완료');
 		return true;
 	} else {
@@ -245,10 +252,11 @@ function validateJoin() {
 		pw.value = "";
 		pw1.focus();
 		alert('비밀번호가 일치하지않습니다.');
-		
 		return false;
-	}
+	} 
 }
+
+
 </script>
 
 </body>

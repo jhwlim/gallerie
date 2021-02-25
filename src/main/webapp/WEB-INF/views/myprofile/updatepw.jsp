@@ -135,6 +135,18 @@ input[type=text]:focus {
 	text-align: left;
 }
 
+.findpw {
+	width: 100%;
+	grid-column: 2/1 span;
+	display: inline-block;
+	text-align: left;
+	margin-bottom: 3%;
+}
+
+.findpw>a {
+	color: blue;
+}
+
 input[type=password] {
 	padding: 10px;
 	background-color: rgb(233, 227, 227);
@@ -175,10 +187,15 @@ input[type=submit] {
 				<div class="pwd2">
 					<input class="p1_t" id="pw" type="password" size="60"
 					name="pw" placeholder="현재 비밀번호 입력"></input>
+					<input type="hidden" value="1234" name="test"></input>
 					<span class="error_next_box" id="pwMsg" style="margin-top: 15px;"></span>
 				</div>
 				<div class="ok_">
 					<input type="submit" value="본인확인" ></input>
+				</div>
+				<div class="findpw">
+					<a href="http://localhost:8080/spring/findpw">비밀번호를 잊으셨나요?</a>
+					<br>
 				</div>
 			</form>
 		</div>
