@@ -5,7 +5,7 @@
 <mapper
 	namespace="com.kgitbank.spring.domain.model.mapper.LoginMapper">
 
-	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.LoginVO">
+	<select id="selectAll" resultType="LoginVO">
 		SELECT * FROM logins
 	</select>
 
