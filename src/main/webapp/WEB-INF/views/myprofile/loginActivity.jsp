@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -165,14 +166,15 @@ input[type=text]:focus {
 				<div onclick="test()">
 					<c:forEach items="${loginActivity }" var="login" >
 						<br>
-					<div><i class="fas fa-map-marker"></i></div>
+						<div><i class="fas fa-map-marker"></i></div>
 				        ${login.location }
-				        ${login.loginDate } 
+				        <fmt:formatDate value="${login.loginDate}" pattern="yyyy-MM-dd HH:mm:ss"/>   
+				        ${login.ip } 
 				        <br><br>
 				        <hr>
 			    	</c:forEach>
 				</div>
-			   
+			  
 		</div>
 	</form>
 	</div>
@@ -236,9 +238,11 @@ input[type=text]:focus {
 			console.log('경도 : ' + lon);
 			
 			var initLoc = new google.maps.LatLng(lat,lon);
+			console.log(initLoc);
+			
 			
 			var map = new google.maps.Map(document.getElementById('map_canvas'),{
-				zoom:16,
+				zoom:8,
 	            mapTypeId : google.maps.MapTypeId.ROADMAP
 			});
 	         map.setCenter(initLoc);
@@ -267,7 +271,7 @@ input[type=text]:focus {
 			var initLoc = new google.maps.LatLng(lat,lon);
 			
 			var map = new google.maps.Map(document.getElementById('map_canvas'),{
-				zoom:16,
+				zoom:8,
 	            mapTypeId : google.maps.MapTypeId.ROADMAP
 			});
 	         map.setCenter(initLoc);

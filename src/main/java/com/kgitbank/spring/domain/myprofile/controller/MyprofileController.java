@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kgitbank.spring.domain.model.LoginVO;
 import com.kgitbank.spring.domain.model.MemberVO;
@@ -52,11 +53,15 @@ public class MyprofileController {
 	}
 	
 	@PostMapping(value = "/updatepw")
-	public String currentpw(MemberVO vo) {
+	public String currentpw(MemberVO vo, Model model, @RequestParam("test") String test) {
 		vo.setId("abc5678");
-		// 1234로 설정했었음
+		log.info(test);
+		
 		if (encoder.matches(vo.getPw(), service.currentpw(vo))) {
 			log.info("일치");
+			log.info(vo.getPw());
+			model.addAttribute("oldpw", vo.getPw());
+			model.addAttribute("test", test);
 			return "myprofile/changepw";
 		} else {
 			log.info("불일치");
@@ -65,7 +70,14 @@ public class MyprofileController {
 	}
 	
 	@GetMapping(value = "/changepw")
-	public String updatepw() {
+	public String updatepw(@RequestParam(name="test", required=false) String test) {
+//		log.info(testDto);
+//		if (testDto.getTest() == null) {
+//			return "redirect:/myprofile/updatepw";
+//		}
+		if (test == null) {
+			return "redirect:/myprofile/updatepw";
+		}
 		return "myprofile/changepw";
 	}
 	
@@ -74,7 +86,8 @@ public class MyprofileController {
 		vo.setId("abc5678");
 		
 		service.updatepw(vo);
-		return "redirect:/myprofile/changepw";
+		return "redirect:/myprofile/updatepw";
+
 	}
 	
 	// 로그인활동 페이지
