@@ -8,13 +8,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
 <%@ include file="/WEB-INF/include/commonCss.jspf" %>
 <%@ include file="/WEB-INF/include/headerCss.jspf" %>
 
+<!-- bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
+<!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <!-- jquery.form.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
@@ -42,7 +45,7 @@
 .summary__content {
 	padding: 20px;
 }
-.summary_id {
+.summary__id {
 	font-size: 30px;
 }
 .summary__row {
@@ -73,22 +76,13 @@
 <div class="wrapper">
     <div class="container">
     	<div class="summary">
-    		<c:choose>
-    			<c:when test="${member.signedIn}">
-    				<figure class="summary__image-area" id="profileImageArea" 
-    						${member.hasImg ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' : ''}>
-    					<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
-		    		</figure>
-	    		</c:when>
-	    		<c:otherwise>
-	    			<figure class="summary__image-area">
-    					<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
-		    		</figure>
-	    		</c:otherwise>
-    		</c:choose>
+   			<figure class="summary__image-area" id="profileImageArea" 
+   					${member.signedIn && member.hasImg ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' : ''}>
+   				<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
+	    	</figure>
     		<div class="summary__content">
     			<div class="summary__row">
-    				<span class="summary_id">${member.id}</span>
+    				<span class="summary__id">${member.id}</span>
     				&nbsp;&nbsp;
     				<button class="profile-upload">프로필 편집</button>
     				&nbsp;&nbsp;
@@ -104,126 +98,110 @@
     			<div class="summary__row">
     				<span class="summary__name">${member.name}</span>
     			</div>
+    			<div class="summary__row">
+    				<span class="summary__profile">${member.profile}</span>
+    			</div>
     		</div>
     	</div>
     </div>    
 </div>
 
 <c:if test="${member.signedIn}">
-
-<form method="POST" action="<c:url value='/myprofile/upload' />" enctype="multipart/form-data" id="uploadForm">
-	<input type="file" accept="image/jpeg, image/png" name="file" class="file-upload" />
-	<input type="hidden" name="seqId" value="${member.seqId}" />
-</form>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-			  	<h5 class="modal-title">프로필 사진 바꾸기</h5>
+	<form method="POST" action="<c:url value='/myprofile/upload' />" enctype="multipart/form-data" id="uploadForm">
+		<input type="file" accept="image/jpeg, image/png" name="file" class="file-upload" />
+		<input type="hidden" name="seqId" value="${member.seqId}" />
+	</form>
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+				  	<h5 class="modal-title">프로필 사진 바꾸기</h5>
+				</div>
+				<div class="modal-body">
+				  	<ul>
+				  		<li class="profile-upload">사진 업로드</li>
+				  		<li id="profileImgDelete">현재 사진 삭제</li>
+				  	</ul>
+				</div>
+				<div class="modal-footer" data-bs-dismiss="modal" id="modalClose">취소</div>
 			</div>
-			<div class="modal-body">
-			  	<ul>
-			  		<li class="profile-upload">사진 업로드</li>
-			  		<li id="profileImgDelete">현재 사진 삭제</li>
-			  	</ul>
-			</div>
-			<div class="modal-footer" data-bs-dismiss="modal" id="modalClose">취소</div>
 		</div>
 	</div>
-</div>
-<script>
-profileImageArea = document.getElementById('profileImageArea');
-console.log(profileImageArea);
-var hasImg = '${member.hasImg}' == 'true' ? true : false;
-
-function setModal() {
-	profileImageArea.setAttribute('data-bs-toggle', 'modal');
-	profileImageArea.setAttribute('data-bs-target', '#exampleModal');
-	console.log(profileImageArea);
-}
-function removeModal() {
-	profileImageArea.removeAttribute('data-bs-toggle');
-	profileImageArea.removeAttribute('data-bs-target');
-}
-
-$(window).on('load', function() {
+	
+	<script>
+	var profileImageArea = document.getElementById('profileImageArea');
+	var hasImg = ${member.hasImg};
+	var prevImgPath = null;
+	
+	function setModal() {
+		profileImageArea.setAttribute('data-bs-toggle', 'modal');
+		profileImageArea.setAttribute('data-bs-target', '#exampleModal');
+	}
+	function removeModal() {
+		profileImageArea.removeAttribute('data-bs-toggle');
+		profileImageArea.removeAttribute('data-bs-target');
+	}
+	
 	if (!hasImg) {
 		$("#profileImageArea").on('click', function() {
 			$('.file-upload').click();
 		});
 	}	
-});
 
-
-$(".profile-upload").on('click', function(event) {
-	console.log(".profile-upload 클릭")
-	$('.file-upload').click();
-});
-
-$(".file-upload").on('change', function() {
-	console.log(this.files);
-	$("#uploadForm").submit();
-});
-
-$('#uploadForm').ajaxForm({
-	beforeSend: function() {
-	},
-	uploadProgress: function() {
-		$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
-		$("#modalClose").click();
-	},
-	success: function(result, status, xhr) {
-		// console.log("result=", result, ", status=", status, ", xhr=", xhr);
-		switch (status) {
-		case "nocontent" :
-			console.log("no content")
-			break;
-		case "success" :
-			$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + result + "/");
-			console.log(hasImg);
-			if (hasImg) {
-				setModal();
-				$("#profileImageArea").off('click');
-				$("#modalClose").click();
-			}
-			break;
-		}
-
-	},
-	error: function() {
-		console.log("upload Fail");
-	}
+	$(".profile-upload").on('click', function(event) {
+		$('.file-upload').click();
+	});
 	
-});
-
-$('#profileImgDelete').on('click', function() {
-	console.log('프로필 이미지 삭제');
-	$.ajax({
-		type : "DELETE",
-		url : "<c:url value='/myprofile/delete' />",
-		dataType : "text",
-		data : "${member.seqId}",
-		uploadProgress: function() {
+	$(".file-upload").on('change', function() {
+		$("#uploadForm").submit();
+	});
+	
+	$('#uploadForm').ajaxForm({
+		beforeSend: function() {
+			prevImgPath = $('#profileImg').attr('src');
 			$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
 			$("#modalClose").click();
 		},
-		success : function(result) {
-			$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + null);
-			$("#modalClose").click();
-			
-			$("#profileImageArea").on('click', function() {
-				$('.file-upload').click();
-			});
-			removeModal();
-			console.log(result);
+		success: function(result, status, xhr) {
+			switch (status) {
+			case "nocontent" :
+				$("#profileImg").attr("src", prevImgPath);
+				break;
+			case "success" :
+				$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + result + "/");				
+				$("#profileImageArea").off('click');
+				$("#modalClose").click();
+				setModal();
+				break;
+			}
+		},
+		error: function() {
+			console.log("Upload Fail");
 		}
-	})
-});
-</script>
-<script>
+	});
+	
+	$('#profileImgDelete').on('click', function() {
+		$.ajax({
+			type : "DELETE",
+			url : "<c:url value='/myprofile/delete' />",
+			dataType : "text",
+			data : "${member.seqId}",
+			beforeSend: function() {
+				$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
+				$("#modalClose").click();
+			},
+			complete : function(result) {
+				$("#profileImg").attr("src", "<c:url value = '/image/profile/blank.png/' />");
+				$("#modalClose").click();
+				$("#profileImageArea").on('click', function() {
+					$('.file-upload').click();
+				});
+				removeModal();
+			}
+		})
+	});
+	</script>
 
-</script>
 </c:if>
 
 
