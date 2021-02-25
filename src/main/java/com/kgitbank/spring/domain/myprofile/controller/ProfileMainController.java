@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
-import com.kgitbank.spring.domain.myprofile.service.MyProfileMainService;
+import com.kgitbank.spring.domain.myprofile.service.ProfileMainService;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping(value = "/myprofile")
 @Log4j
-public class MyProfileMainController {
+public class ProfileMainController {
 	
 	@Autowired
-	MyProfileMainService service;
+	ProfileMainService service;
 	
 	@GetMapping("/{id}")
 	public String main(@PathVariable String id, Model model, HttpSession session) {
@@ -38,6 +38,5 @@ public class MyProfileMainController {
 		model.addAttribute("member", member);
 		
 		return member != null ? "myprofile/myProfileMain" : "";
-
 	}
 }

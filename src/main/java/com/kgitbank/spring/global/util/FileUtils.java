@@ -13,9 +13,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class FileUtils {
 	
-	public static String uploadFile(MultipartFile file, String uploadPath) {
+	public static String uploadFile(MultipartFile file, String prefix, String uploadPath) {
 		
-		String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+		String fileName = prefix + "_" + UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 		File target = new File(uploadPath, fileName);
 		
 		try {

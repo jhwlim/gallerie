@@ -107,7 +107,7 @@
 </div>
 
 <c:if test="${member.signedIn}">
-	<form method="POST" action="<c:url value='/myprofile/upload' />" enctype="multipart/form-data" id="uploadForm">
+	<form method="POST" action="<c:url value='/image/profile' />" enctype="multipart/form-data" id="uploadForm">
 		<input type="file" accept="image/jpeg, image/png" name="file" class="file-upload" />
 		<input type="hidden" name="seqId" value="${member.seqId}" />
 	</form>
@@ -162,13 +162,13 @@
 			$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
 			$("#modalClose").click();
 		},
-		success: function(result, status, xhr) {
+		success: function(fileName, status, xhr) {
 			switch (status) {
 			case "nocontent" :
 				$("#profileImg").attr("src", prevImgPath);
 				break;
 			case "success" :
-				$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + result + "/");				
+				$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + fileName + "/");				
 				$("#profileImageArea").off('click');
 				$("#modalClose").click();
 				setModal();
@@ -183,14 +183,14 @@
 	$('#profileImgDelete').on('click', function() {
 		$.ajax({
 			type : "DELETE",
-			url : "<c:url value='/myprofile/delete' />",
+			url : "<c:url value='/image/profile' />",
 			dataType : "text",
 			data : "${member.seqId}",
 			beforeSend: function() {
 				$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
 				$("#modalClose").click();
 			},
-			complete : function(result) {
+			complete : function() {
 				$("#profileImg").attr("src", "<c:url value = '/image/profile/blank.png/' />");
 				$("#modalClose").click();
 				$("#profileImageArea").on('click', function() {

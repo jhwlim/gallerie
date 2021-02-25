@@ -46,7 +46,7 @@
     </bean>
 	
 	<bean id="profileUploadPath" class="java.lang.String">
-		<constructor-arg value="D:\file\profile\" /> 
+		<constructor-arg value="C:\MyInstagram\profile\" /> 
 	</bean>
 	
 	<bean id="profileDefaultImgFileName" class="java.lang.String">

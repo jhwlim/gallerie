@@ -22,10 +22,13 @@ import lombok.extern.log4j.Log4j;
 	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 })
 @Log4j
-public class MyProfileMainMapperTests {
+public class ProfileMainMapperTests {
 	
 	@Autowired
-	MyProfileMainMapper mapper;
+	ProfileMainMapper mapper;
+	
+	@Autowired
+	ProfileImageMapper imgMapper;
 	
 	@Test
 	public void selectMemberByIdTest() {
@@ -47,7 +50,7 @@ public class MyProfileMainMapperTests {
 		member.setSeqId(seqId);
 		member.setImgPath(imgPath);
 		
-		int result = mapper.updateProfileImgBySeqId(member);
+		int result = imgMapper.updateProfileImgBySeqId(member);
 		
 		assertEquals(1, result);
 	}
@@ -58,6 +61,6 @@ public class MyProfileMainMapperTests {
 		
 		int seqId = 1;
 		
-		log.info(mapper.selectProfileImgBySeqId(seqId));
+		log.info(imgMapper.selectProfileImgBySeqId(seqId));
 	}
 }

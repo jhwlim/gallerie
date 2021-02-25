@@ -1,6 +1,5 @@
 package com.kgitbank.spring.domain.myprofile.service;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,15 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kgitbank.spring.domain.model.MemberVO;
-import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
-import com.kgitbank.spring.domain.myprofile.mapper.MyProfileMainMapper;
+import com.kgitbank.spring.domain.myprofile.mapper.ProfileImageMapper;
 import com.kgitbank.spring.global.util.FileUtils;
 
 import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
-public class MyProfileMainServiceImpl implements MyProfileMainService {
+public class ProfileImageServiceImpl implements ProfileImageService {
 	
 	@Resource(name="profileUploadPath")
 	private String uploadPath;
@@ -31,21 +29,7 @@ public class MyProfileMainServiceImpl implements MyProfileMainService {
 	private String defaultImgFile;
 	
 	@Autowired
-	MyProfileMainMapper mapper;
-
-	@Override
-	public ProfileDto selectMemberById(String id) {
-		ProfileDto member = mapper.selectMemberById(id);
-		if (member.getImgPath() == null
-				|| !new File(uploadPath + member.getImgPath()).exists()) {
-			log.info("Not Exist : " + member.getImgPath());
-			member.setImgPath(defaultImgFile);
-		} else {
-			member.setHasImg(true);
-		}
-		
-		return member;
-	}
+	ProfileImageMapper mapper;
 
 	@Override
 	public String uploadProfileImg(MultipartFile file, int seqId) {
@@ -67,7 +51,7 @@ public class MyProfileMainServiceImpl implements MyProfileMainService {
 		
 		// 파일 업로드 및 DB에 정보 업데이트
 		MemberVO member = new MemberVO(seqId);
-		String savedFileName = FileUtils.uploadFile(file, uploadPath);
+		String savedFileName = FileUtils.uploadFile(file, String.valueOf(seqId), uploadPath);
 		member.setImgPath(savedFileName);
 		mapper.updateProfileImgBySeqId(member);
 		
