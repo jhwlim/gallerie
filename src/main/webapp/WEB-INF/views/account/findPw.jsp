@@ -1,48 +1,76 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 찾기</title>
-<link rel="stylesheet" href="/spring/resources/css/member/join.css">
+
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="/spring/resources/css/member/idpw.css?ver=1.0">
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
 </head>
 <body>
 
-<div class="wrapper">
-		<form id="pwForm" method="post">
-			<div class="wrap">
-				<div class="subjecet">
-					<span>비밀번호 찾기</span>
-				</div>
-				<div class="id-wrap">
-					<div class="id-name">비밀번호를 찾고자 하는 아이디를 입력해 주세요.</div>
-					<div class="id-input-box">
-						<input class="id" name="id">
-					</div>
-					
-				</div>
-				
-				<div class="pw-button-wrap">
-					<input type="button" class="pw-button" value="다음">
-				</div>
-			</div>
-		</form>
-	</div>
-	
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
 
-<script>
+				<div class="col-sm-6">
+					<div class="right-column text-center">
+						<img src="/spring/resources/css/member/images/lock.png"
+							class="lock-logo">
+						<h2 class="info">로그인에 문제가 있나요?</h2>
+						<p>이메일 주소, 전화번호 또는 사용자 이름을 입력하시면 계정에 다시 액세스할 수 있는 링크를 보내드립니다.</p>
+						<form id="pwForm" method="post">
+
+							<div class="form-group">
+								<input type="text" class="id" name="id" required> <label>사용자이름</label>
+							</div>
+
+							<input type="button" id="pw-button"
+								class="btn btn-primary btn-block" value="로그인 링크 보내기">
+						</form>
+
+						<div class="bar">
+							<div class="left-right"></div>
+							<div class="or-center">또는</div>
+							<div class="left-right"></div>
+						</div>
+
+						<h2 class="info">
+							<a href="./signup">새 계정 만들기</a>
+						</h2>
+
+						<div class="login-box">
+							<h3 class="info2">
+								<a href="./login">로그인으로 돌아가기</a>
+							</h3>
+						</div>
+					</div>
+
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script>
 
 var idCheck = false;            	// 아이디
 var idckCheck = false;              // 아이디 중복 검사
 
 $(document).ready(function(){
 	//회원가입 버튼(회원가입 기능 작동)
-    $(".pw-button").click(function(){
+    $("#pw-button").click(function(){
     	
     	 var id = $('.id').val();				// id 입력란
 		
