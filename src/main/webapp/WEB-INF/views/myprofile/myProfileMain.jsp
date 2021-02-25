@@ -75,7 +75,7 @@
     	<div class="summary">
     		<c:choose>
     			<c:when test="${member.signedIn}">
-    				<figure class="summary__image-area${member.hasImg ? '' : ' profile-upload'}" id="profileImageArea" 
+    				<figure class="summary__image-area" id="profileImageArea" 
     						${member.hasImg ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' : ''}>
     					<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
 		    		</figure>
@@ -135,7 +135,7 @@
 <script>
 profileImageArea = document.getElementById('profileImageArea');
 console.log(profileImageArea);
-hasImg = '${member.hasImg}';
+var hasImg = '${member.hasImg}' == 'true' ? true : false;
 
 function setModal() {
 	profileImageArea.setAttribute('data-bs-toggle', 'modal');
@@ -147,12 +147,14 @@ function removeModal() {
 	profileImageArea.removeAttribute('data-bs-target');
 }
 
-function setProfileUpload() {
-	profileImageArea.classList.add('profile-upload');
-}
-function removeProfileUpload() {
-	profileImageArea.classList.remove('profile-upload');
-}
+$(window).on('load', function() {
+	if (!hasImg) {
+		$("#profileImageArea").on('click', function() {
+			$('.file-upload').click();
+		});
+	}	
+});
+
 
 $(".profile-upload").on('click', function(event) {
 	console.log(".profile-upload 클릭")
@@ -168,6 +170,8 @@ $('#uploadForm').ajaxForm({
 	beforeSend: function() {
 	},
 	uploadProgress: function() {
+		$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
+		$("#modalClose").click();
 	},
 	success: function(result, status, xhr) {
 		// console.log("result=", result, ", status=", status, ", xhr=", xhr);
@@ -181,9 +185,7 @@ $('#uploadForm').ajaxForm({
 			if (hasImg) {
 				setModal();
 				$("#profileImageArea").off('click');
-				removeProfileUpload();
 				$("#modalClose").click();
-					
 			}
 			break;
 		}
@@ -195,8 +197,28 @@ $('#uploadForm').ajaxForm({
 	
 });
 
-$('#profileImgDelete').ajaxForm({
-	
+$('#profileImgDelete').on('click', function() {
+	console.log('프로필 이미지 삭제');
+	$.ajax({
+		type : "DELETE",
+		url : "<c:url value='/myprofile/delete' />",
+		dataType : "text",
+		data : "${member.seqId}",
+		uploadProgress: function() {
+			$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
+			$("#modalClose").click();
+		},
+		success : function(result) {
+			$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + null);
+			$("#modalClose").click();
+			
+			$("#profileImageArea").on('click', function() {
+				$('.file-upload').click();
+			});
+			removeModal();
+			console.log(result);
+		}
+	})
 });
 </script>
 <script>

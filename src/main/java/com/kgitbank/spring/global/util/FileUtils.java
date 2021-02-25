@@ -8,6 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 public class FileUtils {
 	
 	public static String uploadFile(MultipartFile file, String uploadPath) {
@@ -39,5 +42,26 @@ public class FileUtils {
 		return MediaType.parseMediaType("image/" + fileFormat);
 	}
 	
+	public static boolean deleteFile(String filePath) {
+		File fileInServer = new File(filePath);
+		
+		if (fileInServer.exists()) {
+			// 파일이 삭제될 때까지 반복
+			for (int i = 0; i < 10000; i++) {
+				if (fileInServer.delete()) {
+					log.info(filePath + " : delete Complete - " + i);
+					return true;
+				}
+				
+				try {
+					Thread.sleep(100);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return false;
+	}
 	
 }

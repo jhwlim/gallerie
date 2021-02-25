@@ -12,4 +12,6 @@ public interface MyProfileMainService {
 	public String uploadProfileImg(MultipartFile file, int seqId);
 	
 	public byte[] getImage(String fileName);
+	
+	public void deleteProfileImg(int seqId);
 }

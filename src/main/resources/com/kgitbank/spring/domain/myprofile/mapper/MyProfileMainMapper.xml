@@ -11,7 +11,7 @@
 	
 	<update id="updateProfileImgBySeqId">
 		UPDATE members
-		SET img_path = #{imgPath}
+		SET img_path = #{imgPath, jdbcType=VARCHAR}
 		WHERE seq_id = #{seqId}
 	</update>
 	

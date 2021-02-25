@@ -5,9 +5,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,7 +53,7 @@ public class MyprofileUploadController {
 	
 	@ResponseBody
 	@GetMapping("/image/profile/{imgPath}")
-	public ResponseEntity<byte[]> getImage(@PathVariable("imgPath") String imgPath) {
+	public ResponseEntity<byte[]> getImage(@PathVariable(name = "imgPath", required = false) String imgPath) {
 		log.info("URL : /myprofile/image/ - GET");
 		log.info("imgPath=" + imgPath);
 	
@@ -74,5 +76,17 @@ public class MyprofileUploadController {
 
 		return new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 	}
+	
+	@ResponseBody
+	@DeleteMapping(value = "/myprofile/delete", produces="text/plain")
+	public ResponseEntity<String> deleteProfileImage(@RequestBody String seqId) {
+		log.info("URL : /myprofile/delete - DELETE");
+		log.info("seqId=" + seqId);
+		
+		service.deleteProfileImg(Integer.parseInt(seqId));
+		
+		return new ResponseEntity<String>("Delete Success", HttpStatus.OK);
+	}
+	
 	
 }

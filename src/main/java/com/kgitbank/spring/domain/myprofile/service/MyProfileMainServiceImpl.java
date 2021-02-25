@@ -62,10 +62,7 @@ public class MyProfileMainServiceImpl implements MyProfileMainService {
 		// 기존 파일이 존재한다면 서버에서 파일을 삭제 
 		if (imgPath != null) {
 			log.info(uploadPath + imgPath);
-			File fileInServer = new File(uploadPath + imgPath);
-			if (fileInServer.exists()) {
-				log.info("delete OK ? " + fileInServer.delete());
-			}
+			log.info("delete OK ? " + FileUtils.deleteFile(uploadPath + imgPath));
 		}
 		
 		// 파일 업로드 및 DB에 정보 업데이트
@@ -104,6 +101,17 @@ public class MyProfileMainServiceImpl implements MyProfileMainService {
 		return imgBytes;
 	}
 
-	
-	
+	@Override
+	public void deleteProfileImg(int seqId) {
+		
+		String profileImg = mapper.selectProfileImgBySeqId(seqId);
+		if (profileImg != null) {
+			MemberVO member = new MemberVO(seqId);
+			
+			FileUtils.deleteFile(uploadPath + profileImg);
+			
+			mapper.updateProfileImgBySeqId(member);
+		}
+	}
+
 }
