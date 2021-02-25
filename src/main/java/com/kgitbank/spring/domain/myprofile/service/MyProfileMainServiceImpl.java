@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kgitbank.spring.domain.model.MemberVO;
+import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 import com.kgitbank.spring.domain.myprofile.mapper.MyProfileMainMapper;
 import com.kgitbank.spring.global.util.FileUtils;
 
@@ -33,8 +34,17 @@ public class MyProfileMainServiceImpl implements MyProfileMainService {
 	MyProfileMainMapper mapper;
 
 	@Override
-	public MemberVO selectMemberById(String id) {
-		return mapper.selectMemberById(id);
+	public ProfileDto selectMemberById(String id) {
+		ProfileDto member = mapper.selectMemberById(id);
+		if (member.getImgPath() == null
+				|| !new File(uploadPath + member.getImgPath()).exists()) {
+			log.info("Not Exist : " + member.getImgPath());
+			member.setImgPath(defaultImgFile);
+		} else {
+			member.setHasImg(true);
+		}
+		
+		return member;
 	}
 
 	@Override

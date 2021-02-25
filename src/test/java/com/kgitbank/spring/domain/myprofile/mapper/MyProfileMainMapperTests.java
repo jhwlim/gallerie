@@ -27,7 +27,6 @@ public class MyProfileMainMapperTests {
 	@Autowired
 	MyProfileMainMapper mapper;
 	
-	@Ignore
 	@Test
 	public void selectMemberByIdTest() {
 		
@@ -53,6 +52,7 @@ public class MyProfileMainMapperTests {
 		assertEquals(1, result);
 	}
 	
+	@Ignore
 	@Test
 	public void selectProfileImgBySeqIdTest() {
 		

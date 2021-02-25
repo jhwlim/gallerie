@@ -8,8 +8,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
 <%@ include file="/WEB-INF/include/commonCss.jspf" %>
 <%@ include file="/WEB-INF/include/headerCss.jspf" %>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <!-- jquery.form.js -->
@@ -69,9 +73,19 @@
 <div class="wrapper">
     <div class="container">
     	<div class="summary">
-    		<figure class="summary__image-area profile-upload">
-    			<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
-    		</figure>
+    		<c:choose>
+    			<c:when test="${member.signedIn}">
+    				<figure class="summary__image-area${member.hasImg ? '' : ' profile-upload'}" id="profileImageArea" 
+    						${member.hasImg ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' : ''}>
+    					<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
+		    		</figure>
+	    		</c:when>
+	    		<c:otherwise>
+	    			<figure class="summary__image-area">
+    					<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
+		    		</figure>
+	    		</c:otherwise>
+    		</c:choose>
     		<div class="summary__content">
     			<div class="summary__row">
     				<span class="summary_id">${member.id}</span>
@@ -91,41 +105,69 @@
     				<span class="summary__name">${member.name}</span>
     			</div>
     		</div>
-    		
-    		
     	</div>
-    	
-    	
     </div>    
 </div>
+
+<c:if test="${member.signedIn}">
 
 <form method="POST" action="<c:url value='/myprofile/upload' />" enctype="multipart/form-data" id="uploadForm">
 	<input type="file" accept="image/jpeg, image/png" name="file" class="file-upload" />
 	<input type="hidden" name="seqId" value="${member.seqId}" />
 </form>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			  	<h5 class="modal-title">프로필 사진 바꾸기</h5>
+			</div>
+			<div class="modal-body">
+			  	<ul>
+			  		<li class="profile-upload">사진 업로드</li>
+			  		<li id="profileImgDelete">현재 사진 삭제</li>
+			  	</ul>
+			</div>
+			<div class="modal-footer" data-bs-dismiss="modal" id="modalClose">취소</div>
+		</div>
+	</div>
+</div>
 <script>
-const $percent = $('#percent'),
-	  $status = $('#status');
+profileImageArea = document.getElementById('profileImageArea');
+console.log(profileImageArea);
+hasImg = '${member.hasImg}';
 
-$(".profile-upload").on("click", function(event) {
+function setModal() {
+	profileImageArea.setAttribute('data-bs-toggle', 'modal');
+	profileImageArea.setAttribute('data-bs-target', '#exampleModal');
+	console.log(profileImageArea);
+}
+function removeModal() {
+	profileImageArea.removeAttribute('data-bs-toggle');
+	profileImageArea.removeAttribute('data-bs-target');
+}
+
+function setProfileUpload() {
+	profileImageArea.classList.add('profile-upload');
+}
+function removeProfileUpload() {
+	profileImageArea.classList.remove('profile-upload');
+}
+
+$(".profile-upload").on('click', function(event) {
+	console.log(".profile-upload 클릭")
 	$('.file-upload').click();
 });
 
 $(".file-upload").on('change', function() {
 	console.log(this.files);
-	
 	$("#uploadForm").submit();
 });
 
 $('#uploadForm').ajaxForm({
 	beforeSend: function() {
-		$status.empty();
-		$percent.html('0%');
 	},
-	uploadProgress: function(event, position, total, percentComplete) {
-		$status.html('uploading...');
-		$percent.html(percentComplete + '%');
+	uploadProgress: function() {
 	},
 	success: function(result, status, xhr) {
 		// console.log("result=", result, ", status=", status, ", xhr=", xhr);
@@ -135,6 +177,14 @@ $('#uploadForm').ajaxForm({
 			break;
 		case "success" :
 			$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + result + "/");
+			console.log(hasImg);
+			if (hasImg) {
+				setModal();
+				$("#profileImageArea").off('click');
+				removeProfileUpload();
+				$("#modalClose").click();
+					
+			}
 			break;
 		}
 
@@ -144,7 +194,17 @@ $('#uploadForm').ajaxForm({
 	}
 	
 });
+
+$('#profileImgDelete').ajaxForm({
+	
+});
 </script>
+<script>
+
+</script>
+</c:if>
+
+
 
 </body>
 </html>
