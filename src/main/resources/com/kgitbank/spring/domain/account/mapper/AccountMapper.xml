@@ -26,8 +26,8 @@
 		insert into logins values(
 			login_seq.nextval,
 			#{memberSeqId},
-			#{loginDate},
-			#{location},
+			sysdate,
+			null,
 			#{ip}
 		)
 	</insert>

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ include file="/WEB-INF/include/jstl.jspf" %>
->>>>>>> refs/heads/develop
 <html>
 <head>
 <title>Home</title>
@@ -13,7 +12,6 @@
 <%@ include file="/WEB-INF/include/header.jspf" %>
 </head>
 <body>
-<<<<<<< HEAD
 <h1>
 	Hello world! <%=session.getAttribute("user") %>
 </h1>
