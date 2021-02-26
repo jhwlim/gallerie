@@ -102,8 +102,8 @@ public class AccountController {
 	public String signUp(MemberVO mem) throws Exception {
 
 		int result = service.signUp(mem);
-
-		return "account/success";
+		
+		return "account/login";
 	}
 
 	// 아이디 중복 검사

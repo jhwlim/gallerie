@@ -32,7 +32,7 @@
 		#{name},
 		#{phone},
 		#{email},
-		#{profile},
+		null,
 		sysdate,
 		null,
 		null,
