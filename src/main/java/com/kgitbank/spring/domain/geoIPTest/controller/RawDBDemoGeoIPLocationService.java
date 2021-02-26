@@ -29,8 +29,12 @@ public class RawDBDemoGeoIPLocationService {
         String cityName = response.getCity().getName();
         String latitude = response.getLocation().getLatitude().toString();
         String longitude = response.getLocation().getLongitude().toString();
+        String state = response.getLeastSpecificSubdivision().getName();
        
         log.info(ip);
-        return new GeoIP(ip, cityName, latitude, longitude);
+        GeoIP g = new GeoIP(ip, state, latitude, longitude);
+        log.info(g);
+        return g;
+//        return new GeoIP(ip, cityName, latitude, longitude);
     }
 }
