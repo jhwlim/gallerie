@@ -40,18 +40,23 @@
 				  type: "POST",
 				  contentType: "application/x-www-form-urlencoded; charset=UTF-8", // send as JSON
 				  data: $.param( {ipAddress : $("#ip").val()} ),
+				  /*
 				  complete: function(data) {
+					  console.log(data)
 				      console.log ("Request complete");
 				     
 				  },
+				  */
 				  success: function(data) {
+					  console.log(data)
 					  $("#status").html(JSON.stringify(data));
-					  
+					 /*
+					  $("#status").html(JSON.stringify(data));
 					  if (data.ipAddress !=null) {
 						  console.log ("Success:"+data.ipAddress);    
-					    	showLocationOnMap(data);
-					  		  	
+					    	showLocationOnMap(data);  	
 					  }
+					  */
 				  },
 				  error: function(err) {
 				      console.log(err);

@@ -30,7 +30,7 @@ public class GeoIPTestController {
 		return "geoIPTest/GeoIPTest";
 	}
     
-    @PostMapping(value = "/GeoIPTest")
+    @PostMapping(value = "/GeoIPTest", produces="application/json")
     @ResponseBody
     public GeoIP getLocation(@RequestParam(value="ipAddress", required=true) String ipAddress) throws Exception {
     	log.info(ipAddress);
