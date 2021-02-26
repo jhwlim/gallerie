@@ -35,7 +35,7 @@
 							</div>
 
 							<input type="button" id="pw-button"
-								class="btn btn-primary btn-block" value="로그인 링크 보내기">
+								class="btn btn-primary btn-block" value="본인 인증 절차">
 						</form>
 
 						<div class="bar">
