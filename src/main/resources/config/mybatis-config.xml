@@ -7,4 +7,9 @@
 		<!-- 자동으로 카멜케이스 규칙으로 변환 -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
+	
+	<typeAliases>
+		<package name="com.kgitbank.spring.domain.model"/>
+	</typeAliases>
+	
 </configuration>

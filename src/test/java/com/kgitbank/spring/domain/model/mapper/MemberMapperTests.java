@@ -28,7 +28,7 @@ public class MemberMapperTests {
 	@Autowired
 	SecurityPwEncoder encoder;
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectAllTest() {
 		log.info(memberMapper.selectAll());
@@ -56,7 +56,7 @@ public class MemberMapperTests {
 		log.info("insertMemberTest - Complete");
 	}
 	
-	
+	@Ignore
 	@Test
 	public void createMemberSamples() {
 		
