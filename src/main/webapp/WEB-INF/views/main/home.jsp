@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ include file="/WEB-INF/include/jstl.jspf" %>
+
 <html>
 <head>
 <title>Home</title>
 
 <%@ include file="/WEB-INF/include/commonCss.jspf" %>
 <%@ include file="/WEB-INF/include/headerCss.jspf" %>
-<%@ include file="/WEB-INF/include/header.jspf" %>
 </head>
 <body>
-<h1>
-	Hello world! <%=session.getAttribute("user") %>
-</h1>
 
+<%@ include file="/WEB-INF/include/header.jspf" %>
+
+<h1>
+	Hello world!
+</h1>
 
 <div class="wrapper">
     <div class="container">
@@ -24,14 +24,13 @@
     </div>    
 </div>
 
-
 <form action="/spring/logout" method="post">
+
     <button type="submit">로그아웃</button>
 </form>
 <form action="/spring/sessiondel" method="post">
     <button type="submit">세션삭제 후 리다이렉트</button>
 </form>
-
 
 </body>
 </html>
