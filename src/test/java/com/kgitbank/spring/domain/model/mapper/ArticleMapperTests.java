@@ -30,16 +30,16 @@ public class ArticleMapperTests {
 		log.info(mapper.selectAll());
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void createNewArticleTest() {
 		
-		int writerSeqId = 2;
+		int writerSeqId = 3;
 		String content = "Hello!";
 		
 		ArticleVO article = new ArticleVO();
 		
-		article.setWriterSeqId(writerSeqId );
+		article.setWriterSeqId(writerSeqId);
 		article.setContent(content);
 		
 		mapper.createNewArticle(article);
@@ -47,6 +47,7 @@ public class ArticleMapperTests {
 		log.info("createNewArticleTest - Complete");
 	}
 	
+	@Ignore
 	@Test
 	public void createArticleSamples() {
 		
@@ -57,7 +58,7 @@ public class ArticleMapperTests {
 			
 			ArticleVO article = new ArticleVO();
 			
-			article.setWriterSeqId(writerSeqId );
+			article.setWriterSeqId(writerSeqId);
 			article.setContent(content);
 			
 			log.info(article);
