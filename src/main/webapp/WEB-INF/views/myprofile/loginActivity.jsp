@@ -249,35 +249,6 @@ input[type=text]:focus {
 	         var marker = new google.maps.Marker({position:initLoc,map:map,title:'현재위치'})
 		});
 	};
-	
-	
-	
-	function test() {
-		if(!navigator.geolocation) {
-			document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
-			return;
-		}
-		navigator.geolocation.getCurrentPosition(function(position) {
-			//var lat = position.coords.latitude;
-			//var lon = position.coords.longitude;
-			
-			// 실험
-			var lat = 37.559667;
-			var lon = 126.997199;
-			
-			console.log('위도 : ' + lat);
-			console.log('경도 : ' + lon);
-			
-			var initLoc = new google.maps.LatLng(lat,lon);
-			
-			var map = new google.maps.Map(document.getElementById('map_canvas'),{
-				zoom:8,
-	            mapTypeId : google.maps.MapTypeId.ROADMAP
-			});
-	         map.setCenter(initLoc);
-	         var marker = new google.maps.Marker({position:initLoc,map:map,title:'현재위치'})
-		});
-	};
 </script>
 </body>
 </html>
