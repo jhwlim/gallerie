@@ -24,7 +24,7 @@ public class TagMapperTest {
 	@Autowired
 	TagMapper mapper;
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectAllTest() {
 		log.info(mapper.selectAll());
@@ -47,6 +47,7 @@ public class TagMapperTest {
 		log.info("createTagTest - Complete");
 	}
 	
+	@Ignore
 	@Test
 	public void createTagSamples() {
 		

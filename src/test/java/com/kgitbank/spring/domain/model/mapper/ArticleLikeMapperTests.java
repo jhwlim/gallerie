@@ -24,7 +24,7 @@ public class ArticleLikeMapperTests {
 	@Autowired
 	ArticleLikeMapper mapper;
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectAllTest() {
 		log.info(mapper.selectAll());
@@ -47,6 +47,7 @@ public class ArticleLikeMapperTests {
 		log.info("likeTest - Complete");
 	}
 	
+	@Ignore
 	@Test
 	public void createArticleLikeSamples() {
 		

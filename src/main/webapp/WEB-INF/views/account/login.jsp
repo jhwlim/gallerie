@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -41,18 +42,28 @@
     
 <main class="form-signin">
   <form method="post" action="/spring/">
-    <h1 class="h3 mb-3 fw-normal">로그인</h1>
-    <label for="inputEmail" class="visually-hidden">Email address</label>
-    <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+  	<div id = "maintitle">
+  		<h1 class="h2 mb-3 fw-normal">login</h1>
+  	</div>
+    
+    <label for="inputEmail" class="visually-hidden">id</label>
+    <input type="text" name="id" class="form-control" placeholder="id" required autofocus>
+  	<p class="loginerr">
+  		${loginFailId }
+  	</p>
     <label for="inputPassword" class="visually-hidden">Password</label>
-    <input type="password" id="inputPassword" name="pw" class="form-control" placeholder="Password" required>
+    <input type="password" name="pw" class="form-control" placeholder="Password" required>
+    <p class="loginerr">
+  		${loginFailMsg }
+  	</p>
     <div class="checkbox mb-3">
       <label>
         <input type="checkbox" value="remember-me" name="remember"> 자동로그인
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+    <button class="w-100 btn btn-sm btn-primary" type="submit">로그인</button>
   </form>
+  
   <div style="margin-top: 10px">
   <button class="w-50 btn btn-sm">아이디 찾기</button>
   <button class="w-50 btn btn-sm">비밀번호 찾기</button>

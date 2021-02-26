@@ -1,68 +1,76 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 찾기(본인 확인)</title>
-<link rel="stylesheet" href="/spring/resources/css/member/join.css">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="/spring/resources/css/member/idpw.css?ver=1.0">
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
 </head>
 <body>
 
-<div class="wrapper">
-		<form id="authForm" method="post">
-			<div class="wrap">
-				<div class="subjecet">
-					<span>비밀번호 찾기(본인확인)</span>
-					
-				</div>
-				<div class="id-wrap">
-					<div class="id-name">
-						<input class="id" name="id" value="${member.id }" style="display:none">
-						<h3>본인확인 이메일로 인증(${member.email })</h3>
-						<h6>본인확인 이메일 주소와 입력한 미에일 주소가 같아야, 인증번호를 받을 수 있습니다.</h6>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+
+				<div class="col-sm-6">
+					<div class="right-column text-center">
+						<img src="/spring/resources/css/member/images/lock.png"
+							class="lock-logo">
+						<h2 class="info">비밀번호 찾기(본인확인)</h2>
+
+						<p>
+							본인확인 이메일로 인증 ${member.email }<br>본인확인 이메일 주소와 입력한 이메일 주소가
+							같아야, 인증번호를 받을 수 있습니다.
+						</p>
+						<form id="authForm" method="post">
+
+							<input class="id" name="id" value="${member.id }"
+								style="display: none">
+
+							<div class="form-group">
+								<input type="text" class="name" name="name" required> <label>성명</label>
+							</div>
+
+							<div class="form-group">
+								<input type="text" class="email" name="email" required>
+								<label>이메일</label>
+							</div>
+
+							<div class="form-group">
+								<div class="mail-check-input-box" id="mailCheckInputBoxFalse">
+									<input class="mail-check-input" disabled="disabled" required>
+									<label>인증번호</label>
+								</div>
+								<div class="mail-check-button">
+								<input type="button" value="인증번호 전송">
+							</div>
+							<div class="clearfix"></div>
+							<img src="/spring/resources/css/member/images/correct.png" class="correct-check-num">
+							<img src="/spring/resources/css/member/images/incorrect.png" class="incorrect-check-num">
+						</div>
+							<input type="button" id="pw-button"
+								class="btn btn-primary btn-block" value="다음">
+						</form>
+
+
 					</div>
-					<hr>
-				</div>
-				
-				<div class="user-wrap">
-					<div class="user-name">이름</div>
-					<div class="user-input-box">
-						<input class="name" name="name">
-					</div>
-					<span class="final-name-ck">이름을 입력해주세요.</span>
+
+
+
 				</div>
 
-				<div class="mail-wrap">
-					<div class="mail-name">이메일</div>
-					<div class="mail-input-box">
-						<input class="email" name="email">
-					</div>
-					<span class="final-mail-ck">이메일을 입력해주세요.</span>
-					<span class="mail-input-box-warn"></span>
-					<div class="mail-check-wrap">
-						<div class="mail-check-input-box" id="mailCheckInputBoxFalse">
-							<input class="mail-check-input" disabled="disabled">
-						</div>
-						<div class="mail-check-button">
-							<span>인증번호 전송</span>
-						</div>
-						<div class="clearfix"></div>
-						<span id="mailCheckInputBoxWarn"></span>
-					</div>
-				</div>
-				
-				<div class="pw-button-wrap">
-					<input type="button" class="pw-button" value="다음">
-				</div>
 			</div>
-		</form>
+		</div>
 	</div>
-	
 	<script>
 	/* 유효성 검사 통과유무 변수 */
 	var nameCheck = false;            // 이름
@@ -73,7 +81,7 @@
 	
 	$(document).ready(function(){
 		//회원가입 버튼(회원가입 기능 작동)
-	    $(".pw-button").click(function(){
+	    $("#pw-button").click(function(){
 	    	
 	    	var id = $('.id').val();
 	    	
@@ -151,12 +159,12 @@
 		    
 		    
 		    if(inputCode == code){                            	 // 일치할 경우
-		        checkResult.html("인증번호가 일치합니다.");
-		        checkResult.attr("class", "correct");
+		    	$('.correct-check-num').css('display', 'block');
+	            $('.incorrect-check-num').css('display', 'none'); 
 		        mailnumCheck = true;
 		    } else {                                             // 일치하지 않을 경우
-		        checkResult.html("인증번호를 다시 확인해주세요.");
-		        checkResult.attr("class", "incorrect");
+		    	$('.correct-check-num').css('display','none');
+	            $('.incorrect-check-num').css('display','block');
 		        mailnumCheck = false;
 		    }  
 		    

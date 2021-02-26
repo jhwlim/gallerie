@@ -24,7 +24,7 @@ public class ArticleMapperTests {
 	@Autowired
 	ArticleMapper mapper;
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectAllTest() {
 		log.info(mapper.selectAll());

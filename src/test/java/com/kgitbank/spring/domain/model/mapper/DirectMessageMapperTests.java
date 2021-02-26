@@ -24,7 +24,7 @@ public class DirectMessageMapperTests {
 	@Autowired
 	DirectMessageMapper mapper;
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectAllTest() {
 		log.info(mapper.selectAll());

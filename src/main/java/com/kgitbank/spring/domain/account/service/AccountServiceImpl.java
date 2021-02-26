@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kgitbank.spring.domain.account.dto.Sessionkey;
 import com.kgitbank.spring.domain.account.mapper.AccountMapper;
+import com.kgitbank.spring.domain.model.LoginVO;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.global.util.SecurityPwEncoder;
 
@@ -36,6 +37,11 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public MemberVO checkUserWithSessionkey(String sessionId) {
 		return mapper.checkUserWithSessionkey(sessionId);
+	}
+	
+	@Override
+	public void loginHistory(LoginVO history) {
+		mapper.loginHistory(history);
 	}
 	
 	@Override
@@ -85,6 +91,8 @@ public class AccountServiceImpl implements AccountService {
 		mem.setPw(encPassword);
 		return accMapper.changedPw(mem);
 	}
+
+	
 
 
 }

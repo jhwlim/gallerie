@@ -24,7 +24,7 @@ public class LoginMapperTests {
 	@Autowired
 	LoginMapper mapper;
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectAllTest() {
 		log.info(mapper.selectAll());
@@ -49,6 +49,7 @@ public class LoginMapperTests {
 		log.info("createNewLoginTest - Complete");
 	}
 	
+	@Ignore
 	@Test
 	public void createLoginSamples() {
 		
