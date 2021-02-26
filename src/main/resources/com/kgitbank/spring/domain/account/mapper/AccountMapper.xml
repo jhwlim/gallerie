@@ -9,9 +9,10 @@
 	    		*
 			FROM 
 				members
-			WHERE email = #{email} AND pw = #{pw}
+			WHERE id = #{id}
 		]]>		
 	</select>
+	
 	
 	<update id="keepLogin">
 		update members set sessionkey = #{sessionId}, sessionlimit = #{next} where email=#{email}
@@ -20,6 +21,16 @@
 	<select id="checkUserWithSessionkey" resultType="com.kgitbank.spring.domain.model.MemberVO">
 		select * from members where sessionkey = #{sessionId} and sessionLimit > sysdate
 	</select>
+
+	<insert id="loginHistory">
+		insert into logins values(
+			login_seq.nextval,
+			#{memberSeqId},
+			sysdate,
+			null,
+			#{ip}
+		)
+	</insert>
 
 	<!-- 회원가입 -->
 	<insert id="signUp">
@@ -48,6 +59,8 @@
 		SELECT count(*) FROM members WHERE ID = #{id} 
 	
 	</select>
+	
+	
 	
 	<!-- 이메일 중복검사 -->
 	<select id="emailCheck" resultType="int">

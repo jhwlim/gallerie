@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ include file="/WEB-INF/include/jstl.jspf" %>
->>>>>>> refs/heads/develop
 <html>
 <head>
 <title>Home</title>
@@ -13,7 +12,6 @@
 <%@ include file="/WEB-INF/include/header.jspf" %>
 </head>
 <body>
-<<<<<<< HEAD
 <h1>
 	Hello world! <%=session.getAttribute("user") %>
 </h1>
@@ -28,8 +26,12 @@
 
 
 <form action="/spring/logout" method="post">
-    <button class="w-100 btn btn-lg btn-primary" type="submit">로그아웃</button>
- </form>
+    <button type="submit">로그아웃</button>
+</form>
+<form action="/spring/sessiondel" method="post">
+    <button type="submit">세션삭제 후 리다이렉트</button>
+</form>
+
 
 </body>
 </html>
