@@ -154,27 +154,28 @@ input[type=text]:focus {
 		</div>
 	</div>
 	<div class="main2">
-	<form action="<c:url value='/myprofile/loginActivity' />" method="POST">
+	<form id="ipForm" action="<c:url value='/myprofile/loginActivity' />" method="POST">
 		<div class="login_form">
 			<h2 class="">로그인 활동</h2>
 		</div>
 		<div class="login_form2">
 			<h4 id="login_place">로그인한 위치</h4>
 			<br>
-			<div id="map_canvas" style="width:500px;height:300px;"></div>
-			<br>
-				<div onclick="test()">
+				<div id="map" style="width:500px;height:300px;"></div>
+				<br>
+				<div>
 					<c:forEach items="${loginActivity }" var="login" >
 						<br>
 						<div><i class="fas fa-map-marker"></i></div>
+						<div class="test">
 				        ${login.location }
 				        <fmt:formatDate value="${login.loginDate}" pattern="yyyy-MM-dd HH:mm:ss"/>   
-				        ${login.ip } 
+				        <span class="ip">${login.ip }</span> 
 				        <br><br>
+				        </div>
 				        <hr>
 			    	</c:forEach>
 				</div>
-			  
 		</div>
 	</form>
 	</div>
@@ -219,36 +220,120 @@ input[type=text]:focus {
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
 	</footer>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyC4rw11RhDxupVZthhGLLJnBLsOgHGyKhk"></script>
+<script type="text/javascript" 
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4rw11RhDxupVZthhGLLJnBLsOgHGyKhk"
+    async defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript">
-	window.onload = function() {
-		if(!navigator.geolocation) {
-			document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
-			return;
-		}
-		navigator.geolocation.getCurrentPosition(function(position) {
-			var lat = position.coords.latitude;
-			var lon = position.coords.longitude;
-			
-			//마장동주소
-			//var lat = 37.567986415251;
-			//var lon = 127.03721964556;
-			
-			console.log('위도 : ' + lat);
-			console.log('경도 : ' + lon);
-			
-			var initLoc = new google.maps.LatLng(lat,lon);
-			console.log(initLoc);
-			
-			
-			var map = new google.maps.Map(document.getElementById('map_canvas'),{
-				zoom:8,
-	            mapTypeId : google.maps.MapTypeId.ROADMAP
-			});
-	         map.setCenter(initLoc);
-	         var marker = new google.maps.Marker({position:initLoc,map:map,title:'현재위치'})
+window.onload = function() {
+	if (!navigator.geolocation) {
+		document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
+		return;
+	}
+	navigator.geolocation.getCurrentPosition(function(position) {
+		var lat = position.coords.latitude;
+		var lon = position.coords.longitude;
+		
+		console.log('위도 : ' + lat);
+		console.log('경도 : ' + lon);
+		
+		var initLoc = new google.maps.LatLng(lat,lon);
+		console.log(initLoc);
+		
+		var map = new google.maps.Map(document.getElementById('map'),{
+			zoom:6,
+            mapTypeId : google.maps.MapTypeId.ROADMAP
 		});
-	};
+         map.setCenter(initLoc);
+         var marker = new google.maps.Marker({position:initLoc,map:map,title:'현재위치'})
+         map.setDraggable(false);
+	});
+};
+
+
+$(".test").click(function() {
+	//alert($(".ip").text());
+	alert($(this).children(".ip").text());
+
+	$.get( "https://api.ipify.org?format=json", function(login) {
+		  //${ip}.val(login.ip);  
+    });
+	
+	function showLocationOnMap (location) {
+		  var map;
+	      map = new google.maps.Map(document.getElementById('map'), {
+	          center: {lat: Number(location.latitude), lng: Number(location.longitude)},
+	          zoom: 6
+	      });
+	      var marker = new google.maps.Marker({
+	          position: {lat: Number(location.latitude), lng: Number(location.longitude)},
+	          map: map,
+	          title: "Public IP:"+location.ipAddress+" @ "+location.city
+	      });      
+	}
+	
+	$.ajax({
+		  url: "GeoIP",
+		  type: "POST",
+		  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		  data: $.param( {ipAddress : $(this).children(".ip").text()} ),
+		  success: function(data) {
+			  if (data.ipAddress != null) {
+				  console.log ("Success:"+data.ipAddress);    
+			    	showLocationOnMap(data);  	
+			  }
+		  },
+		  error: function(err) {
+		      console.log(err);
+		  },
+	  });
+	
+});
+
+/*
+$(document).ready (function () {
+	
+	$.get( "https://api.ipify.org?format=json", function( data ) {
+		  console.log(data);
+		  ${ip}.val(data.ip) ;
+    });
+	
+	function showLocationOnMap (location) {
+		  var map;
+	      map = new google.maps.Map(document.getElementById('map'), {
+	          center: {lat: Number(location.latitude), lng: Number(location.longitude)},
+	          zoom: 8
+	      });
+	      var marker = new google.maps.Marker({
+	          position: {lat: Number(location.latitude), lng: Number(location.longitude)},
+	          map: map,
+	          title: "Public IP:"+location.ipAddress+" @ "+location.city
+	      });      
+	}
+	
+	$( "#ipForm" ).submit(function( event ) {
+		  event.preventDefault();
+		  $.ajax({
+			  url: "loginActivity",
+			  type: "POST",
+			  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			  data: $.param( {ipAddress : ${ip}.val()} ),
+			  success: function(data) {
+				  console.log(data)
+				  if (data.ipAddress != null) {
+					  console.log ("Success:"+data.ipAddress);    
+				    	showLocationOnMap(data);  	
+				  }
+			  },
+			  error: function(err) {
+			      console.log(err);
+			      $("#status").html("Error:"+JSON.stringify(data));
+			  },
+		  });  
+	});
+	
+});
+*/
 </script>
 </body>
 </html>
