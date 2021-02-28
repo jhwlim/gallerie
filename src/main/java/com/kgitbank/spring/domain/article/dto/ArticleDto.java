@@ -5,7 +5,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class ArticleContentDto {
+public class ArticleDto {
 
 	private int id;
 	private int writerSeqId;

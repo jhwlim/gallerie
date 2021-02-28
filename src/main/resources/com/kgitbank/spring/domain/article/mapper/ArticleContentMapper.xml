@@ -4,7 +4,45 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.article.mapper.ArticleContentMapper">
 	
-	<select id="selectOne" resultType="com.kgitbank.spring.domain.article.dto.ArticleContentDto">
+	<insert id="insertArticle">
+		INSERT INTO
+			articles
+		VALUES (
+			article_seq.nextval, #{writerSeqId}, #{content}, sysdate
+		)
+	</insert>
+	
+	
+	<insert id="insertTags">
+		<selectKey keyProperty="articleId" resultType="int" order="BEFORE">
+			SELECT article_seq.currval FROM dual
+		</selectKey>
+		<foreach collection="list" item="tag" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO tag (
+				article_id, tag_name
+			) VALUES (
+				#{articleId}, #{tag.tagName}
+			)
+   		</foreach>
+	</insert>
+	
+	
+	<insert id="insertFiles">
+		<selectKey keyProperty="articleId" resultType="int" order="BEFORE">
+			SELECT article_seq.currval FROM dual
+		</selectKey>
+		<foreach collection="list" item="file" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO files (
+				article_id, img_path
+			) VALUES (
+				#{articleId}, #{file.imgPath}
+			)
+   		</foreach>
+	</insert>
+	
+	
+	
+	<select id="selectOne" resultType="com.kgitbank.spring.domain.article.dto.ArticleDto">
 		SELECT
 		    a.*, m.id as writer_id, m.name as writer_name, m.img_path
 		FROM
