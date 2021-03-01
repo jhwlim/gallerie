@@ -12,10 +12,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
 
-import lombok.extern.log4j.Log4j;
-
 @Service
-@Log4j
 public class GeoIPLocationService {
     private DatabaseReader dbReader;
     
@@ -27,16 +24,12 @@ public class GeoIPLocationService {
     public GeoIPVO getLocation(String ip) throws IOException, GeoIp2Exception {
         InetAddress ipAddress = InetAddress.getByName(ip);
         CityResponse response = dbReader.city(ipAddress);
-        
-        String cityName = response.getCity().getName();
+
         String latitude = response.getLocation().getLatitude().toString();
         String longitude = response.getLocation().getLongitude().toString();
         String state = response.getLeastSpecificSubdivision().getName();
-       
-//        log.info(ip);
+        
         GeoIPVO g = new GeoIPVO(ip, state, latitude, longitude);
-//        log.info(g);
         return g;
-//        return new GeoIP(ip, cityName, latitude, longitude);
     }
 }
