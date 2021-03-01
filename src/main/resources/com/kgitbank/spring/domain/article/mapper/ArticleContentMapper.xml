@@ -4,6 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.article.mapper.ArticleContentMapper">
 	
+	<select id="selectArticleWithWriterInfoById" resultType="com.kgitbank.spring.domain.article.dto.ArticleDto">
+		SELECT
+		    a.*, m.id as writer_id, m.name as writer_name, m.img_path
+		FROM
+		    articles a
+		    INNER JOIN members m
+		    ON a.writer_seq_id = m.seq_id
+		WHERE
+			a.id = #{id}
+	</select>
+	
+	<select id="selectFileByArticleId" resultType="FileVO">
+		SELECT * FROM files WHERE article_id = #{articleId}
+	</select>
+	
+	
 	<insert id="insertArticle">
 		INSERT INTO
 			articles
@@ -11,7 +27,6 @@
 			article_seq.nextval, #{writerSeqId}, #{content}, sysdate
 		)
 	</insert>
-	
 	
 	<insert id="insertTags">
 		<selectKey keyProperty="articleId" resultType="int" order="BEFORE">
@@ -25,7 +40,6 @@
 			)
    		</foreach>
 	</insert>
-	
 	
 	<insert id="insertFiles">
 		<selectKey keyProperty="articleId" resultType="int" order="BEFORE">
@@ -42,15 +56,5 @@
 	
 	
 	
-	<select id="selectArticleWithWriterInfoById" resultType="com.kgitbank.spring.domain.article.dto.ArticleDto">
-		SELECT
-		    a.*, m.id as writer_id, m.name as writer_name, m.img_path
-		FROM
-		    articles a
-		    INNER JOIN members m
-		    ON a.writer_seq_id = m.seq_id
-		WHERE
-			a.id = #{id}
-	</select>
 	
 </mapper>

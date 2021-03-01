@@ -43,6 +43,7 @@ public class ArticleContentController {
 		if (article == null) {
 			return "redirect:/";
 		}
+		article.setFiles(service.selectFileByArticleId(article.getId()));
 		
 		model.addAttribute("article", article);
 		return "article/content";

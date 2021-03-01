@@ -11,6 +11,9 @@ public interface ArticleContentMapper {
 	
 	public ArticleDto selectArticleWithWriterInfoById(int id);
 
+	public List<FileVO> selectFileByArticleId(int articleId);
+
+	
 	public void insertArticle(ArticleVO article);
 
 	public void insertTags(List<TagVO> tags);

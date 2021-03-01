@@ -60,6 +60,13 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 		return article;
 	}
 
+
+	@Override
+	public List<FileVO> selectFileByArticleId(int articleId) {
+		return mapper.selectFileByArticleId(articleId);
+	}
+	
+	
 	@Override
 	public boolean saveArticleContent(ArticleVO article, MultipartFile[] files) {
 		boolean result = false;
@@ -75,9 +82,8 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 			if (files != null && files.length > 0) {
 				// 유효성 검사 - 지원하지 않은 파일 형식일 때 처리
 				for(MultipartFile file : files) {
-					String f = file.getOriginalFilename();
-					if (FileUtils.getMediaType(f.substring(f.lastIndexOf(".")+1)) == null) {
-						throw new Exception(f + " 파일은 지원하지 않은 파일 형식입니다.");
+					if (FileUtils.getMediaType(file.getOriginalFilename()) == null) {
+						throw new Exception(file.getOriginalFilename() + " 파일은 지원하지 않은 파일 형식입니다.");
 					}
 				}
 				
@@ -85,7 +91,7 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 				String[] fileNames = FileUtils.uploadFiles(files, uploadPath); // 연도/월/일/파일이름
 				List<FileVO> fileList = new ArrayList<>();
 				for (String fileName : fileNames) {
-					fileList.add(new FileVO(fileName));
+					fileList.add(new FileVO(FileUtils.currPathtoUnderbarPath(fileName)));
 				}
 				
 				// 서버에 저장한 파일이름을 DB에 저장하기
@@ -153,5 +159,6 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 		
 		return new ArrayList<>(tags);
 	}
+
 	
 }

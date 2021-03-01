@@ -1,6 +1,9 @@
 package com.kgitbank.spring.domain.article.dto;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.kgitbank.spring.domain.model.FileVO;
 
 import lombok.Data;
 
@@ -15,4 +18,6 @@ public class ArticleDto {
 	private String writerId;
 	private String writerName;
 	private String imgPath;
+	
+	private List<FileVO> files;
 }

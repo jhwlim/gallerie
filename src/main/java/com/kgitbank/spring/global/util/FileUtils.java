@@ -27,12 +27,12 @@ public class FileUtils {
 	}
 	
 	/**
-	 * 파일 확장자 → MediaType 으로 변환
-	 * @param ext  파일 확장자
+	 * 파일 이름 → 파일 확장자 → MediaType 으로 변환
+	 * @param fileName  파일 이름
 	 * @return 파일 확장자의 MediaType을 반환, 없으면 null
 	 */
-	public static MediaType getMediaType(String ext) {
-		return mediaMap.get(ext.toUpperCase());
+	public static MediaType getMediaType(String fileName) {
+		return mediaMap.get(fileName.substring(fileName.lastIndexOf(".")+1).toUpperCase());
 	}
 	
 	public static String uploadFile(MultipartFile file, String prefix, String uploadPath) {
@@ -137,6 +137,44 @@ public class FileUtils {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * DB에 저장되어 있는 파일 경로를 '/'를 '_'로 변환한다.
+	 * @param currPath  현재 파일 저장된 경로(YYYY/MM/DD/filePath)
+	 * @return YYYY__MM__DD__filePath
+	 */
+	public static String currPathtoUnderbarPath(String currPath) {
+		StringBuilder underbarPath = new StringBuilder();
+		
+		underbarPath.append(currPath.substring(0, 4)) 	// YYYY
+					.append("_")
+					.append(currPath.substring(5, 7)) 	// MM
+					.append("_")
+					.append(currPath.substring(8, 10)) 	// DD
+					.append("_")
+					.append(currPath.substring(11));
+		
+		return underbarPath.toString();
+	}
+	
+	/**
+	 * '_' 형식의 파일 경로를 현재 저장되어 있는 파일 경로로 변환한다.
+	 * @param underbarPath  YYYY__MM__DD__filePath  
+	 * @return YYYY/MM/DD/filePath
+	 */
+	public static String underbarPathTocurrPath(String underbarPath) {
+		StringBuilder currPath = new StringBuilder();
+		
+		currPath.append(underbarPath.substring(0, 4)) 	// YYYY
+				.append(File.separator)
+				.append(underbarPath.substring(5, 7)) 	// MM
+				.append(File.separator)
+				.append(underbarPath.substring(8, 10)) 	// DD
+				.append(File.separator)
+				.append(underbarPath.substring(11));
+			
+		return currPath.toString();
 	}
 	
 }
