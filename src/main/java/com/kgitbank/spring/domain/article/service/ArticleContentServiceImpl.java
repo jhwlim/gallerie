@@ -160,5 +160,11 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 		return new ArrayList<>(tags);
 	}
 
+
+	@Override
+	public int deleteArticleById(int id) {
+		return mapper.deleteArticleById(id);
+	}
+
 	
 }

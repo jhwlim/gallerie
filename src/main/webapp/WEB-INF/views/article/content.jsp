@@ -160,16 +160,40 @@
    					<input type="text" />
    					<button>작성</button>
    				</div>
-   					
    			</div>
     	</div>
     	<hr>
+    	<button id="deleteBtn">삭제하기</button>
     </div>    
 </div>
-
 <script>
 $('.article__img').on('error', function() {
 	this.src = "<c:url value = '/resources/image/article/alternative.jpg'/>";
+});
+
+$('#deleteBtn').on('click', function() {
+	var articleId = ${article.id};
+	var writerId = "${article.writerId}"; 
+	
+	var data = {
+			id : articleId,
+			writerId : writerId
+	};
+	console.log(data);
+	$.ajax({
+		url: "<c:url value = '/article'/> ",
+		type: 'delete',
+		contentType : "application/json",
+		data: JSON.stringify(data),
+		beforeSend: function() {
+			
+		},
+		success: function() {
+			alert('게시물이 삭제되었습니다.');
+			location.href = "<c:url value = '/' />";
+		}
+	});
+	
 });
 </script>
 

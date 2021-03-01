@@ -12,12 +12,13 @@ public interface ArticleContentMapper {
 	public ArticleDto selectArticleWithWriterInfoById(int id);
 
 	public List<FileVO> selectFileByArticleId(int articleId);
-
 	
 	public void insertArticle(ArticleVO article);
 
 	public void insertTags(List<TagVO> tags);
 	
 	public void insertFiles(List<FileVO> files);
+	
+	public int deleteArticleById(int id);
 	
 }

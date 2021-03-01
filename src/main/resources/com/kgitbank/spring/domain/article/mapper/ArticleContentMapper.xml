@@ -19,6 +19,9 @@
 		SELECT * FROM files WHERE article_id = #{articleId}
 	</select>
 	
+	<delete id="deleteArticleById">
+		DELETE FROM articles WHERE id = #{id}
+	</delete>
 	
 	<insert id="insertArticle">
 		INSERT INTO

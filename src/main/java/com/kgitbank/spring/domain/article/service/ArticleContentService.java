@@ -16,4 +16,6 @@ public interface ArticleContentService {
 
 	public boolean saveArticleContent(ArticleVO article, MultipartFile[] files);
 	
+	public int deleteArticleById(int id);
+	
 }
