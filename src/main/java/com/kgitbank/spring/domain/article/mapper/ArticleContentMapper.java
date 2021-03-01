@@ -9,7 +9,7 @@ import com.kgitbank.spring.domain.model.TagVO;
 
 public interface ArticleContentMapper {
 	
-	public ArticleDto selectOne(int id);
+	public ArticleDto selectArticleWithWriterInfoById(int id);
 
 	public void insertArticle(ArticleVO article);
 

@@ -42,7 +42,7 @@
 	
 	
 	
-	<select id="selectOne" resultType="com.kgitbank.spring.domain.article.dto.ArticleDto">
+	<select id="selectArticleWithWriterInfoById" resultType="com.kgitbank.spring.domain.article.dto.ArticleDto">
 		SELECT
 		    a.*, m.id as writer_id, m.name as writer_name, m.img_path
 		FROM

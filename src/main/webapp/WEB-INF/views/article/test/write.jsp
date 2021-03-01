@@ -49,13 +49,13 @@
 			console.log(formData);
 			
 			$.ajax({
-				url: "/spring/article/test/save",
-				data: formData,
+				url: "/spring/article/",
 				type: 'post',
+				data: formData,
 				contentType: false,
 				processData: false,
 				success: function() {
-					console.log('complete');
+					console.log("OK");
 				}
 			});
 			
