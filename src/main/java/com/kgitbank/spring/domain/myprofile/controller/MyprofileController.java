@@ -29,6 +29,9 @@ public class MyprofileController {
 	@Autowired
 	private MyprofileService service;
 	private GeoIPLocationService locationService;
+	public MyprofileController() throws IOException {
+		locationService = new GeoIPLocationService();
+	}
 	
 	@Autowired
 	SecurityPwEncoder encoder;
@@ -110,10 +113,6 @@ public class MyprofileController {
 		return "myprofile/loginActivity";
 	}
 	
-	public MyprofileController() throws IOException {
-		locationService = new GeoIPLocationService();
-	}
-	
     @GetMapping(value = "/GeoIP")
 	public String GeoIPTest() {
 		return "geoIPTest/GeoIP";
@@ -122,15 +121,7 @@ public class MyprofileController {
     @PostMapping(value = "/GeoIP", produces="application/json")
     @ResponseBody
     public GeoIPVO getLocation(@RequestParam(value="ipAddress", required=true) String ipAddress) throws Exception {
-        log.info(ipAddress);
     	return locationService.getLocation(ipAddress);
     }
-	
-// ----------------------------------------------------------------------------------
-	// 기능 확인용
-	@GetMapping(value = "/test")
-	public String test() {	
-		return "myprofile/test";
-	}
 	
 }
