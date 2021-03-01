@@ -62,11 +62,11 @@ public class ArticleContentController {
 		String id = (String) session.getAttribute("user");
 		if (id != null) {
 			article.setWriterSeqId(accService.selectMemberById(id).getSeqId());
-			if(!service.saveArticleContent(article, files)) {
+			if(service.saveArticleContent(article, files)) {
 				return new ResponseEntity<>(HttpStatus.OK);				
 			}
 		}
 		
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // 파일 업로드 실패
 	}
 }

@@ -26,6 +26,11 @@ public class FileUtils {
 		mediaMap.put("PNG", MediaType.IMAGE_PNG);
 	}
 	
+	/**
+	 * 파일 확장자 → MediaType 으로 변환
+	 * @param ext  파일 확장자
+	 * @return 파일 확장자의 MediaType을 반환, 없으면 null
+	 */
 	public static MediaType getMediaType(String ext) {
 		return mediaMap.get(ext.toUpperCase());
 	}
@@ -57,6 +62,7 @@ public class FileUtils {
 	}
 	
 	public static String[] uploadFiles(MultipartFile[] files, String uploadPath) {
+		
 		String[] fileNames = new String[files.length];
 		String currentUploadPath = getCurrentUploadPath(uploadPath);
 		String dirPath = currentUploadPath.substring(uploadPath.length());

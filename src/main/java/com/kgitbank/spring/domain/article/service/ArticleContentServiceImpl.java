@@ -65,7 +65,6 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 		boolean result = false;
 		TransactionStatus txStatus = transactionManger.getTransaction(new DefaultTransactionDefinition());
 		
-		log.info(getTagsFromContent(null));
 		// 트랜잭션 처리
 		try {
 			insertArticle(article);
@@ -74,6 +73,14 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 			insertTags(getTagsFromContent(article.getContent()));				
 			
 			if (files != null && files.length > 0) {
+				// 유효성 검사 - 지원하지 않은 파일 형식일 때 처리
+				for(MultipartFile file : files) {
+					String f = file.getOriginalFilename();
+					if (FileUtils.getMediaType(f.substring(f.lastIndexOf(".")+1)) == null) {
+						throw new Exception(f + " 파일은 지원하지 않은 파일 형식입니다.");
+					}
+				}
+				
 				// 파일을 서버에 저장하기
 				String[] fileNames = FileUtils.uploadFiles(files, uploadPath); // 연도/월/일/파일이름
 				List<FileVO> fileList = new ArrayList<>();
@@ -85,13 +92,15 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 				insertFiles(fileList);	
 			}
 			
+			log.info("게시물 업로드 완료");
 			result = true;
+			transactionManger.commit(txStatus);
 		} catch (Exception e) {
 			transactionManger.rollback(txStatus);
+			log.warn("게시물 업로드 실패");
 			e.printStackTrace();
 		}
 		
-		transactionManger.commit(txStatus);
 		return result;
 	}
 
