@@ -242,28 +242,34 @@ window.onload = function() {
 		
 		var map = new google.maps.Map(document.getElementById('map'),{
 			zoom:6,
-            mapTypeId : google.maps.MapTypeId.ROADMAP
+            mapTypeId : google.maps.MapTypeId.ROADMAP,
+            gestureHandling: "none",
+            zoomControl: false,
+            fullscreenControl: false,
+            streetViewControl: false,
+            mapTypeControl: false,
 		});
          map.setCenter(initLoc);
          var marker = new google.maps.Marker({position:initLoc,map:map,title:'현재위치'})
-         map.setDraggable(false);
 	});
 };
 
 
 $(".test").click(function() {
-	//alert($(".ip").text());
-	alert($(this).children(".ip").text());
 
 	$.get( "https://api.ipify.org?format=json", function(login) {
-		  //${ip}.val(login.ip);  
     });
 	
 	function showLocationOnMap (location) {
 		  var map;
 	      map = new google.maps.Map(document.getElementById('map'), {
 	          center: {lat: Number(location.latitude), lng: Number(location.longitude)},
-	          zoom: 6
+	          zoom: 6,
+	          gestureHandling: "none",
+	          zoomControl: false,
+	          fullscreenControl: false,
+	          streetViewControl: false,
+	          mapTypeControl: false,
 	      });
 	      var marker = new google.maps.Marker({
 	          position: {lat: Number(location.latitude), lng: Number(location.longitude)},
@@ -289,51 +295,6 @@ $(".test").click(function() {
 	  });
 	
 });
-
-/*
-$(document).ready (function () {
-	
-	$.get( "https://api.ipify.org?format=json", function( data ) {
-		  console.log(data);
-		  ${ip}.val(data.ip) ;
-    });
-	
-	function showLocationOnMap (location) {
-		  var map;
-	      map = new google.maps.Map(document.getElementById('map'), {
-	          center: {lat: Number(location.latitude), lng: Number(location.longitude)},
-	          zoom: 8
-	      });
-	      var marker = new google.maps.Marker({
-	          position: {lat: Number(location.latitude), lng: Number(location.longitude)},
-	          map: map,
-	          title: "Public IP:"+location.ipAddress+" @ "+location.city
-	      });      
-	}
-	
-	$( "#ipForm" ).submit(function( event ) {
-		  event.preventDefault();
-		  $.ajax({
-			  url: "loginActivity",
-			  type: "POST",
-			  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			  data: $.param( {ipAddress : ${ip}.val()} ),
-			  success: function(data) {
-				  console.log(data)
-				  if (data.ipAddress != null) {
-					  console.log ("Success:"+data.ipAddress);    
-				    	showLocationOnMap(data);  	
-				  }
-			  },
-			  error: function(err) {
-			      console.log(err);
-			      $("#status").html("Error:"+JSON.stringify(data));
-			  },
-		  });  
-	});
-	
-});
-*/
 </script>
 </body>
 </html>

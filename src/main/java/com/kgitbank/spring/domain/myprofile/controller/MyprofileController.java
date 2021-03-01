@@ -110,8 +110,6 @@ public class MyprofileController {
 		return "myprofile/loginActivity";
 	}
 	
-    
-	// 지금 부터 DB의 내용을 가져올수 있을지 시험할거임
 	public MyprofileController() throws IOException {
 		locationService = new GeoIPLocationService();
 	}
@@ -127,14 +125,6 @@ public class MyprofileController {
         log.info(ipAddress);
     	return locationService.getLocation(ipAddress);
     }
-	
-//	@PostMapping(value = "/loginActivity", produces="application/json")
-//    @ResponseBody
-//    public GeoIPVO getLocation(@RequestParam(value="ipAddress", required=true) String ipAddress) throws Exception {
-//        return locationService.getLocation(ipAddress);
-//    }
-	
-	
 	
 // ----------------------------------------------------------------------------------
 	// 기능 확인용

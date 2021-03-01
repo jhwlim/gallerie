@@ -34,9 +34,16 @@
 	   </select>
 	   
 	   <select id="getLoginActivityList" resultType="com.kgitbank.spring.domain.model.LoginVO">
-	   		SELECT location, login_date, ip
-	   		FROM members JOIN logins
-	   		ON seq_id = member_seq_id
+	   		SELECT 
+	   			location, login_date, ip
+	   		FROM 
+	   			members 
+	   		JOIN 
+	   			logins
+	   		ON 
+	   			seq_id = member_seq_id
+	   		ORDER BY 
+	   			login_date desc
 	   </select>
 
 </mapper>
