@@ -86,7 +86,7 @@ public class LoginController {
 		}
 
 		
-		return "account/login";
+		return "account/newLogin";
 	}
 
 	@PostMapping(value = "/")
@@ -102,7 +102,7 @@ public class LoginController {
 		if(loginMember != null) {
 			if(!(encoder.matches(member.getPw(), loginMember.getPw()))) {
 				loginMember = null;
-				req.setAttribute("loginFailMsg", "입력한 아이디와 비밀번호가 일치하지 않습니다. 아이디 또는 비밀번호를 다시 한번 입력해 주세요.");
+				req.setAttribute("loginFailMsg", "입력한 아이디와 비밀번호가 일치하지 않습니다. <br>아이디 또는 비밀번호를 다시 한번 입력해 주세요.");
 				
 			}
 		}else {
@@ -153,7 +153,7 @@ public class LoginController {
 			System.out.println("로그인실패");
 		}
 		
-		return "account/login";
+		return "account/newLogin";
 	} 
 	
 	@PostMapping(value = "/logout")
