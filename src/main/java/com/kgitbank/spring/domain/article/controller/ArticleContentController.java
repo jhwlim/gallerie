@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.domain.article.dto.ArticleDto;
 import com.kgitbank.spring.domain.article.service.ArticleContentService;
+import com.kgitbank.spring.domain.model.ArticleLikeVO;
 import com.kgitbank.spring.domain.model.ArticleVO;
 
 import lombok.extern.log4j.Log4j;
@@ -37,22 +38,34 @@ public class ArticleContentController {
 	
 	@GetMapping(value = "/{id}")
 	public String getContent(@PathVariable("id") String id, 
-							 Model model) {
+							 Model model,
+							 HttpSession session) {
 		log.info("URL : /article - GET");
 		log.info("id=" + id);
 		
+		String loginId = (String) session.getAttribute("user");
+		if (loginId == null) {
+			return "redirect:/"; 
+		}
+		
+		// 게시물에 대한 정보를 조회
 		ArticleDto article = service.selectArticleWithWriterInfoById(id);
 		if (article == null) {
 			return "redirect:/";
 		}
 		article.setFiles(service.selectFileByArticleId(article.getId()));
 		
+		// 해당 게시물에 로그인한 아이디가 좋아요를 눌렀는지 확인
+		ArticleLikeVO likeVO = new ArticleLikeVO(article.getId(), accService.selectMemberById(loginId).getSeqId());
+		article.setHasLike(service.selectCountLikeByMemberSeqIdAndArticleId(likeVO) == 1 ? true : false);
+		
+		log.info(article);
 		model.addAttribute("article", article);
 		return "article/content";
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "")
+	@PostMapping(value = "/")
 	public ResponseEntity<String> saveContent(ArticleVO article, 
 											  MultipartFile[] files,
 											  HttpSession session) {
@@ -74,7 +87,7 @@ public class ArticleContentController {
 	}
 	
 	@ResponseBody
-	@DeleteMapping(value = "", produces = "application/json")
+	@DeleteMapping(value = "/", produces = "application/json")
 	public ResponseEntity<String> deleteContent(@RequestBody ArticleDto articleInfo, HttpSession session) {
 		log.info("URL : /article - DELETE");
 		log.info("articleInfo=" + articleInfo);
@@ -92,5 +105,41 @@ public class ArticleContentController {
 		return result == 0 ? 
 				new ResponseEntity<>(HttpStatus.NOT_FOUND) : // Delete Fail, 삭제할 게시물이 존재하지 않는 경우 
 				new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/like")
+	public ResponseEntity<String> likeArticle(@RequestBody ArticleLikeVO vo, HttpSession session) {
+		log.info("URL : /article/like - POST");
+		log.info("articleId=" + vo.getArticleId());
+		
+		String loginId = (String) session.getAttribute("user");
+		log.info(loginId);
+		if (loginId == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		vo.setMemberSeqId(accService.selectMemberById(loginId).getSeqId());
+		service.insertLike(vo);
+		
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@ResponseBody
+	@DeleteMapping(value = "/like")
+	public ResponseEntity<String> cancelLike(@RequestBody ArticleLikeVO vo, HttpSession session) {
+		log.info("URL : /article/like - DELETE");
+		log.info("articleId=" + vo.getArticleId());
+		
+		String loginId = (String) session.getAttribute("user");
+		log.info(loginId);
+		if (loginId == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		vo.setMemberSeqId(accService.selectMemberById(loginId).getSeqId());
+		service.deleteLike(vo);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

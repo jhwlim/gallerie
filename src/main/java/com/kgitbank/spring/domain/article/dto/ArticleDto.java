@@ -20,4 +20,8 @@ public class ArticleDto {
 	private String imgPath;
 	
 	private List<FileVO> files;
+	
+	private int likeCount;
+	private boolean hasLike;
+	
 }

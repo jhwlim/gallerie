@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kgitbank.spring.domain.article.dto.ArticleDto;
 import com.kgitbank.spring.domain.article.mapper.ArticleContentMapper;
+import com.kgitbank.spring.domain.model.ArticleLikeVO;
 import com.kgitbank.spring.domain.model.ArticleVO;
 import com.kgitbank.spring.domain.model.FileVO;
 import com.kgitbank.spring.domain.model.TagVO;
@@ -164,6 +165,24 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 	@Override
 	public int deleteArticleById(int id) {
 		return mapper.deleteArticleById(id);
+	}
+
+
+	@Override
+	public int selectCountLikeByMemberSeqIdAndArticleId(ArticleLikeVO vo) {
+		return mapper.selectCountLikeByMemberSeqIdAndArticleId(vo);
+	}
+
+
+	@Override
+	public void insertLike(ArticleLikeVO vo) {
+		mapper.insertLike(vo);
+	}
+
+
+	@Override
+	public void deleteLike(ArticleLikeVO vo) {
+		mapper.deleteLike(vo);
 	}
 
 	

@@ -163,7 +163,15 @@
    			</div>
     	</div>
     	<hr>
-    	<button id="deleteBtn">삭제하기</button>
+    	<div>
+	    	<button id="deleteBtn">삭제하기</button>
+    	</div>
+		<div>
+			<button id="likeBtn">
+				<img src="<c:url value = '/resources/image/static/${article.hasLike ? "like_black.png" : "like_white.png"}' />" alt="" id="likeImg" />
+			</button>
+			좋아요 <span id="likeCnt">${article.likeCount}</span>개
+		</div>
     </div>    
 </div>
 <script>
@@ -182,7 +190,7 @@ $('#deleteBtn').on('click', function() {
 	console.log(data);
 	$.ajax({
 		url: "<c:url value = '/article'/> ",
-		type: 'delete',
+		method: 'delete',
 		contentType : "application/json",
 		data: JSON.stringify(data),
 		beforeSend: function() {
@@ -193,6 +201,44 @@ $('#deleteBtn').on('click', function() {
 			location.href = "<c:url value = '/' />";
 		}
 	});
+	
+});
+
+$('#likeBtn').on('click', function() {
+	var hasLike = ${article.hasLike};
+	var likeImgSrc = $('#likeImg').attr('src');
+	var likeBlack = "<c:url value = '/resources/image/static/like_black.png' />";
+	var likeWhite = "<c:url value = '/resources/image/static/like_white.png' />";
+	
+	var likeCnt = $('#likeCnt');
+	
+	var data = {
+			articleId : ${article.id}
+	};
+	
+	if (likeImgSrc == likeBlack) { // 좋아요 상태
+		$.ajax({
+			url: "<c:url value = '/article/like'/> ",
+			method: 'delete',
+			contentType : "application/json",
+			data: JSON.stringify(data),
+			success: function() {
+				likeImg.src = likeWhite;
+				likeCnt.text(parseInt(likeCnt.text())-1);
+			}
+		});
+	} else {
+		$.ajax({
+			url: "<c:url value = '/article/like'/> ",
+			method: 'POST',
+			contentType : "application/json",
+			data: JSON.stringify(data),
+			success: function() {
+				likeImg.src = likeBlack;
+				likeCnt.text(parseInt(likeCnt.text())+1);
+			}
+		});
+	}
 	
 });
 </script>
