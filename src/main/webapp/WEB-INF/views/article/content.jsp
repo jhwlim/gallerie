@@ -127,11 +127,11 @@
 		    					<img src="<c:url value = '/image/profile/${"imgPath"}/'/>" alt="" class="article__writer-img"> 
 		    				</figure>
 		    				<div class="comment__content">
-		    				${"댓글 작성자 아이디"}
+		    				${article.writerId}
 	  						<p class="comment__text">
-	  							${"댓글 내용"}
+	  						${comment.content}
 	  						</p>
-	   						${"댓글 작성일"}
+	   						${comment.writeDate}
 	   						</div>
 	   					</div>
 	   				</div>
@@ -147,9 +147,5 @@
     	<hr>
     </div>    
 </div>
-
-
-
-
 </body>
 </html>
