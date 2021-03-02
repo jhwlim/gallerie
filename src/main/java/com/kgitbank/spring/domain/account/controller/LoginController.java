@@ -49,6 +49,8 @@ public class LoginController {
 		
 		MemberVO loginMember = null;
 		
+		String doubleLogin = "";
+		
 		Cookie[] cookies = req.getCookies();
 		String sessionId;
 		
@@ -69,8 +71,7 @@ public class LoginController {
 					System.out.println(loginMember);
 					if(loginMember != null) {
 						
-						System.out.println("쿠키로 로그인됨!!");
-						SessionConfig.getSessionidCheck("user", loginMember.getId());
+						doubleLogin = SessionConfig.getSessionidCheck("user", loginMember.getId());
 						session.setAttribute("user", loginMember.getId());
 						
 						LoginVO logvo = new LoginVO();
@@ -79,6 +80,19 @@ public class LoginController {
 						logvo.setIp(getip.getIp(req));
 						service.loginHistory(logvo);
 						
+						if(doubleLogin != "") {
+							
+							Date sessionLimit = new Date(System.currentTimeMillis());
+							
+							Sessionkey key = new Sessionkey();
+							key.setEmail(loginMember.getEmail());
+							key.setSessionId(session.getId());
+							key.setNext(sessionLimit);
+							
+							service.keepLogin(key);
+						}
+						
+						
 						return "/main/home";
 					}
 				}
@@ -86,13 +100,13 @@ public class LoginController {
 		}
 
 		
-		return "account/newLogin";
+		return "account/login";
 	}
 
 	@PostMapping(value = "/")
 	public String mainsignin(MemberVO member, HttpSession session, Model model, HttpServletRequest req, HttpServletResponse rep) {
 		
-		
+		String doubleLogin = "";
 		
 		MemberVO loginMember = null;
 
@@ -117,7 +131,7 @@ public class LoginController {
 			
 			System.out.println("다시로그인??");
 			System.out.println("현재 세션 아이디" + session.getId());
-			SessionConfig.getSessionidCheck("user", loginMember.getId());
+			doubleLogin = SessionConfig.getSessionidCheck("user", loginMember.getId());
 			session.setAttribute("user", loginMember.getId());
 			System.out.println(getip.getIp(req));
 			
@@ -128,6 +142,7 @@ public class LoginController {
 			logvo.setIp(getip.getIp(req));
 			service.loginHistory(logvo);
 			String check = req.getParameter("remember");
+			
 			if(check != null) {
 				
 				Cookie newCookie = new Cookie("loginCookie", session.getId());
@@ -142,18 +157,28 @@ public class LoginController {
 				key.setEmail(loginMember.getEmail());
 				key.setSessionId(session.getId());
 				key.setNext(sessionLimit);
+
+					service.keepLogin(key);
+			}
+			
+			if(doubleLogin != "") {
 				
-				System.out.println(key);
-				System.out.println(loginMember);
+				Date sessionLimit = new Date(System.currentTimeMillis());
+				
+				Sessionkey key = new Sessionkey();
+				key.setEmail(loginMember.getEmail());
+				key.setSessionId(session.getId());
+				key.setNext(sessionLimit);
 				
 				service.keepLogin(key);
 			}
+			
 			return "main/home";
 		}else {
 			System.out.println("로그인실패");
 		}
 		
-		return "account/newLogin";
+		return "account/login";
 	} 
 	
 	@PostMapping(value = "/logout")
