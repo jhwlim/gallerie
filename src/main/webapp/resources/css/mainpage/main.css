@@ -166,7 +166,7 @@ img {
 
 .heart{
   position: absolute;
-  background: url("assets/images/posts/img.png") no-repeat;
+  background: url("images/img.png") no-repeat;
   background-position: left;
   background-size: 2900%;
   height: 90px;
