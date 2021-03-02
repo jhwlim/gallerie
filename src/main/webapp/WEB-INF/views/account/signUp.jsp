@@ -6,95 +6,124 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입 페이지</title>
-<link rel="stylesheet" href="/spring/resources/css/member/join.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="/spring/resources/css/member/signup.css?ver=1.0">
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
-
 </head>
+
+
 <body>
-	<div class="wrapper">
-		<form id="joinForm" method="post">
-			<div class="wrap">
-				<div class="subjecet">
-					<span>회원가입</span>
-				</div>
-				<div class="id-wrap">
-					<div class="id-name">아이디</div>
-					<div class="id-input-box">
-						<input class="id" name="id">
-					</div>
-					<span class="id-input-re-1">사용 가능한 아이디입니다.</span>
-					<span class="id-input-re-2">아이디가 이미 존재합니다.</span>
-					<span class="final-id-ck">아이디를 입력해주세요.</span>
-				</div>
-				<div class="pw-wrap">
-					<div class="pw-name">비밀번호</div>
-					<div class="pw-input-box">
-						<input type="password" class="pw" name="pw">
-					</div>
-					<span class="final-pw-ck">비밀번호를 입력해주세요.</span>
-					
-				</div>
-				<div class="pwck-wrap">
-					<div class="pwck-name">비밀번호 확인</div>
-					<div class="pwck-input-box">
-						<input type="password" class="pwck-input">
-					</div>
-					<span class="final-pwck-ck">비밀번호 확인을 입력해주세요</span>
-					<span class="pwck-input-re-1">비밀번호가 일치합니다.</span>
-                	<span class="pwck-input-re-2">비밀번호가 일치하지 않습니다.</span>
-				</div>
 
-				<div class="user-wrap">
-					<div class="user-name">이름</div>
-					<div class="user-input-box">
-						<input class="name" name="name">
-					</div>
-					<span class="final-name-ck">이름을 입력해주세요.</span>
-				</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<img src="/spring/resources/css/member/images/phone.png"
+					class="phone">
+				<div class="change-bg">
+					<div class="outer">
+						<div class="detail"></div>
 
-				<div class="phone-wrap">
-					<div class="phone-name">전화번호</div>
-					<div class="phone-input-box">
-						<input class="phone" name="phone">
 					</div>
-					<span class="final-phone-ck">전화번호를 입력해주세요.</span>
-				</div>
-
-				<div class="mail-wrap">
-					<div class="mail-name">이메일</div>
-					<div class="mail-input-box">
-						<input class="email" name="email">
-					</div>
-					<span class="email-input-re-1">사용 가능한 이메일입니다.</span>
-					<span class="email-input-re-2">이 이메일은 이미 존재합니다.</span>
-					<span class="final-mail-ck">이메일을 입력해주세요.</span>
-					<span class="mail-input-box-warn"></span>
-					<div class="mail-check-wrap">
-						<div class="mail-check-input-box" id="mailCheckInputBoxFalse">
-							<input class="mail-check-input" disabled="disabled">
-						</div>
-						<div class="mail-check-button">
-							<span>인증번호 전송</span>
-						</div>
-						<div class="clearfix"></div>
-						<span id="mailCheckInputBoxWarn"></span>
-					</div>
-				</div>
-				<div class="profile-wrap">
-					<div class="profile-name">자기소개</div>
-					<div class="profile-input-3-wrap">
-						<div class="profile-input-3-box">
-							<input class="profile" name="profile">
-						</div>
-					</div>
-				</div>
-				<div class="join-button-wrap">
-					<input type="button" class="join-button" value="가입하기">
 				</div>
 			</div>
-		</form>
+			<div class="col-sm-6">
+				<div class="right-column text-center">
+
+					<form id="signUpForm" method="post">
+
+						<img src="/spring/resources/css/member/images/instagram.png"
+							class="instagram-logo">
+						<h2 class="info">친구들의 사진과 동영상을 보려면 가입하세요.</h2>
+						<button type="submit" class="btn btn-primary btn-block">
+							<img src="/spring/resources/css/member/images/facebook.jpg">Facebook으로
+							로그인
+						</button>
+						<div class="bar">
+							<div class="left-right"></div>
+							<div class="or-center">또는</div>
+							<div class="left-right"></div>
+						</div>
+
+						<div class="form-group">
+							<input type="text" class="id" name="id" required> <label>사용자이름</label>
+							<img src="/spring/resources/css/member/images/correct.png" class="correct-check">
+							<img src="/spring/resources/css/member/images/incorrect.png" class="incorrect-check">
+						</div>
+																						
+						<div class="form-group">
+							<input type="password" class="pw" name="pw" required> <label>비밀번호</label>
+						</div>
+
+						<div class="form-group">
+							<input type="password" class="pwck-input" name="pwck-input"
+								required> <label>비밀번호 확인</label>
+							<img src="/spring/resources/css/member/images/correct.png" class="correct-check-pw">
+							<img src="/spring/resources/css/member/images/incorrect.png" class="incorrect-check-pw">
+						</div>
+
+						<div class="form-group">
+							<input type="text" class="name" name="name" required> <label>성명</label>
+						</div>
+
+						<div class="form-group">
+							<input type="text" id="phone" class="phone" name="phone" required>
+							<label>전화번호</label>
+						</div>
+
+						<div class="form-group">
+							<input type="text" class="email" name="email" required> <label>이메일</label>
+							<img src="/spring/resources/css/member/images/correct.png" class="correct-check-email">
+							<img src="/spring/resources/css/member/images/incorrect.png" class="incorrect-check-email">
+						</div>
+
+						<div class="form-group">
+							<div class="mail-check-input-box" id="mailCheckInputBoxFalse">
+								<input class="mail-check-input" disabled="disabled" required>
+								<label>인증번호</label>
+								
+							</div>
+							<div class="mail-check-button">
+								<input type="button" value="인증번호 전송">
+							</div>
+							<div class="clearfix"></div>
+							<img src="/spring/resources/css/member/images/correct.png" class="correct-check-num">
+							<img src="/spring/resources/css/member/images/incorrect.png" class="incorrect-check-num">
+						</div>
+
+						<input type="button" id="join-button"
+							class="btn btn-primary btn-block" value="가입">
+					</form>
+
+					<p class="terms">
+						가입하면 Instagram의 <b>약관, 데이터 정책</b> 및 <b> 쿠키 정책 </b> 에 동의하게 됩니다.
+					</p>
+				</div>
+				<div class="right-column-login text-center">
+					<p>
+						계정이 있으신가요?<a href="./login"> 로그인</a>
+					</p>
+				</div>
+				<div class="apps">
+					<p>앱을 다운로드 하세요.</p>
+					<div class="icons">
+						<a href="https://apps.apple.com/app/instagram/id389801252?vt=lo"
+							target="_blank"><img
+							src="/spring/resources/css/member/images/appstore.png"
+							alt="appstore"></a> <a
+							href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb%26utm_campaign%3DsignupPage%26ig_mid%3D6972091C-73FE-4C9E-AF80-7800E1C196CF%26utm_content%3Dlo%26utm_medium%3Dbadge"
+							target="_blank"><img
+							src="/spring/resources/css/member/images/googleplay.png"
+							alt="googleplay"></a>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
 	</div>
 
 	<script>
@@ -110,82 +139,82 @@
 	var mailCheck = false;            // 이메일
 	var mailckCheck = false;		 // 이메일 중복 검사
 	var mailnumCheck = false;        // 이메일 인증번호 확인
-	var addressCheck = false         // 주소
 	
 	var code = "";	//이메일전송 인증번호 저장위한 코드
 	
 	$(document).ready(function(){
 		//회원가입 버튼(회원가입 기능 작동)
-	    $(".join-button").click(function(){
+	    $("#join-button").click(function(){
 	    	
 	    	 var id = $('.id').val();				// id 입력란
 	         var pw = $('.pw').val();				// 비밀번호 입력란
 	         var pwck = $('.pwck-input').val();		// 비밀번호 확인 입력란
 	         var name = $('.name').val();           // 이름 입력란
-	         var phone = $('.phone').val();			// 전화번호 확인 입력란
+	         var phone = $('#phone').val();			// 전화번호 확인 입력란
 	         var mail = $('.email').val();          // 이메일 입력란
 	         
 	         /* 아이디 유효성검사 */
 	         if(id == ""){
-	             $('.final-id-ck').css('display','block');
+				 
 	             idCheck = false;
 	         }else{
-	             $('.final-id-ck').css('display', 'none');
+
 	             idCheck = true;
 	         }
 	         
 	         /* 비밀번호 유효성 검사 */
 	         if(pw == ""){
-	             $('.final-pw-ck').css('display','block');
+	             
 	             pwCheck = false;
 	         }else{
-	             $('.final-pw-ck').css('display', 'none');
+	             
 	             pwCheck = true;
 	         }
 	         
 	         /* 비밀번호 확인 유효성 검사*/ 
 	         if(pwck == ""){
-	             $('.final-pwck-ck').css('display','block');
+	             
 	             pwckCheck = false;
 	         }else{
-	             $('.final-pwck-ck').css('display', 'none');
+	         
 	             pwckCheck = true;
 	         }
 	         
 	         
 	         /* 이름 유효성 검사 */
 	         if(name == ""){
-	             $('.final-name-ck').css('display','block');
+	             
 	             nameCheck = false;
 	         }else{
-	             $('.final-name-ck').css('display', 'none');
+	             
 	             nameCheck = true;
 	         }
 	         
 	         /* 전화번호 유효성 검사 */
 	         if(phone == ""){
-	             $('.final-phone-ck').css('display','block');
+	        	 
 	             phoneCheck = false;
 	         }else{
-	             $('.final-phone-ck').css('display', 'none');
 	             phoneCheck = true;
 	         }
 	         
 	         /* 이메일 유효성 검사 */
 	         if(mail == ""){
-	             $('.final-mail-ck').css('display','block');
+	             
 	             mailCheck = false;
 	         }else{
-	             $('.final-mail-ck').css('display', 'none');
+	             
 	             mailCheck = true;
 	         }
 	         
 	         /* 최종 유효성 검사 */
 	         if(idCheck&&idckCheck&&pwCheck&&pwckCheck&&pwckcorCheck&&nameCheck&&phoneCheck&&mailCheck&mailckCheck&&mailnumCheck ){
-	        	 $("#joinForm").attr("action", "./success");
-		 	     $("#joinForm").submit(); 
+	        	 $("#signUpForm").attr("action", "./success");
+		 	     $("#signUpForm").submit(); 
+		 	     
+		 	     alert('회원가입이 완료되었습니다.');
 	         } 
-
+	         	       	         	      	      
 	         return false;
 	 	        
 	    });
@@ -204,12 +233,12 @@
 				success : function(result){
 				
 					if(result != 'fail'){
-						$('.id-input-re-1').css("display","inline-block");
-						$('.id-input-re-2').css("display", "none"); 
+						$('.correct-check').css('display', 'block');
+			            $('.incorrect-check').css('display', 'none');
 						idckCheck = true;
-					} else {
-						$('.id-input-re-2').css("display","inline-block");
-						$('.id-input-re-1').css("display", "none");
+					} else {									             
+			            $('.correct-check').css('display','none');
+			            $('.incorrect-check').css('display','block');
 						idckCheck = false;
 					}
 
@@ -233,12 +262,12 @@
 				success : function(result){
 				
 					if(result != 'fail'){
-						$('.email-input-re-1').css("display","inline-block");
-						$('.email-input-re-2').css("display", "none"); 
+						$('.correct-check-email').css('display', 'block');
+			            $('.incorrect-check-email').css('display', 'none'); 
 						mailckCheck = true;
 					} else {
-						$('.email-input-re-2').css("display","inline-block");
-						$('.email-input-re-1').css("display", "none");
+						$('.correct-check-email').css('display','none');
+			            $('.incorrect-check-email').css('display','block');
 						mailckCheck = false;
 					}
 
@@ -291,12 +320,12 @@
 		    
 		    
 		    if(inputCode == code){                            	 // 일치할 경우
-		        checkResult.html("인증번호가 일치합니다.");
-		        checkResult.attr("class", "correct");
+		    	$('.correct-check-num').css('display', 'block');
+	            $('.incorrect-check-num').css('display', 'none'); 
 		        mailnumCheck = true;
 		    } else {                                             // 일치하지 않을 경우
-		        checkResult.html("인증번호를 다시 확인해주세요.");
-		        checkResult.attr("class", "incorrect");
+		    	$('.correct-check-num').css('display','none');
+	            $('.incorrect-check-num').css('display','block');
 		        mailnumCheck = false;
 		    }  
 		    
@@ -310,12 +339,12 @@
 		    $('.final-pwck-ck').css('display', 'none');
 		    
 		    if(pw == pwck){
-		        $('.pwck-input-re-1').css('display','block');
-		        $('.pwck-input-re-2').css('display','none');
+		    	$('.correct-check-pw').css('display', 'block');
+	            $('.incorrect-check-pw').css('display', 'none');
 		        pwckcorCheck = true;
 		    }else{
-		        $('.pwck-input-re-1').css('display','none');
-		        $('.pwck-input-re-2').css('display','block');
+		    	$('.correct-check-pw').css('display','none');
+	            $('.incorrect-check-pw').css('display','block');
 		        pwckcorCheck = false;
 		    }        
 			
@@ -328,7 +357,6 @@
 		}
 		
 	</script>
-
 
 </body>
 </html>

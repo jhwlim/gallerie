@@ -5,7 +5,7 @@
 <mapper
 	namespace="com.kgitbank.spring.domain.model.mapper.FollowMapper">
 
-	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.FollowVO">
+	<select id="selectAll" resultType="FollowVO">
 		SELECT * FROM follow
 	</select>
 	

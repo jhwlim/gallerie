@@ -3,6 +3,7 @@ package com.kgitbank.spring.domain.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+@Alias("MemberVO")
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
