@@ -24,12 +24,13 @@ public class FollowMapperTests {
 	@Autowired
 	FollowMapper mapper;
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectAllTest() {
 		log.info(mapper.selectAll());
 	}
 	
+	@Ignore
 	@Test
 	public void followTest() {
 		

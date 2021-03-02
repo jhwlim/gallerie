@@ -5,7 +5,7 @@
 <mapper
 	namespace="com.kgitbank.spring.domain.model.mapper.CommentMapper">
 
-	<select id="selectAll" resultType="com.kgitbank.spring.domain.model.CommentVO">
+	<select id="selectAll" resultType="CommentVO">
 		SELECT * FROM comments
 	</select>
 	

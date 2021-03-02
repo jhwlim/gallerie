@@ -24,7 +24,7 @@ public class CommentMapperTests {
 	@Autowired
 	CommentMapper mapper;
 
-	@Ignore
+//	@Ignore
 	@Test
 	public void selectAll() {
 		log.info(mapper.selectAll());
@@ -49,6 +49,7 @@ public class CommentMapperTests {
 		log.info("createCommentTest - Complete");
 	}
 	
+	@Ignore
 	@Test
 	public void createCommentSamples() {
 		

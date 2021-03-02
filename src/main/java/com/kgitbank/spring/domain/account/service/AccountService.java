@@ -1,6 +1,7 @@
 package com.kgitbank.spring.domain.account.service;
 
 import com.kgitbank.spring.domain.account.dto.Sessionkey;
+import com.kgitbank.spring.domain.model.LoginVO;
 import com.kgitbank.spring.domain.model.MemberVO;
 
 public interface AccountService {
@@ -10,6 +11,8 @@ public interface AccountService {
 	public void keepLogin(Sessionkey key);
 	
 	public MemberVO checkUserWithSessionkey(String sessionId);
+	
+	public void loginHistory(LoginVO history);
 	
 	// 회원가입
 	public int signUp(MemberVO mem) throws Exception;
