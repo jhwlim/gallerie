@@ -30,3 +30,4 @@ target
 .settings
 bin
 *.properties
+config.js
