@@ -17,7 +17,7 @@ public class GeoIPLocationService {
     private DatabaseReader dbReader;
     
     public GeoIPLocationService() throws IOException {
-        File database = new File("C:\\MyInstagram\\geolite2DB\\GeoLite2-City.mmdb");
+        File database = new File("D:\\GeoLite2-City_20210223\\GeoLite2-City.mmdb");
         dbReader = new DatabaseReader.Builder(database).build();
     }
     
