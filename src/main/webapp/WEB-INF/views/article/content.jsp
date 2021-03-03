@@ -158,7 +158,7 @@ $(document).ready(function(){
 		var comment = $("#comment").val();
 		$.ajax({
 			type: "post",
-			url: "",
+			url: "/comment/insert",
 			data: $.param( {$(this).children(".comment").text()} ),
 			success: function() {
 				alert("댓글 등록 완료");
@@ -169,8 +169,9 @@ $(document).ready(function(){
 	function commentList() {
 		$.ajax({
 			type: "get",
-			url: "",
-			success: function() {
+			url: "/comment/list",
+			data: {},
+			success: function(data) {
 			
 				$("#comment").html();
 			}

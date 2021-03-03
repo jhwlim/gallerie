@@ -15,7 +15,7 @@ import com.kgitbank.spring.domain.model.CommentVO;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping(value = "/article/*")
+@RequestMapping(value = "/comment")
 @Log4j
 public class ArticleCommentController {
 
@@ -23,7 +23,7 @@ public class ArticleCommentController {
 	ArticleCommentService service;
 	
 	// 댓글 목록
-	@RequestMapping("/*")
+	@RequestMapping(value = "/list")
 	@ResponseBody
 	public List<CommentVO> listComment(@RequestParam int id) {
 		List<CommentVO> list = service.list(id);
@@ -31,12 +31,23 @@ public class ArticleCommentController {
 	}
 	
 	// 댓글 작성
-	@RequestMapping("")
+	@RequestMapping(value = "/insert")
 	public void insertComment(@ModelAttribute CommentVO vo) {
 		
 		service.insertComment(vo);
 	}
 	
+	// 댓글 수정
+	@RequestMapping(value = "/update")
+	public void updateComment() {
+		
+	}
+	
+	// 댓글 삭제
+	@RequestMapping(value = "/delete")
+	public void deleteComment() {
+		
+	}
 	
 }
 
