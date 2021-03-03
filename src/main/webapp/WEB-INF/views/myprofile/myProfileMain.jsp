@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
 <!-- css -->
-<link rel="stylesheet" href="/spring/resources/css/profile/profile.css?ver=1.0">
+<link rel="stylesheet" href="/spring/resources/css/profile/profile.css?ver=1.0"">
 
 </head>
 <body>
