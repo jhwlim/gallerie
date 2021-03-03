@@ -23,20 +23,29 @@ public class ProfileMainController {
 	@Autowired
 	ProfileMainService service;
 	
-	@GetMapping("/{id}")
-	public String main(@PathVariable String id, Model model, HttpSession session) {
+	@GetMapping({"/", "/{id}"})
+	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		log.info("URL : /myprofile/" + id + " - GET");
+		log.info("id=" + id);
+		if (id == null) {
+			log.warn("id is null");
+			return "redirect:/";
+		}
 		
 		ProfileDto member = service.selectMemberById(id);
-		MemberVO loginUser = (MemberVO) session.getAttribute("user");
-		if (loginUser != null) {
-			member.setSignedIn(id.equals(loginUser.getId()));			
+		if (member == null) {
+			log.warn("page not found");
+			return "redirect:/";
 		}
+		
+		String loginedId = (String) session.getAttribute("user");
+		log.info("loginedId=" + loginedId);
+		
+		member.setSignedIn(id.equals(loginedId));
 		log.info("member=" + member);
 		
-		member.setSignedIn(true);
 		model.addAttribute("member", member);
 		
-		return member != null ? "myprofile/myProfileMain" : "";
+		return "myprofile/myProfileMain";
 	}
 }
