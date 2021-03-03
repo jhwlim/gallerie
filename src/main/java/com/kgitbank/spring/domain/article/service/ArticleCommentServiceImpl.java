@@ -1,5 +1,7 @@
 package com.kgitbank.spring.domain.article.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,14 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
 	ArticleCommentMapper mapper;
 	
 	@Override
+	public List<CommentVO> list(int id) {
+		return mapper.list(id);
+	}
+	
+	@Override
 	public void insertComment(CommentVO comment) {
 		mapper.insertComment(comment);
 	}
+
 
 }

@@ -126,20 +126,21 @@
 	   						<figure class="article__writer-figure">
 		    					<img src="<c:url value = '/image/profile/${"imgPath"}/'/>" alt="" class="article__writer-img"> 
 		    				</figure>
-		    				<div class="comment__content">
-		    				${article.writerId}
-	  						<p class="comment__text">
-	  						${comment.content}
-	  						</p>
-	   						${comment.writeDate}
+		    				<!-- comment__content에 내용들어가야 -->
+		    				<div class="comment__content"> 
+			    				${article.writerId}
+		  						<p class="comment__text" id="content">
+		  						${comment.content}
+		  						</p>
+		   						${comment.writeDate}
 	   						</div>
 	   					</div>
 	   				</div>
    				</div>
    				<div class="comment-write">
    					<!-- 댓글을 작성하는 영역 -->
-   					<input type="text" />
-   					<button>작성</button>
+   					<input type="text" class="comment" id="comment" placeholder="댓글작성"/>
+   					<button id="commentWrite">작성</button>
    				</div>
    					
    			</div>
@@ -147,5 +148,43 @@
     	<hr>
     </div>    
 </div>
+<!-- 댓글관련 스크립트 -->
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	commentList();
+	
+	$("#commentWrite").click(function(){
+		var comment = $("#comment").val();
+		$.ajax({
+			type: "post",
+			url: "",
+			data: $.param( {$(this).children(".comment").text()} ),
+			success: function() {
+				alert("댓글 등록 완료");
+			}
+		});
+	});
+	
+	function commentList() {
+		$.ajax({
+			type: "get",
+			url: "",
+			success: function() {
+			
+				$("#comment").html();
+			}
+		});
+	}
+	
+});
+</script>
 </body>
 </html>
+
+
+
+
+
+
+

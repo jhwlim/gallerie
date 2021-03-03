@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.article.mapper.ArticleCommentMapper">
 
+	<!-- 댓글작성 -->
 	<insert id="insertComment">
 		INSERT INTO
 			comments
@@ -12,20 +13,39 @@
 		)
 	</insert>
 
+	<!-- 댓글작성자의 아이디, 내용, 게시날짜 -->
 	<select id="commentList">
-		
+		SELECT DISTINCT
+		    m.id, c.content, c.write_date
+		FROM
+		    members m, articles a, comments c
+		WHERE
+		    m.seq_id = a.writer_seq_id
+		AND
+		    a.id = c.article_id
+		AND
+		    c.article_id = #{articleId};
 	</select>
 
+	<!-- 댓글수정 -->
+	<update id="updateComment">
+		UPDATE 
+			comments 
+		SET 
+			content = #{content} 
+		WHERE 
+			article_id = #{articleId};
+	</update>
 
-
-
-
-
-
-
-
-
-
-
-
+	<!-- 댓글삭제 -->
+	<delete id="deleteComment">
+		DELETE FROM 
+			comments 
+		WHERE 
+			article_id = #{articleId};
+	</delete>
 </mapper>
+
+
+
+
