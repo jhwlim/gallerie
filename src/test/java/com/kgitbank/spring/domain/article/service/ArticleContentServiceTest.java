@@ -1,5 +1,9 @@
 package com.kgitbank.spring.domain.article.service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,7 @@ public class ArticleContentServiceTest {
 	@Autowired
 	ArticleContentService service;
 	
+	@Ignore
 	@Test
 	public void transactionTest() {
 		
@@ -31,9 +36,23 @@ public class ArticleContentServiceTest {
 		article.setWriterSeqId(2);
 		article.setContent("Hello");
 		
-		service.saveContent(article, null);
+		service.saveArticleContent(article, null);
 		
 		log.info("transactionTest - Complete");
+	}
+	
+	@Test
+	public void getTagsFromContentTest() {
+		
+		String content = "#Hello #google #가나다 #가1 #da,123 #1&* #&* #*123 #해시_연습";
+		
+		Pattern tagPattern = Pattern.compile("\\#([0-9a-zA-Z가-힣_]+)");
+		Matcher matcher = tagPattern.matcher(content);
+		
+		while(matcher.find()) {
+			log.info(matcher.group(1));
+		}
+		
 	}
 	
 }

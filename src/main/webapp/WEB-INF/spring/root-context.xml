@@ -56,6 +56,10 @@
 	    </property>
     </bean>
 	
+	<bean id="articleUploadPath" class="java.lang.String">
+		<constructor-arg value="C:\MyInstagram\article\" /> 
+	</bean>
+	
 	<bean id="profileUploadPath" class="java.lang.String">
 		<constructor-arg value="C:\MyInstagram\profile\" /> 
 	</bean>

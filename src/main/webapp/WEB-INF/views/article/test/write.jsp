@@ -23,17 +23,50 @@
 	
 	<textarea name="content" class="article__textarea" id="content"></textarea> <br>
 	<label for="file">파일업로드</label>
-	<input type="file" multiple="multiple" id="file" style="display: none;"> <br>
+	<input type="file" multiple="multiple" accept=".png, .jpg, .gif" id="file" style="display: none;"> <br>
 	<button id="submitBtn">전송</button>
-
+	
 	<script>
-		let files = [];
+		function checkExtOfFile(file) {
+			const extArr = ['png', 'jpg', 'gif'];
+			var fileName = file.name;
+			var ext = fileName.substring(fileName.lastIndexOf('.')+1);
+			
+			if (extArr.indexOf(ext) >= 0) {
+				return true;
+			} else {
+				alert(fileName + ' 파일은 지원하지 않은 파일 형식입니다.');
+				return false;
+			}
+		}
+		function hasSameFileName(file, fileList) {
+			for (f of fileList) {
+				if (f.name == file.name) {
+					console.log("?");
+					alert(f.name + ' 파일은 이미 추가되었습니다.');
+					return true;
+				}
+			}
+			return false;
+		}
+	</script>
+	<script>
+		let fileList = [];
 		
 		$('#file').on('change', function() {
 			for (file of this.files) {
-				files.push(file);
+				if (!checkExtOfFile(file)) {
+					return;					
+				}
 			}
-			console.log(files);
+			
+			for (file of this.files) {
+				if (!hasSameFileName(file, fileList)) {
+					fileList.push(file);				
+				}
+			}
+			
+			this.value = '';
 		});
 		
 		$('#submitBtn').on('click', function(evt) {
@@ -41,21 +74,24 @@
 			
 			var formData = new FormData();
 			formData.append('content', $('#content').val());
-			console.log($('#content').val());
-			console.log(formData);
-			for (file of files) {
+			
+			for (file of fileList) {
+				if (!checkExtOfFile(file)) {
+					files = [];
+					return;
+				}
 				formData.append('files', file);
 			}
-			console.log(formData);
 			
 			$.ajax({
-				url: "/spring/article/test/save",
-				data: formData,
+				url: "/spring/article/",
 				type: 'post',
+				data: formData,
 				contentType: false,
 				processData: false,
 				success: function() {
-					console.log('complete');
+					alert('게시물이 업로드되었습니다.');
+					location.href = "/spring/article/test/write";
 				}
 			});
 			

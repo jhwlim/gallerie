@@ -14,7 +14,7 @@
 	</insert>
 
 	<!-- 댓글목록(댓글작성자의 아이디, 내용, 게시날짜) -->
-	<select id="commentList">
+	<select id="commentList" resultType="CommentVO">
 		SELECT DISTINCT
 		    m.id, c.content, c.write_date
 		FROM

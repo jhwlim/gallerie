@@ -36,4 +36,8 @@ public interface AccountMapper {
 	// 비밀번호 변경 완료
 	public int changedPw(MemberVO mem);
 
+	
+	// 아이디로 회원정보 조회
+	public MemberVO selectMemberById(String id);
+	
 }

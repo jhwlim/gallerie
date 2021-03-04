@@ -4,6 +4,28 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.article.mapper.ArticleContentMapper">
 	
+	<select id="selectArticleWithWriterInfoById" resultType="com.kgitbank.spring.domain.article.dto.ArticleDto">
+		SELECT
+		    a.*, 
+		    m.id as writer_id, 
+		    m.name as writer_name, 
+		    m.img_path, 
+		    (SELECT COUNT(*) FROM article_like WHERE article_id= #{id}) as like_count
+		FROM
+		    articles a
+		    INNER JOIN members m
+		    ON a.writer_seq_id = m.seq_id
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="selectFileByArticleId" resultType="FileVO">
+		SELECT * FROM files WHERE article_id = #{articleId}
+	</select>
+	
+	<delete id="deleteArticleById">
+		DELETE FROM articles WHERE id = #{id}
+	</delete>
+	
 	<insert id="insertArticle">
 		INSERT INTO
 			articles
@@ -11,7 +33,6 @@
 			article_seq.nextval, #{writerSeqId}, #{content}, sysdate
 		)
 	</insert>
-	
 	
 	<insert id="insertTags">
 		<selectKey keyProperty="articleId" resultType="int" order="BEFORE">
@@ -26,7 +47,6 @@
    		</foreach>
 	</insert>
 	
-	
 	<insert id="insertFiles">
 		<selectKey keyProperty="articleId" resultType="int" order="BEFORE">
 			SELECT article_seq.currval FROM dual
@@ -40,17 +60,30 @@
    		</foreach>
 	</insert>
 	
-	
-	
-	<select id="selectOne" resultType="com.kgitbank.spring.domain.article.dto.ArticleDto">
-		SELECT
-		    a.*, m.id as writer_id, m.name as writer_name, m.img_path
-		FROM
-		    articles a
-		    INNER JOIN members m
-		    ON a.writer_seq_id = m.seq_id
-		WHERE
-			a.id = #{id}
+	<select id="selectCountLikeByMemberSeqIdAndArticleId" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			article_like 
+		WHERE member_seq_id = #{memberSeqId} AND article_id = #{articleId}
 	</select>
+	
+	<insert id="insertLike">
+		INSERT INTO
+			article_like(
+				article_id, 
+				member_seq_id
+		) VALUES (
+			#{articleId},
+			#{memberSeqId}
+		)
+	</insert>
+	
+	<delete id="deleteLike">
+		DELETE FROM
+			article_like
+		WHERE
+			article_id = #{articleId} AND member_seq_id = #{memberSeqId}
+	</delete>
 	
 </mapper>
