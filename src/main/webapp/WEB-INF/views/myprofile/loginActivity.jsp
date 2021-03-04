@@ -220,6 +220,13 @@ input[type=text]:focus {
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
 	</footer>
+<<<<<<< HEAD
+<script type="text/javascript" 
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4rw11RhDxupVZthhGLLJnBLsOgHGyKhk"
+    async defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+=======
 	
 <script src = "<c:url value='/resources/config/config.js' />"></script>
 
@@ -237,6 +244,7 @@ window.initMap = function() {
 
 // Append the 'script' element to 'head'
 document.head.appendChild(script);
+>>>>>>> refs/heads/develop
 window.onload = function() {
 	if (!navigator.geolocation) {
 		document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
