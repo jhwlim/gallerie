@@ -28,6 +28,10 @@ public class ProfileMainServiceImpl implements ProfileMainService {
 	@Override
 	public ProfileDto selectMemberById(String id) {
 		ProfileDto member = mapper.selectMemberById(id);
+		if (member == null) {
+			return null;
+		}
+		
 		if (member.getImgPath() == null
 				|| !new File(uploadPath + member.getImgPath()).exists()) {
 			log.info("Not Exist : " + member.getImgPath());
