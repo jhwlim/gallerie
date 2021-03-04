@@ -94,21 +94,31 @@
                     <div class="col-8" style="padding: 0;">
                         <div class="d-flex flex-column mt-4 mb-4">
 		                    <div class="article">
-			                    <div class="article__items" style="width: calc(100% * ${fn:length(article.files)});">
-		                    	<c:forEach var="file" items="${article.files}" varStatus="status">
-	                                <div class="article__item ${status.first ? 'article__on' : ''}" style="width: calc(100% / ${fn:length(article.files)})">
-	                                    <img src="<c:url value = '/image/article/${file.imgPath}/' />" class="article__image" />
-	                                </div>
-		                    	</c:forEach>
-	                            </div>
-		                    	<figure class="article__btn article__btn--prev">
-									<img src="<c:url value = '/resources/image/static/prev_btn.png' />" alt="" class="article__btn-image" />
-								</figure>
-                               	<figure class="article__btn article__btn--next">
-                               		<img src="<c:url value = '/resources/image/static/next_btn.png' />" alt="" class="article__btn-image" />
-                               	</figure>
+		                    	<c:choose>
+		                    		<c:when test="${fn:length(article.files) eq 0}">
+			                    		<div class="article__items" style="width: 100%;">
+				                    	    <div class="article__item" style="width: 100%;">
+			                                    <img src="<c:url value = '/resources/image/article/alternative.jpg'/>" class="article__image" />
+			                                </div>
+			                            </div>
+		                    		</c:when>
+		                    		<c:otherwise>
+		                    			<div class="article__items" style="width: calc(100% * ${fn:length(article.files)});">
+					                    	<c:forEach var="file" items="${article.files}" varStatus="status">
+				                                <div class="article__item ${status.first ? 'article__on' : ''}" style="width: calc(100% / ${fn:length(article.files)})">
+				                                    <img src="<c:url value = '/image/article/${file.imgPath}/' />" class="article__image" />
+				                                </div>
+					                    	</c:forEach>
+			                            </div>
+				                    	<figure class="article__btn article__btn--prev">
+											<img src="<c:url value = '/resources/image/static/prev_btn.png' />" alt="" class="article__btn-image" />
+										</figure>
+		                               	<figure class="article__btn article__btn--next">
+		                               		<img src="<c:url value = '/resources/image/static/next_btn.png' />" alt="" class="article__btn-image" />
+		                               	</figure>
+		                    		</c:otherwise>
+		                    	</c:choose>
 		                    </div>
-                            
                         </div>
                     </div>
                     <div class="col-4" style="padding: 0;">
@@ -164,12 +174,12 @@
                                         </div>
 									</div>
 									
-									<div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
+									<div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1 article__btns">
                                         <ul class="list-inline d-flex flex-row align-items-center m-0">
                                             <li class="list-inline-item">
-                                                <button class="btn p-0">
-                                                    <div class="content">
-                                                      <span class="heart"></span>
+                                                <button class="btn p-0" value="${article.id}">
+                                                    <div class="content ${article.hasLike ? 'heart-active' : ''}">
+                                                      <span class="heart ${article.hasLike ? 'heart-active' : ''}"></span>
                                                     </div>
                                                 </button>
                                             </li>
@@ -209,11 +219,9 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        
-                                        
                                     </div>
-                                    <div style="padding: 0 16px;">
-                                    	<strong class="d-block">365.354 likes</strong>
+                                    <div class="article__likes" style="font-weight: bold; padding: 0 16px;">
+                                    	<span>${article.likeCount}</span> likes
                                     </div>
                                     <div class="position-relative comment-box">
                                         <form>
@@ -235,112 +243,136 @@
     
 
 <footer>
-    <!-- JS, Popper.js, and jQuery -->
-    <script
-  src="https://code.jquery.com/jquery-3.6.0.js"
-  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script>
-    <!-- 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-     -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
-        
-    <script>
-      $(document).ready(function(){
-        $('.content').click(function(){
-          $('.content').toggleClass("heart-active")
-          $('.text').toggleClass("heart-active")
-          $('.numb').toggleClass("heart-active")
-          $('.heart').toggleClass("heart-active")
-        });
-      });
-    </script>
+       
+    
 </footer>
-
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+ 
 <script>
-    $(document).ready(function(){
-      $('.content').click(function(){
-        $('.content').toggleClass("heart-active")
-        $('.text').toggleClass("heart-active")
-        $('.numb').toggleClass("heart-active")
-        $('.heart').toggleClass("heart-active")
-      });
-    });
-</script>
-  
-<script>
-function getIndexOfSlide(articleItems) {
-	var articleItems = articleItems[0];
-	var children = articleItems.children;
-	
-	// article__on 이 붙은 article의 index 찾기
-	for (var i = 0; i < children.length; i++) {
-		if (children[i].classList.contains("article__on")) {
-			return i;
-		}
-	}
-	return -1;
-}
-
-
-$('.article__btn--prev').on('click', function() {
-	// moveNextSlide(this.parentElement);
-	var articleItems = $(this).parent().children(".article__items");
-	var idx = getIndexOfSlide(articleItems);
-	articleItems[0].children[idx].classList.remove('article__on');
-	
-	var slideLen = articleItems[0].children.length;
-	idx = (idx - 1) % slideLen;
-	if (idx < 0) {
-		idx += slideLen;
-	}
-	articleItems[0].children[idx].classList.add('article__on');
-	
-	moveSlide(articleItems, idx);
-});
-
-$('.article__btn--next').on('click', function() {
-	// moveNextSlide(this.parentElement);
-	var articleItems = $(this).parent().children(".article__items");
-	var idx = getIndexOfSlide(articleItems);
-	articleItems[0].children[idx].classList.remove('article__on');
-	
-	var slideLen = articleItems[0].children.length;
-	idx = (idx + 1) % slideLen;
-	articleItems[0].children[idx].classList.add('article__on');
-	
-	moveSlide(articleItems, idx);
-});
-
-function moveSlide(target, idx) {
-	var width = $('.article').width();
-
-	target.stop().animate({
-		'margin-left': -width * idx
+$(document).ready(function(){
+	$('.content').click(function(){
+		$('.content').toggleClass("heart-active")
+	  	$('.text').toggleClass("heart-active")
+	  	$('.numb').toggleClass("heart-active")
+	  	$('.heart').toggleClass("heart-active")
 	});
-}
+});
 
-$(window).resize(function() {
-	var article = $('.article');
-	var articleItemsList = $('.article__items');
-	var width = $('.article').width();
+$('.content').on('click', function() {
+	var $like = $(this).parents('.article__btns').next('.article__likes');
+	var likeCnt = $($like).children('span');
+	var hasLike = $(this).hasClass('heart-active');
 	
-	$.each(articleItemsList, function(i, item) {
-		articleItems = $(item);
-		var idx = getIndexOfSlide(articleItems);
-		articleItems.css({
-			'margin-left': -width * idx
-		});	
-	})
+	var data = {
+			articleId : $(this).parent().val()
+	};
+	
+	if (hasLike) { // 좋아요 상태
+		$.ajax({
+			url: "<c:url value = '/article/like'/> ",
+			method: 'delete',
+			contentType : "application/json",
+			data: JSON.stringify(data),
+			success: function() {
+				likeCnt.text(parseInt(likeCnt.text())-1);
+			}
+		});
+	} else {
+		$.ajax({
+			url: "<c:url value = '/article/like'/> ",
+			method: 'POST',
+			contentType : "application/json",
+			data: JSON.stringify(data),
+			success: function() {
+				likeCnt.text(parseInt(likeCnt.text())+1);
+			}
+		});
+	}
 	
 });
+</script>
+<c:if test="${fn:length(article.files) ne 0}">
+	<script>
+	function getIndexOfSlide(articleItems) {
+		var articleItems = articleItems[0];
+		var children = articleItems.children;
+		
+		// article__on 이 붙은 article의 index 찾기
+		for (var i = 0; i < children.length; i++) {
+			if (children[i].classList.contains("article__on")) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	$('.article__btn--prev').on('click', function() {
+		// moveNextSlide(this.parentElement);
+		var articleItems = $(this).parent().children(".article__items");
+		var idx = getIndexOfSlide(articleItems);
+		articleItems[0].children[idx].classList.remove('article__on');
+		
+		var slideLen = articleItems[0].children.length;
+		idx = (idx - 1) % slideLen;
+		if (idx < 0) {
+			idx += slideLen;
+		}
+		articleItems[0].children[idx].classList.add('article__on');
+		
+		moveSlide(articleItems, idx);
+	});
+	
+	$('.article__btn--next').on('click', function() {
+		// moveNextSlide(this.parentElement);
+		var articleItems = $(this).parent().children(".article__items");
+		var idx = getIndexOfSlide(articleItems);
+		articleItems[0].children[idx].classList.remove('article__on');
+		
+		var slideLen = articleItems[0].children.length;
+		idx = (idx + 1) % slideLen;
+		articleItems[0].children[idx].classList.add('article__on');
+		
+		moveSlide(articleItems, idx);
+	});
+	
+	function moveSlide(target, idx) {
+		var width = $('.article').width();
+	
+		target.stop().animate({
+			'margin-left': -width * idx
+		});
+	}
+	
+	$(window).resize(function() {
+		var article = $('.article');
+		var articleItemsList = $('.article__items');
+		var width = $('.article').width();
+		
+		$.each(articleItemsList, function(i, item) {
+			articleItems = $(item);
+			var idx = getIndexOfSlide(articleItems);
+			articleItems.css({
+				'margin-left': -width * idx
+			});	
+		})
+		
+	});
+	
+	$('.article__image').on('error', function() {
+		this.src = "<c:url value = '/resources/image/article/alternative.jpg'/>";
+	});
+	</script>
+</c:if>
+<script>
+
 </script>
 </body>
 </html>
