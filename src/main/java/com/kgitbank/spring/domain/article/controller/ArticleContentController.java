@@ -61,7 +61,7 @@ public class ArticleContentController {
 		
 		log.info(article);
 		model.addAttribute("article", article);
-		return "article/content";
+		return "article/article";
 	}
 	
 	@ResponseBody
