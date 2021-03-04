@@ -22,15 +22,7 @@
 <!-- jquery.form.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
 
-<<<<<<< HEAD
-<!-- font -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-<!-- css -->
-<link rel="stylesheet" href="/spring/resources/css/profile/profile.css?ver=1.0">
-
-=======
 <style>
 .summary {
 	margin: 0 auto;
@@ -77,7 +69,7 @@
 	overflow: hidden;
 }
 </style>
->>>>>>> refs/heads/develop
+
 </head>
 <body>
 
