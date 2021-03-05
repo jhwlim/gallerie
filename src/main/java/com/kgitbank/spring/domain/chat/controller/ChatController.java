@@ -27,7 +27,7 @@ public class ChatController {
 	private ChatService service;
 	
 	@RequestMapping(value = "/chat.do", method = RequestMethod.GET)
-	public String viewChatPAge(@RequestParam String id, Model model) {
+	public String viewChatPage(@RequestParam String id, Model model) {
 		
 		model.addAttribute("receiver_id", id);
 		

@@ -112,7 +112,7 @@ var webSocket = {
 </head>
 <body>
 <form>
-<input type="button" id="test04" class= user-chat-connect value="친구1">
+<button type="button" onclick="location.href='./chat.do?bang_id=2&id=test02'">test02</button>
 <input type="button" id="test05" class= user-chat-connect value="친구2">
 <input type="button" id="test06" class= user-chat-connect value="친구3">
 </form>
@@ -141,6 +141,10 @@ chat.on('message', function(data) {
         .stop()
         .animate({ scrollTop: $('#messages')[0].scrollHeight }, 1000);
 });
+
+
+
+
 </script>
 
 
