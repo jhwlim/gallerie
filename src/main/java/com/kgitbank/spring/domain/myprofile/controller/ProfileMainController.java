@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kgitbank.spring.domain.follow.service.FollowService;
-import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 import com.kgitbank.spring.domain.myprofile.service.ProfileMainService;
 
@@ -49,6 +48,19 @@ public class ProfileMainController {
 		log.info("member=" + member);
 		
 		model.addAttribute("member", member);
+		
+		
+		
+		followService.selectFollow(member);
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		return "myprofile/myProfileMain";
 	}

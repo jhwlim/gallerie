@@ -101,6 +101,7 @@
     			<div class="summary__row">
     				<span class="summary__profile">${member.profile}</span>
     			</div>
+    			<div style="float : right"><a href="/spring/follow/${member.id }">팔로우하기</a></div>
     		</div>
     	</div>
     </div>    
