@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kgitbank.spring.domain.follow.service.FollowService;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 import com.kgitbank.spring.domain.myprofile.service.ProfileMainService;
@@ -22,6 +23,9 @@ public class ProfileMainController {
 	
 	@Autowired
 	ProfileMainService service;
+	
+	@Autowired
+	FollowService followService;
 	
 	@GetMapping({"/", "/{id}"})
 	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {

@@ -62,7 +62,7 @@ public class FollowController {
 		FollowVO vo = new FollowVO();
 		
 		vo.setFollowerId(login_id.getSeqId());
-		vo.setFollowedId(search_id.getSeqId());
+		vo.setFollowId(search_id.getSeqId());
 		if(!followed) {
 			followService.following(vo);
 		}else {

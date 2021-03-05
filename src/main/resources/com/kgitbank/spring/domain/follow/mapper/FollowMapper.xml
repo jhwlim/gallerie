@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgitbank.spring.domain.follow.mapper.FollowMapper">
+	
+	<update id="following">
+		INSERT INTO follow VALUES(#{followerId}, #{followId})
+	</update>
+	
+	
+	<select id="selectFollow" resultType="Integer">
+		select follow_id from follow where follower_id = #{seqId}
+	</select>
+	
+	<select id="selectFollower" resultType="Integer">
+		select follower_id from follow where follow_id = #{seqId}
+	</select>
+	
+</mapper>
