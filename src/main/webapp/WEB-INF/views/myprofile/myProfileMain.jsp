@@ -11,8 +11,7 @@
 <!-- bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-<%@ include file="/WEB-INF/include/commonCss.jspf" %>
-<%@ include file="/WEB-INF/include/headerCss.jspf" %>
+
 
 <!-- bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
@@ -22,91 +21,126 @@
 <!-- jquery.form.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
 
+<!-- font -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-<style>
-.summary {
-	margin: 0 auto;
-	width: 100%;
-	display: flex;
-	justify-content: space-around;
-	padding: 20px;
-}
-.summary__image-area {
-	display: inline-block;
-	width: 160px;
-	height: 160px;
-	border-radius: 50%;
-	overflow: hidden;
-}
-.summary__image {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-.summary__content {
-	padding: 20px;
-}
-.summary__id {
-	font-size: 30px;
-}
-.summary__row {
-	margin-bottom: 20px;
-}
-.summary__row:last-child {
-	margin-bottom: 0;
-}
-.summary__name {
-	font-weight: bold;
-}
-.file-upload {
-	display: none;
-}
-.profile-area {
-	border-radius: 50%;
-	width: 500px;
-	height: 500px;
-	border: 1px solid gray;
-	overflow: hidden;
-}
-</style>
+<!-- css -->
+<link rel="stylesheet" href="/spring/resources/css/profile/profile.css?ver=1.0"">
+
 
 </head>
 <body>
 
-<%@ include file="/WEB-INF/include/header.jspf" %>
+<header>
+        <div class="container">
+            <div class="profile">
+                <div class="profile-image">
+                    <figure class="summary__image-area" id="profileImageArea" 
+		   					${member.signedIn && member.hasImg ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' : ''}>
+		   					<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
+	    			</figure>
+                </div>
+                <div class="profile-user-settings">
+                    <h1 class="profile-user-name">${member.id}</h1>
+                    <button class="btn profile-edit-btn">Edit Profile</button>
+                    <button class="btn profile-settings-btn" aria-label="Profile Settings"><i class="fas fa-cog" aria-hidden=""></i></button>
+                </div>
+                <div class="profile-stats">
+                    <ul>
+                        <li><span class="profile-stat-count">164</span> posts</li>
+                        <li><span class="profile-stat-count">188</span> followers</li>
+                        <li><span class="profile-stat-count">206</span> following</li>
+                    </ul>
+                </div>
+                <div class="profile-bio">
+                    <p><span class="profile-real-name">John Doe</span> Lorem ipsum dolor sit amet... 📷✈️🚞</p>
+                </div>
+            </div>
+<!--            End of Profile Section-->
+        </div>
+<!--        End of Container-->
+    </header>
+    <main>
+        <div class="container">
+            <div class="gallery">
+                <div class="gallery-item" tabindex="0">
+                    <img src="/spring/resources/image/mypost/hiking.jpg" alt="alt="Gallery-1" class="gallery-image" >
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
+                        </ul>
+                    </div>
+    
+                </div>
+                <div class="gallery-item" tabindex="0">
+                    <img src="/spring/resources/image/mypost/hiking2.jpg" alt="alt="Gallery-1" class="gallery-image" >
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
+                        </ul>
+                    </div>
 
-<div class="wrapper">
-    <div class="container">
-    	<div class="summary">
-   			<figure class="summary__image-area" id="profileImageArea" 
-   					${member.signedIn && member.hasImg ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' : ''}>
-   				<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
-	    	</figure>
-    		<div class="summary__content">
-    			<div class="summary__row">
-    				<span class="summary__id">${member.id}</span>
-    				&nbsp;&nbsp;
-    				<button class="profile-upload">프로필 편집</button>
-    				&nbsp;&nbsp;
-    				<span>아이콘</span>
-    			</div>
-    			<div class="summary__row">
-    				<span>게시물</span>
-    				&nbsp;&nbsp;
-    				<span>팔로워</span>
-    				&nbsp;&nbsp;
-    				<span>팔로우</span>
-    			</div>
-    			<div class="summary__row">
-    				<span class="summary__name">${member.name}</span>
-    			</div>
-    			<div class="summary__row">
-    				<span class="summary__profile">${member.profile}</span>
-    			</div>
-    		</div>
-    	</div>
-    </div>    
-</div>
+                </div>
+                <div class="gallery-item" tabindex="0">
+                    <img src="/spring/resources/image/mypost/hiking3.jpg" alt="alt="Gallery-1" class="gallery-image" >
+                    <div class="gallery-item-type">
+                        <span class="visually-hidden">Gallery</span>
+                        <i class="fas fa-clone" aria-hidden></i>
+                    </div>
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
+                        </ul>
+                    </div>
+    
+                </div>
+                <div class="gallery-item" tabindex="0">
+                    <img src="/spring/resources/image/mypost/hiking4.jpg" alt="alt="Gallery-1" class="gallery-image">
+                    <div class="gallery-item-type">                   
+                        <span class="visually-hidden">Video</span>
+                        <i class="fas fa-video" aria-hidden></i>
+                    </div>
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="gallery-item" tabindex="0">
+                    <img src="/spring/resources/image/mypost/hiking5.jpg" alt="alt="Gallery-1" class="gallery-image" >
+                    <div class="gallery-item-type">
+                        <span class="visually-hidden">Gallery</span>
+                        <i class="fas fa-clone" aria-hidden></i>
+                    </div>
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
+                        </ul>
+                    </div>
+    
+                </div>
+                <div class="gallery-item" tabindex="0">
+                    <img src="/spring/resources/image/mypost/hiking6.jpg" alt="alt="Gallery-1" class="gallery-image" >
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+    <!--        End of Gallery-->
+        </div>
+        <div class="loader"></div>
+    </main>
 
 <c:if test="${member.signedIn}">
 	<form method="POST" action="<c:url value='/image/profile' />" enctype="multipart/form-data" id="uploadForm">
