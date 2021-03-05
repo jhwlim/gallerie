@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kgitbank.spring.domain.account.service.AccountService;
-import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 import com.kgitbank.spring.domain.myprofile.service.ProfileMainService;
 
@@ -24,9 +22,6 @@ public class ProfileMainController {
 	@Autowired
 	ProfileMainService service;
 	
-	@Autowired
-	AccountService accService;
-	
 	@GetMapping({"/", "/{id}"})
 	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		log.info("URL : /myprofile/" + id + " - GET");
@@ -36,7 +31,7 @@ public class ProfileMainController {
 			return "redirect:/";
 		}
 		
-		/*
+		
 		ProfileDto member = service.selectMemberById(id);
 		if (member == null) {
 			log.warn("page not found");
@@ -50,14 +45,7 @@ public class ProfileMainController {
 		log.info("member=" + member);
 		
 		model.addAttribute("member", member);
-		*/
 		
-		MemberVO member = accService.selectMemberById(id);
-		if (member == null) {
-			return "redirect:/";
-		}
-		
-		model.addAttribute("member", member);
 		model.addAttribute("articles", service.selectArticleSummarys(member.getSeqId()));
 		
 		return "myprofile/myProfileMain";
