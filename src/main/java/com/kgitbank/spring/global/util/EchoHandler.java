@@ -26,6 +26,10 @@ public class EchoHandler extends TextWebSocketHandler {
 	
 		@Autowired
 		ChatService service;
+		
+		MessageVO mvo;
+		
+		Gson gson = new Gson();
 	
 		//세션을 모두 저장한다
 		//방법 1 : 1 : 1 채팅
@@ -44,9 +48,9 @@ public class EchoHandler extends TextWebSocketHandler {
 			
 			String str = message.getPayload();
 			
-			Gson gson = new Gson();
 			
-			MessageVO mvo = gson.fromJson(str, MessageVO.class);
+			
+			this.mvo = gson.fromJson(str, MessageVO.class);
 			
 			log.info(mvo);
 
@@ -114,6 +118,8 @@ public class EchoHandler extends TextWebSocketHandler {
 						
 						sess.sendMessage(new TextMessage(gson.toJson(mvo)));
 						
+						service.saveMessage(mvo);
+						
 						
 					}
 				}
@@ -126,7 +132,9 @@ public class EchoHandler extends TextWebSocketHandler {
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
 			super.afterConnectionClosed(session, status);
-
+			
+			log.info(status.toString());
+			
 			ObjectMapper objectMapper = new ObjectMapper();
 			String now_bang_id = "";
 			
@@ -150,13 +158,21 @@ public class EchoHandler extends TextWebSocketHandler {
 				WebSocketSession sess = (WebSocketSession) mapSessionList.get("session");
 
 				if (bang_id.equals(now_bang_id)) {
-					Map<String, String> mapToSend = new HashMap<String, String>();
-					mapToSend.put("bang_id", bang_id);
-					mapToSend.put("cmd", "CMD_EXIT");
-					mapToSend.put("msg", session.getId() + "님이 퇴장 했습니다.");
+					
+					mvo.setCmd("CMD_EXIT");
+					
+//					Map<String, String> mapToSend = new HashMap<String, String>();
+//					mapToSend.put("bang_id", bang_id);
+//					mapToSend.put("cmd", "CMD_EXIT");
+//					mapToSend.put("content", session.getId() + "님이 퇴장 했습니다.");
+//
+//					String jsonStr = objectMapper.writeValueAsString(mapToSend);
+//					sess.sendMessage(new TextMessage(jsonStr));
+					
+					sess.sendMessage(new TextMessage(gson.toJson(mvo)));
+					
+					mvo.setCmd("");
 
-					String jsonStr = objectMapper.writeValueAsString(mapToSend);
-					sess.sendMessage(new TextMessage(jsonStr));
 				}
 			}
 		}

@@ -16,7 +16,7 @@ public class MessageVO {
 
 	
 	@NonNull
-	private String bangId;
+	private String bang_id;
 	private String senderId;
 	private String receiverId;
 	private String cmd;

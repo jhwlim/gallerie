@@ -38,22 +38,29 @@ var webSocket = {
 				var flag = "${sessionScope.user}" === msgData.senderId;
 				if(flag){
 					console.log("아이디가 보냈다");
+					$('#divChatData').append('<div style="text-align:right;">' + msgData.senderId + '</div>');
+					$('#divChatData').append('<div style="text-align:right;">' + msgData.content + '</div>');
+					$('#divChatData').append('<div style="text-align:right;">' + msgData.sendDate + '</div>');
+					
 				}
 				else{
 					console.log("다른세션에서 날라왔다");
+					$('#divChatData').append('<div style="text-align:left;">' + msgData.senderId + '</div>');
+					$('#divChatData').append('<div style="text-align:left;">' + msgData.content + '</div>');
+					$('#divChatData').append('<div style="text-align:left;">' + msgData.sendDate + '</div>');
 				}
 				
-				$('#divChatData').append('<span>' + msgData.senderId + '</span>');
-				$('#divChatData').append('<div>' + msgData.content + '</div>');
-				$('#divChatData').append('<div>' + msgData.sendDate + '</div>');
+				
 			}
 			// 입장
 			else if(msgData.cmd == 'CMD_ENTER') {
+				
+				
 				$('#divChatData').append('<div>' + msgData.senderId + "님이 입장하셨습니다." + '</div>');
 			}
 			// 퇴장
 			else if(msgData.cmd == 'CMD_EXIT') {					
-				$('#divChatData').append('<div>' + msgData.senderId + '</div>');
+				$('#divChatData').append('<div>' + msgData.senderId + "님이 퇴장하셨습니다." + '</div>');
 			}
 		},
 		closeMessage: function(str) {
@@ -75,14 +82,6 @@ var webSocket = {
 			}
 		},
 		
-		/*
-		private String senderId;
-		private String receiverId;
-		private String content;
-		@DateTimeFormat(pattern = "yyyy-MM-dd")
-		private Date sendDate;
-		private String result; // 테스트 값
-		*/
 		_sendMessage: function(bang_id, cmd, msg) {
 			var msgData = {
 					bang_id : bang_id,
@@ -101,9 +100,23 @@ var webSocket = {
 		webSocket.init({ url: '<c:url value="/chat" />' });	
 	});
 </script>
+<style>
+#message-container {
+	/* 채팅창 높이 */
+	height: 700px;
+	overflow-y: auto;
+}
+
+</style>
+
 </head>
 <body>
-<div style="width: 800px; height: 700px; padding: 10px; border: solid 1px #e1e3e9;">
+<form>
+<input type="button" id="test04" class= user-chat-connect value="친구1">
+<input type="button" id="test05" class= user-chat-connect value="친구2">
+<input type="button" id="test06" class= user-chat-connect value="친구3">
+</form>
+<div id="message-container" style="width: 800px; height: 700px; padding: 10px; border: solid 1px #e1e3e9;">
 	<div id="divChatData"></div>
 </div>
 <div style="width: 100%; height: 10%; padding: 10px;">
@@ -111,6 +124,24 @@ var webSocket = {
 	<input type="button" id="btnSend" value="채팅 전송" onclick="webSocket.sendChat()" />
 </div>
 
+<script>
+$('#message-container')
+	.stop()
+    .animate({ scrollTop: $('#message-container')[0].scrollHeight }, 1000);
+	
+	var chat = io('http://localhost:8080/spring/chat.do/*');
+
+
+// 메시지 수신시
+chat.on('message', function(data) {
+    var message = $(`<div class="alert alert-success" role="alert">${data.name} : ${data.msg}</div>`);
+
+    $('#messages')
+        .append(message)
+        .stop()
+        .animate({ scrollTop: $('#messages')[0].scrollHeight }, 1000);
+});
+</script>
 
 
 </body>
