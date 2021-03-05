@@ -10,86 +10,18 @@
 <title>Home</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=1.0">
+<link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=1.0">
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value='/resources/css/article/write_modal.css?ver=1.0' />" />
+
+<script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
 
-
-
-
-<div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container justify-content-center">
-                <div class="d-flex flex-row justify-content-between align-items-center col-9">
-                    <a class="navbar-brand" href="#">
-                        <img src="/spring/resources/css/mainpage/images/ig-logo.png" alt="" loading="lazy">
-                    </a>
-                    <div>
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        </form>
-                    </div>
-                    <div class="d-flex flex-row">
-                        <ul class="list-inline m-0">
-                            <li class="list-inline-item">
-                                <a href="#" class="link-menu">
-                                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-house-door-fill"
-                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z" />
-                                        <path fill-rule="evenodd"
-                                            d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="list-inline-item ml-2">
-                                <a href="#" class="link-menu">
-                                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-inboxes"
-                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393zm.941.83l.32 2.562a.5.5 0 0 0 .497.438h12.234a.5.5 0 0 0 .496-.438l.32-2.562H10.45a2.5 2.5 0 0 1-4.9 0H1.066zM3.81.563A1.5 1.5 0 0 1 4.98 0h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1-.78.624l-3.7-4.624A.5.5 0 0 0 11.02 1H4.98a.5.5 0 0 0-.39.188L.89 5.812a.5.5 0 1 1-.78-.624L3.81.563z" />
-                                        <path fill-rule="evenodd"
-                                            d="M.125 5.17A.5.5 0 0 1 .5 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .121-.393zm.941.83l.32 2.562A.5.5 0 0 0 1.884 9h12.234a.5.5 0 0 0 .496-.438L14.933 6H10.45a2.5 2.5 0 0 1-4.9 0H1.066z" />
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="list-inline-item ml-2">
-                                <a href="#" class="link-menu">
-                                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-compass"
-                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M8 15.016a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13zm0 1a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z" />
-                                        <path
-                                            d="M6 1a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2H7a1 1 0 0 1-1-1zm.94 6.44l4.95-2.83-2.83 4.95-4.95 2.83 2.83-4.95z" />
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="list-inline-item ml-2">
-                                <a href="#" class="link-menu">
-                                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-heart"
-                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="list-inline-item ml-2 align-middle">
-                                <a href="#" class="link-menu">
-                                    <div
-                                        class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border topbar-profile-photo">
-                                        <img src="/spring/resources/css/mainpage/images/profile-6.jpg" alt="..."
-                                            style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
+	<%@ include file="/WEB-INF/include/nav.jspf" %>
 
     <div class="mt-4">
         <div class="container d-flex justify-content-center">
@@ -166,7 +98,7 @@
                                  </a>
                                  <div class="text-box" role="button" tabindex="0">
                                          <div class="text-box-inside">
-                                             <span class="text-text" style="-webkit-box-orient: vertical; -webkit-line-clamp: 2; display: -webkit-box;">Taewook Kang님, 무슨 생각을 하고 계신가요?</span>
+                                             <span class="text-text" id="writeOpenBtn" style="-webkit-box-orient: vertical; -webkit-line-clamp: 2; display: -webkit-box;">Taewook Kang님, 무슨 생각을 하고 계신가요?</span>
                                          </div>
                                          <div class="text-bottom" data-visualcompletion="ignore" style="border-radius: 20px;">
                  
@@ -319,6 +251,7 @@
                         </div>
                         <!-- END OF POSTS -->
                     </div>
+
                     <div class="col-4">
                         <div class="d-flex flex-row align-items-center">
                             <div
@@ -413,15 +346,31 @@
     </script>
 </footer>
 
-<h1>
-	Hello world!
-</h1>
-
-<div class="wrapper">
-    <div class="container">
-        <h1>CONTAINER</h1>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dicta alias reiciendis asperiores tempora quibusdam, quos obcaecati minus, itaque beatae cumque, fuga explicabo excepturi possimus repellendus vel aliquam magni maxime.           
-    </div>    
+<div class="my-modal" id="writeModal">
+    <div class="my-modal__container">
+        <div class="write-modal__header">
+            게시물 만들기
+            <button class="write-modal__close" id="writeCloseBtn">X</button>
+        </div>
+        <div class="write__content">
+            <div class="write__writer">
+                <figure class="write__writer-figure">
+                    <img src="<c:url value = '/image/profile/${sessionScope.userProfile}/' />" alt="" class="write__writer-image">
+                </figure>
+                <span class="write__writer-id">Jonghwan Lim</span>    
+            </div>
+            <textarea name="content" placeholder="Jonghwan Lim님, 무슨 생각을 하고 계신가요?" class="write__textarea" id="writeArea"></textarea>
+            <div class="upload__file-preview" id="writeUploadFilePreview"></div>
+            <label for="fileSelector" class="upload">
+                <figure class="upload__icon-size">
+                    <img src="<c:url value='/resources/image/static/photo.png'/>" alt="" class="upload__image">
+                </figure>
+                <p class="upload__text">게시물에 추가</p> 
+            </label>
+            <input type="file" multiple="multiple" accept=".png, .jpg, .gif" id="fileSelector" class="file" style="display: none;">
+            <button class="write__post" id="writeBtn" disabled>게시</button>
+        </div>
+    </div>
 </div>
 
 <form action="/spring/logout" method="post">
@@ -431,6 +380,111 @@
 <form action="/spring/sessiondel" method="post">
     <button type="submit">세션삭제 후 리다이렉트</button>
 </form>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+<script src="<c:url value = '/resources/js/article/write_modal.js' />"></script>
+<script>
+let fileList = [];
 
+$('#writeOpenBtn').on('click', function(){
+    $('#writeModal').show();
+});
+
+$('#writeCloseBtn').on('click', function() {
+    $('#writeModal').hide();
+});
+
+$('#fileSelector').on('change', function() {
+    var files = this.files;
+    // 파일 형식 유효성 검사
+    for (file of this.files) {
+		if (!checkExtOfFile(file)) {
+			return;					
+		}
+	}
+
+    var filePreview = document.getElementById('writeUploadFilePreview');
+
+    for (var file of files) {
+        if (!hasSameFileName(file, fileList)) {
+            // 파일 리스트에 추가
+            fileList.push(file);
+            
+            // 업로드한 이미지 파일 미리보기 태그 추가
+            var filePreview = document.getElementById('writeUploadFilePreview');
+
+            var figure = document.createElement('figure');
+            figure.classList.add('upload__preview-size');
+
+            var img = document.createElement('img');
+            img.setAttribute('src', URL.createObjectURL(file));
+            img.classList.add('upload__image');
+            figure.appendChild(img);
+            filePreview.appendChild(figure);
+            
+            
+            var div = document.createElement('div');
+            div.classList.add('upload__preview-size', 'upload__preview-size--delete');
+            figure.appendChild(div);
+            
+            var delImg = document.createElement('img');
+            delImg.setAttribute('src', '/spring/resources/image/static/delete.png');
+            delImg.classList.add('upload__delete');
+            div.appendChild(delImg);
+
+            delImg.addEventListener('click', function() {
+                var figure = this.parentElement.parentElement;
+                figure.remove();
+            });
+        }    
+    }
+
+    this.value = '';
+});
+
+$('#writeArea').on('keydown keyup', function() {
+    // textarea 자동으로 높이 조절하기
+    this.style.height = '1px';
+    this.style.height = (12 + this.scrollHeight) + "px";
+
+    const writeBtn = $('#writeBtn');
+    var content = $('#writeArea').val();
+    if (content.length == 0) {
+        writeBtn.attr('disabled', true);
+    } else {
+        writeBtn.attr('disabled', false);
+    }
+});
+
+$('#writeBtn').on('click', function(evt) {
+	evt.preventDefault(); // 원래 브라우저가 가지고 있는 이벤트 방지
+	
+	var formData = new FormData();
+	formData.append('content', $('#writeArea').val());
+	
+	for (file of fileList) {
+		if (!checkExtOfFile(file)) {
+			files = [];
+			return;
+		}
+		formData.append('files', file);
+	}
+	
+	$.ajax({
+		url: "/spring/article/",
+		type: 'post',
+		data: formData,
+		contentType: false,
+		processData: false,
+		success: function() {
+			alert('게시물이 업로드되었습니다.');
+			location.href = ".";
+		}
+	});
+	
+});
+</script>
 </body>
 </html>

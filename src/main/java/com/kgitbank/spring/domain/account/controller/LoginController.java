@@ -74,6 +74,8 @@ public class LoginController {
 						doubleLogin = SessionConfig.getSessionidCheck("user", loginMember.getId());
 						session.setAttribute("user", loginMember.getId());
 						
+						session.setAttribute("userProfile", loginMember.getImgPath()); // 프로필 이미지도 세션 영역에 추가
+						
 						LoginVO logvo = new LoginVO();
 						
 						logvo.setMemberSeqId(loginMember.getSeqId());
@@ -133,6 +135,9 @@ public class LoginController {
 			System.out.println("현재 세션 아이디" + session.getId());
 			doubleLogin = SessionConfig.getSessionidCheck("user", loginMember.getId());
 			session.setAttribute("user", loginMember.getId());
+			
+			session.setAttribute("userProfile", loginMember.getImgPath()); // 프로필 이미지도 세션 영역에 추가
+			
 			System.out.println(getip.getIp(req));
 			
 			
