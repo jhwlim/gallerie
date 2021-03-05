@@ -30,6 +30,7 @@ public class ProfileMainMapperTests {
 	@Autowired
 	ProfileImageMapper imgMapper;
 	
+	@Ignore
 	@Test
 	public void selectMemberByIdTest() {
 		
@@ -62,5 +63,10 @@ public class ProfileMainMapperTests {
 		int seqId = 1;
 		
 		log.info(imgMapper.selectProfileImgBySeqId(seqId));
+	}
+	
+	@Test
+	public void selectArticleSummarysTest() {
+		log.info(mapper.selectArticleSummarys(2));
 	}
 }

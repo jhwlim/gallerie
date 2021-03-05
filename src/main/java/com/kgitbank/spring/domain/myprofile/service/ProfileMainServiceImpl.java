@@ -1,12 +1,14 @@
 package com.kgitbank.spring.domain.myprofile.service;
 
 import java.io.File;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kgitbank.spring.domain.myprofile.dto.ArticleSummaryDto;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 import com.kgitbank.spring.domain.myprofile.mapper.ProfileMainMapper;
 
@@ -41,6 +43,11 @@ public class ProfileMainServiceImpl implements ProfileMainService {
 		}
 		
 		return member;
+	}
+
+	@Override
+	public List<ArticleSummaryDto> selectArticleSummarys(int writerSeqId) {
+		return mapper.selectArticleSummarys(writerSeqId);
 	}
 
 }
