@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.chat.mapper.ChatMapper">
-
+	
 	<!-- 메세지 저장 (임시) -->
 	<insert id="messageSave">
 	
@@ -30,5 +30,5 @@
 		)
 	
 	</insert>
-	
+		
 </mapper>

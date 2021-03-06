@@ -9,4 +9,5 @@ public interface ChatService {
 	
 	//메세지 정보 저장
 	public int saveMessage(MessageVO mvo) throws Exception;
+	
 }

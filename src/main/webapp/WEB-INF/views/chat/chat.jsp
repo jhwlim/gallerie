@@ -86,7 +86,7 @@ var webSocket = {
 			var msgData = {
 					bang_id : bang_id,
 					senderId : "${sessionScope.user}",
-					receiverId : "${receiver_id}",
+					receiverId : "${oldChat.receiver_id}",
 					cmd : cmd,
 					content : msg
 			};
@@ -113,10 +113,19 @@ var webSocket = {
 <body>
 <form>
 <button type="button" onclick="location.href='./chat.do?bang_id=2&id=test02'">test02</button>
-<input type="button" id="test05" class= user-chat-connect value="친구2">
-<input type="button" id="test06" class= user-chat-connect value="친구3">
+<button type="button" onclick="location.href='./chat.do?bang_id=2&id=test03'">test03</button>
+<button type="button" onclick="location.href='./chat.do?bang_id=2&id=test04'">test04</button>
 </form>
 <div id="message-container" style="width: 800px; height: 700px; padding: 10px; border: solid 1px #e1e3e9;">
+	
+	<c:forEach var="oldChat" items="${oldChat}">
+		
+		${oldChat.senderId }
+		${oldChat.content }
+		${oldChat.sendDate }
+	
+	</c:forEach>
+	
 	<div id="divChatData"></div>
 </div>
 <div style="width: 100%; height: 10%; padding: 10px;">

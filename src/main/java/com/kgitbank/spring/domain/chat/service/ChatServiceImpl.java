@@ -24,5 +24,6 @@ public class ChatServiceImpl implements ChatService{
 	
 		return mapper.saveMessage(mvo);
 	}
+	
 
 }
