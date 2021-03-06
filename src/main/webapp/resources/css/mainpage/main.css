@@ -269,7 +269,9 @@ div {
 
 .container {
     margin-bottom: 16px;
-    
+    max-width: 93.5rem;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .post-box{

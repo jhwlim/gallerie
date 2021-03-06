@@ -10,7 +10,7 @@
 <title>Home</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=1.0">
+<link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=2.0">
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
@@ -74,7 +74,12 @@
                                     </div>
                                     <span class="user">Raissa</span>
                                 </li>
-                                
+                                <li class="has-story">
+                                    <div class="story">
+                                        <img src="/spring/resources/css/mainpage/images/profile-7.jpg">
+                                    </div>
+                                    <span class="user">Raissa</span>
+                                </li>
                             </ul>
 
                         </div>
