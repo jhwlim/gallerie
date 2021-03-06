@@ -24,4 +24,12 @@ public class MessageVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date sendDate;
 	//private String result; // 테스트 값
+	
+	//////////////////////
+	
+	private int roomId; // messages_r
+	private int seqId; // messages_r
+	private int senderSeqId; // messages_r
+	private char read; // messages_r
+	
 }

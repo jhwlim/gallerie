@@ -54,13 +54,13 @@ var webSocket = {
 			}
 			// 입장
 			else if(msgData.cmd == 'CMD_ENTER') {
-				
-				
-				$('#divChatData').append('<div>' + msgData.senderId + "님이 입장하셨습니다." + '</div>');
+				console.log(msgData.senderId, " : 입장");
+				// $('#divChatData').append('<div>' + msgData.senderId + "님이 입장하셨습니다." + '</div>');
 			}
 			// 퇴장
-			else if(msgData.cmd == 'CMD_EXIT') {					
-				$('#divChatData').append('<div>' + msgData.senderId + "님이 퇴장하셨습니다." + '</div>');
+			else if(msgData.cmd == 'CMD_EXIT') {
+				console.log(msgData.senderId, " : 퇴장");
+				// $('#divChatData').append('<div>' + msgData.senderId + "님이 퇴장하셨습니다." + '</div>');
 			}
 		},
 		closeMessage: function(str) {
@@ -88,7 +88,8 @@ var webSocket = {
 					senderId : "${sessionScope.user}",
 					receiverId : "${oldChat.receiver_id}",
 					cmd : cmd,
-					content : msg
+					content : msg,
+					roomId : ${roomId}
 			};
 			var jsonData = JSON.stringify(msgData);
 			this._socket.send(jsonData);
@@ -116,17 +117,27 @@ var webSocket = {
 <button type="button" onclick="location.href='./chat.do?bang_id=2&id=test03'">test03</button>
 <button type="button" onclick="location.href='./chat.do?bang_id=2&id=test04'">test04</button>
 </form>
+<!-- 
+	친구목록 리스트 -> foreach 돌린다.
+
+ -->
+<ul>
+<c:forEach var="friend" items="${friends}">
+	<li><a href="<c:url value = '/chat.do/${friend}' />">${friend}</a></li>
+</c:forEach>
+</ul>
 <div id="message-container" style="width: 800px; height: 700px; padding: 10px; border: solid 1px #e1e3e9;">
-	
-	<c:forEach var="oldChat" items="${oldChat}">
-		
-		${oldChat.senderId }
-		${oldChat.content }
-		${oldChat.sendDate }
-	
-	</c:forEach>
-	
-	<div id="divChatData"></div>
+
+	<div id="divChatData">
+		<c:forEach var="message" items="${messages}">
+			<div style="text-align: ${message.senderId eq sessionScope.user ? 'right' : 'left'}">${message.senderId}</div>
+			<div style="text-align: ${message.senderId eq sessionScope.user ? 'right' : 'left'}">
+				${message.content}
+				<strong>${message.read}</strong>
+			</div>
+			<div style="text-align: ${message.senderId eq sessionScope.user ? 'right' : 'left'}">${message.sendDate}</div>
+		</c:forEach>
+	</div>
 </div>
 <div style="width: 100%; height: 10%; padding: 10px;">
 	<input type="text" id="message" size="110" onkeypress="if(event.keyCode==13){webSocket.sendChat();}" />
@@ -150,9 +161,6 @@ chat.on('message', function(data) {
         .stop()
         .animate({ scrollTop: $('#messages')[0].scrollHeight }, 1000);
 });
-
-
-
 
 </script>
 
