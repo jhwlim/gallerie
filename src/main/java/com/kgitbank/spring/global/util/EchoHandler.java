@@ -1,8 +1,8 @@
 package com.kgitbank.spring.global.util;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +13,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.kgitbank.spring.domain.chat.dto.ChattingUser;
 import com.kgitbank.spring.domain.chat.service.ChatService;
 import com.kgitbank.spring.domain.model.MessageVO;
 
@@ -27,104 +27,82 @@ public class EchoHandler extends TextWebSocketHandler {
 		@Autowired
 		ChatService service;
 		
-		MessageVO mvo;
-		
-		Gson gson = new Gson();
-	
-		//세션을 모두 저장한다
-		//방법 1 : 1 : 1 채팅
-		//private Map<Map<String, Object>> sessionList = new HashMap<Map<String, Object>>();
-	
-	
-		// (<"bang_id", 방ID>, <"session", 세션>) - (<"bang_id", 방ID>, <"session", 세션>) - (<"bang_id", 방ID>, <"session", 세션>) 형태
-		//방법 2 : 전체 채팅
-		private List<Map<String, Object>> sessionList = new ArrayList<Map<String, Object>>();
+		private static Gson gson = new Gson();
+			
+		Map<Integer, List<WebSocketSession>> sessions = new HashMap<Integer, List<WebSocketSession>>(); // roomId - 접속한 세션 리스트
+		Map<String, ChattingUser> sessionIdMap = new HashMap<>(); // 세션ID - 유저정보(roomId, seqId, id)
 		
 		// 클라이언트가 서버로 메세지 전송 처리
 		@Override
 		protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
-			super.handleTextMessage(session, message);
 			
 			String str = message.getPayload();
-			
-			
-			
-			this.mvo = gson.fromJson(str, MessageVO.class);
-			
-			log.info(mvo);
-
-			// JSON --> Map으로 변환
-			ObjectMapper objectMapper = new ObjectMapper();
-			Map<String, String> mapReceive = objectMapper.readValue(message.getPayload(), Map.class);
-
-			//System.out.println(mapReceive);
+						
+			MessageVO mvo = gson.fromJson(str, MessageVO.class);
+			int roomId = mvo.getRoomId();
+			List<WebSocketSession> connectedSessions = sessions.get(roomId);
 			
 			switch (mvo.getCmd()) {
-			
 			// CLIENT 입장
 			case "CMD_ENTER":
-				// 세션 리스트에 저장
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("bang_id", mapReceive.get("bang_id"));
-				map.put("session", session);
-				map.put("id", mapReceive.get("id"));
-				sessionList.add(map);
+				// 세션ID 맵에 접속한 유저 정보를 추가한다.
+				ChattingUser user = new ChattingUser();
+				user.setRoomId(roomId);
+				user.setId(mvo.getSenderId());
+				user.setSeqId(service.selectMemberById(mvo.getSenderId()).getSeqId());
 				
-				// 같은 채팅방에 입장 메세지 전송
-				for (int i = 0; i < sessionList.size(); i++) {
-					Map<String, Object> mapSessionList = sessionList.get(i);
-					String bang_id = (String) mapSessionList.get("bang_id");
-					WebSocketSession sess = (WebSocketSession) mapSessionList.get("session");
-					
-					if(bang_id.equals(mapReceive.get("bang_id"))) {
-						
-//						mvo.setContent(mvo.getSenderId() + "님이 입장 했습니다.");
-						
-//						Map<String, String> mapToSend = new HashMap<String, String>();
-//						mapToSend.put("bang_id", bang_id);
-//						mapToSend.put("cmd", "CMD_ENTER");
-//						mapToSend.put("msg",  map.get("id") +  "님이 입장 했습니다.");
-						
-//						String jsonStr = objectMapper.writeValueAsString(mapToSend);
-						//sess.sendMessage(new TextMessage(jsonStr));
-						
-						sess.sendMessage(new TextMessage(gson.toJson(mvo)));
-					}
+				sessionIdMap.put(session.getId(), user);
+				
+				// 접속한 세션을 해당 roomId의 리스트에 추가한다.
+				if (connectedSessions == null) {
+					connectedSessions = new LinkedList<>();
+				} 
+				connectedSessions.add(session);
+				sessions.put(roomId, connectedSessions);
+				log.info("sessions=" + sessions);
+				
+				for(WebSocketSession connectedSession : connectedSessions) {
+					connectedSession.sendMessage(new TextMessage(gson.toJson(mvo)));
 				}
+				
+				// DB 업데이트 : 상대방이 보낸 안 읽은 메시지 'Y'로 변경하기
+				int cntChanged = service.updateMessageRead(user);
+				log.info("count of read N → Y = " + cntChanged);
+				
 				break;
 				
 			// CLIENT 메세지
 			case "CMD_MSG_SEND":
-				// 같은 채팅방에 메세지 전송
-				for (int i = 0; i < sessionList.size(); i++) {
-					Map<String, Object> mapSessionList = sessionList.get(i);
-					String bang_id = (String) mapSessionList.get("bang_id");
-					WebSocketSession sess = (WebSocketSession) mapSessionList.get("session");
-
-					if (bang_id.equals(mapReceive.get("bang_id"))) {
-						
-						mvo.setSendDate(new Date());
-						
-						
-						
-//						Map<String, String> mapToSend = new HashMap<String, String>();
-//						mapToSend.put("bang_id", bang_id);
-//						mapToSend.put("cmd", "CMD_MSG_SEND");
-//						mapToSend.put("msg", session.getId() + " : " + mapReceive.get("msg"));
-//
-//						String jsonStr = objectMapper.writeValueAsString(mapToSend);
-//						sess.sendMessage(new TextMessage(jsonStr));
-						
-						sess.sendMessage(new TextMessage(gson.toJson(mvo)));
-						
-						service.saveMessage(mvo);
-						
-						
-						
-						
+				mvo.setRoomId(roomId);
+				mvo.setSendDate(new Date());
+				ChattingUser sendUser = (ChattingUser) sessionIdMap.get((String) session.getId());
+				int senderSeqId = sendUser.getSeqId();
+				mvo.setSenderSeqId(senderSeqId);
+				
+				boolean existOther = false;
+				
+				// roomId의 리스트에 있는 세션에게 메시지를 보낸다.
+				for(WebSocketSession connectedSession : connectedSessions) {
+					connectedSession.sendMessage(new TextMessage(gson.toJson(mvo)));
+					
+					// 채팅방에 상대방 있는지 확인하기
+					if (!existOther) {
+						String sessionId = connectedSession.getId();
+						ChattingUser u = sessionIdMap.get(sessionId);
+						if (!u.getId().equals(mvo.getSenderId())) { // 채팅을 보낸 아이디와 다른 아이디가 존재한다면
+							log.info(u);
+							log.info(mvo);
+							existOther = true;
+						}
 					}
 				}
+				
+				// 상대방이 있다면 read = 'Y', 없다면 'N'
+				mvo.setRead(existOther ? 'Y' : 'N');
+				
+				// 보낸 메시지를 DB에 저장한다.
+				service.insertMessage(mvo);
+				
 				break;
 			}
 		}
@@ -132,50 +110,22 @@ public class EchoHandler extends TextWebSocketHandler {
 		// 클라이언트가 연결을 끊음 처리
 		@Override
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-
-			super.afterConnectionClosed(session, status);
+			// 연결을 끊은 세션 삭제하기
+			ChattingUser user = sessionIdMap.get((String) session.getId());
+			int roomId = user.getRoomId();
 			
-			log.info(status.toString());
+			List<WebSocketSession> connectedSessions = sessions.get(roomId);
+			log.info("세션 삭제 전 : " + connectedSessions);
+			connectedSessions.remove(session);
+			log.info("세션 삭제 후 : " + connectedSessions);
 			
-			ObjectMapper objectMapper = new ObjectMapper();
-			String now_bang_id = "";
+			MessageVO newMvo = new MessageVO();
+			newMvo.setSenderId(user.getId());
+			newMvo.setCmd("CMD_EXIT");
 			
-			// 사용자 세션을 리스트에서 제거
-			for (int i = 0; i < sessionList.size(); i++) {
-				Map<String, Object> map = sessionList.get(i);
-				String bang_id = (String) map.get("bang_id");
-				WebSocketSession sess = (WebSocketSession) map.get("session");
-				
-				if(session.equals(sess)) {
-					now_bang_id = bang_id;
-					sessionList.remove(map);
-					break;
-				}	
+			for(WebSocketSession connectedSession : connectedSessions) {
+				connectedSession.sendMessage(new TextMessage(gson.toJson(newMvo)));
 			}
 			
-			// 같은 채팅방에 퇴장 메세지 전송 
-			for (int i = 0; i < sessionList.size(); i++) {
-				Map<String, Object> mapSessionList = sessionList.get(i);
-				String bang_id = (String) mapSessionList.get("bang_id");
-				WebSocketSession sess = (WebSocketSession) mapSessionList.get("session");
-
-				if (bang_id.equals(now_bang_id)) {
-					
-					mvo.setCmd("CMD_EXIT");
-					
-//					Map<String, String> mapToSend = new HashMap<String, String>();
-//					mapToSend.put("bang_id", bang_id);
-//					mapToSend.put("cmd", "CMD_EXIT");
-//					mapToSend.put("content", session.getId() + "님이 퇴장 했습니다.");
-//
-//					String jsonStr = objectMapper.writeValueAsString(mapToSend);
-//					sess.sendMessage(new TextMessage(jsonStr));
-					
-					sess.sendMessage(new TextMessage(gson.toJson(mvo)));
-					
-					mvo.setCmd("");
-
-				}
-			}
 		}
 	}
