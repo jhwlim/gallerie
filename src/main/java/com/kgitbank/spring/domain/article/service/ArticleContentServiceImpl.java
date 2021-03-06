@@ -91,8 +91,8 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 				// 파일을 서버에 저장하기
 				String[] fileNames = FileUtils.uploadFiles(files, uploadPath); // 연도/월/일/파일이름
 				List<FileVO> fileList = new ArrayList<>();
-				for (String fileName : fileNames) {
-					fileList.add(new FileVO(FileUtils.currPathtoUnderbarPath(fileName)));
+				for (int i = 0; i < fileNames.length; i++) {
+					fileList.add(new FileVO(FileUtils.currPathtoUnderbarPath(fileNames[i]), i+1));					
 				}
 				
 				// 서버에 저장한 파일이름을 DB에 저장하기

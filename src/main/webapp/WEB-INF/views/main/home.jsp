@@ -362,7 +362,7 @@
                 <figure class="write__writer-figure">
                     <img src="<c:url value = '/image/profile/${sessionScope.userProfile}/' />" alt="" class="write__writer-image">
                 </figure>
-                <span class="write__writer-id">Jonghwan Lim</span>    
+                <span class="write__writer-id">${sessionScope.user}</span>    
             </div>
             <textarea name="content" placeholder="Jonghwan Lim님, 무슨 생각을 하고 계신가요?" class="write__textarea" id="writeArea"></textarea>
             <div class="upload__file-preview" id="writeUploadFilePreview"></div>

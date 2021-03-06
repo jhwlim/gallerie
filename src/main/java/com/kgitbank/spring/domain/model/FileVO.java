@@ -16,5 +16,6 @@ public class FileVO {
 	@NonNull
 	private String imgPath;
 	private int articleId;
-	
+	@NonNull
+	private int num;
 }

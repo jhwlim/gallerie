@@ -19,7 +19,13 @@
 	</select>
 	
 	<select id="selectFileByArticleId" resultType="FileVO">
-		SELECT * FROM files WHERE article_id = #{articleId}
+		SELECT 
+			* 
+		FROM 
+			files 
+		WHERE 
+			article_id = #{articleId}
+		ORDER BY num
 	</select>
 	
 	<delete id="deleteArticleById">
@@ -53,9 +59,9 @@
 		</selectKey>
 		<foreach collection="list" item="file" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
 			INTO files (
-				article_id, img_path
+				article_id, img_path, num
 			) VALUES (
-				#{articleId}, #{file.imgPath}
+				#{articleId}, #{file.imgPath}, #{file.num}
 			)
    		</foreach>
 	</insert>
