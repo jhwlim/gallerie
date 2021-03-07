@@ -1,5 +1,7 @@
 package com.kgitbank.spring.domain.article.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.domain.article.dto.ArticleDto;
+import com.kgitbank.spring.domain.article.dto.GalleryDto;
+import com.kgitbank.spring.domain.article.dto.GalleryPageDto;
 import com.kgitbank.spring.domain.article.service.ArticleContentService;
 import com.kgitbank.spring.domain.model.ArticleLikeVO;
 import com.kgitbank.spring.domain.model.ArticleVO;
-import com.kgitbank.spring.domain.myprofile.service.ProfileMainService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -36,9 +39,6 @@ public class ArticleContentController {
 	
 	@Autowired
 	AccountService accService;
-	
-	@Autowired
-	ProfileMainService profileService;
 	
 	@GetMapping(value = "/{id}")
 	public String getContent(@PathVariable("id") String id, 
@@ -67,9 +67,26 @@ public class ArticleContentController {
 		model.addAttribute("article", article);
 		
 		// 작성자의 다른 게시물 조회
-		model.addAttribute("articles", profileService.selectGalleryBywriterId(article.getWriterSeqId()));
+//		model.addAttribute("articles", profileService.selectGalleryBywriterId(article.getWriterSeqId()));
 		
 		return "article/article";
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/", produces="application/json")
+	public ResponseEntity<GalleryPageDto> getGallery(GalleryPageDto data) {
+		log.info("URL : /article - GET by ajax");
+		log.info("data=" + data);
+		
+		data.setArticles(service.selectGalleryByWriterSeqId(data));
+		int totalCnt = service.selectTotalCountOfArticlesByWriterSeqId(data.getWriterSeqId());
+		int idx = data.getArticleIndex();
+		
+		boolean hasMore = (idx+1) * data.getArticleCount() < totalCnt;
+		log.info(hasMore);
+		data.setHasMore(hasMore);
+		
+		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 	
 	@ResponseBody

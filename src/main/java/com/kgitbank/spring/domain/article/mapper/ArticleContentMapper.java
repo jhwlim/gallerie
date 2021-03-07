@@ -3,6 +3,8 @@ package com.kgitbank.spring.domain.article.mapper;
 import java.util.List;
 
 import com.kgitbank.spring.domain.article.dto.ArticleDto;
+import com.kgitbank.spring.domain.article.dto.GalleryDto;
+import com.kgitbank.spring.domain.article.dto.GalleryPageDto;
 import com.kgitbank.spring.domain.model.ArticleLikeVO;
 import com.kgitbank.spring.domain.model.ArticleVO;
 import com.kgitbank.spring.domain.model.FileVO;
@@ -13,6 +15,10 @@ public interface ArticleContentMapper {
 	public ArticleDto selectArticleWithWriterInfoById(int id);
 
 	public List<FileVO> selectFileByArticleId(int articleId);
+	
+	public List<GalleryDto> selectGalleryByWriterSeqId(GalleryPageDto page);
+	
+	public int selectTotalCountOfArticlesByWriterSeqId(int writerSeqId);
 	
 	public void insertArticle(ArticleVO article);
 

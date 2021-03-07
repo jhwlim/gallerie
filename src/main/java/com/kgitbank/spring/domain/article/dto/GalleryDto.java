@@ -1,4 +1,4 @@
-package com.kgitbank.spring.domain.myprofile.dto;
+package com.kgitbank.spring.domain.article.dto;
 
 import lombok.Data;
 

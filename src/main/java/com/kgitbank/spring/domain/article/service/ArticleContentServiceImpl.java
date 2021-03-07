@@ -18,6 +18,8 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kgitbank.spring.domain.article.dto.ArticleDto;
+import com.kgitbank.spring.domain.article.dto.GalleryDto;
+import com.kgitbank.spring.domain.article.dto.GalleryPageDto;
 import com.kgitbank.spring.domain.article.mapper.ArticleContentMapper;
 import com.kgitbank.spring.domain.model.ArticleLikeVO;
 import com.kgitbank.spring.domain.model.ArticleVO;
@@ -185,5 +187,16 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 		mapper.deleteLike(vo);
 	}
 
-	
+
+	@Override
+	public List<GalleryDto> selectGalleryByWriterSeqId(GalleryPageDto page) {
+		return mapper.selectGalleryByWriterSeqId(page);
+	}
+
+
+	@Override
+	public int selectTotalCountOfArticlesByWriterSeqId(int writerSeqId) {
+		return mapper.selectTotalCountOfArticlesByWriterSeqId(writerSeqId);
+	}
+
 }

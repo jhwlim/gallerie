@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.kgitbank.spring.domain.article.dto.GalleryPageDto;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.model.mapper.ArticleLikeMapperTests;
 
@@ -61,8 +62,4 @@ public class ProfileMainMapperTests {
 		log.info(imgMapper.selectProfileImgBySeqId(seqId));
 	}
 	
-	@Test
-	public void selectArticleSummarysTest() {
-		log.info("Result : " + mapper.selectGalleryBywriterId(2));
-	}
 }

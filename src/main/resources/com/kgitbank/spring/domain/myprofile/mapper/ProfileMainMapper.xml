@@ -9,27 +9,5 @@
 		WHERE id = #{id}
 	</select>
 	
-	<select id="selectGalleryBywriterId" resultType="com.kgitbank.spring.domain.myprofile.dto.GalleryDto">
-		SELECT
-		    a.*, 
-		    alc.like_count,
-		    cc.comment_count,
-		    f.img_path
-		FROM
-		    articles a
-		    LEFT OUTER JOIN
-		    (SELECT article_id, COUNT(*) as like_count FROM article_like GROUP BY article_id) alc
-		    ON a.id = alc.article_id
-		    LEFT OUTER JOIN
-		    (SELECT article_id, COUNT(*) as comment_count FROM comments GROUP BY article_id) cc
-		    ON a.id = cc.article_id
-		    LEFT OUTER JOIN
-		    (SELECT article_id, img_path FROM files WHERE num = 1) f
-		    ON a.id = f.article_id
-		WHERE
-		    writer_seq_id = #{writerSeqId}
-		ORDER BY id DESC
-	</select>
-	
 	
 </mapper>

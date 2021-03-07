@@ -13,5 +13,6 @@ public class ProfileDto {
 	
 	private boolean signedIn;
 	private boolean hasImg;
+	private int post;
 	
 }
