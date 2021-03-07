@@ -103,7 +103,7 @@
                                  </a>
                                  <div class="text-box" role="button" tabindex="0">
                                          <div class="text-box-inside">
-                                             <span class="text-text" id="writeOpenBtn" style="-webkit-box-orient: vertical; -webkit-line-clamp: 2; display: -webkit-box;">Taewook Kang님, 무슨 생각을 하고 계신가요?</span>
+                                             <span class="text-text" id="writeOpenBtn" style="-webkit-box-orient: vertical; -webkit-line-clamp: 2; display: -webkit-box;">${sessionScope.user}님, 무슨 생각을 하고 계신가요?</span>
                                          </div>
                                          <div class="text-bottom" data-visualcompletion="ignore" style="border-radius: 20px;">
                  
@@ -364,7 +364,7 @@
                 </figure>
                 <span class="write__writer-id">${sessionScope.user}</span>    
             </div>
-            <textarea name="content" placeholder="Jonghwan Lim님, 무슨 생각을 하고 계신가요?" class="write__textarea" id="writeArea"></textarea>
+            <textarea name="content" placeholder="${sessionScope.user}님, 무슨 생각을 하고 계신가요?" class="write__textarea" id="writeArea"></textarea>
             <div class="upload__file-preview" id="writeUploadFilePreview"></div>
             <label for="fileSelector" class="upload">
                 <figure class="upload__icon-size">

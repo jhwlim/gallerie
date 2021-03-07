@@ -46,7 +46,7 @@ public class ProfileMainController {
 		
 		model.addAttribute("member", member);
 		
-		model.addAttribute("articles", service.selectArticleSummarys(member.getSeqId()));
+		model.addAttribute("articles", service.selectGalleryBywriterId(member.getSeqId()));
 		
 		return "myprofile/myProfileMain";
 	}

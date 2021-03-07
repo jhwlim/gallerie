@@ -160,10 +160,16 @@ public class FileUtils {
 	
 	/**
 	 * '_' 형식의 파일 경로를 현재 저장되어 있는 파일 경로로 변환한다.
-	 * @param underbarPath  YYYY__MM__DD__filePath  
+	 * @param underbarPath  YYYY_MM_DD_filePath  
 	 * @return YYYY/MM/DD/filePath
 	 */
 	public static String underbarPathTocurrPath(String underbarPath) {
+		if (underbarPath.charAt(4) != '_'
+				|| underbarPath.charAt(7) != '_'
+				|| underbarPath.charAt(10) != '_') {
+			return underbarPath;
+		}
+		
 		StringBuilder currPath = new StringBuilder();
 		
 		currPath.append(underbarPath.substring(0, 4)) 	// YYYY

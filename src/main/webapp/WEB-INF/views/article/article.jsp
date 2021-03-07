@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="<c:url value = '/resources/css/article/article.css?ver=1.0' />" />
 
 </head>
-<body>
+<body style="overflow:scroll;">
 
 	<%@ include file="/WEB-INF/include/nav.jspf" %>
 
@@ -26,7 +26,7 @@
                         <div class="d-flex flex-column mt-4 mb-4">
 		                    <div class="article">
 		                    	<c:choose>
-		                    		<c:when test="${fn:length(article.files) eq 0}">
+		                    		<c:when test="${empty article.files}">
 			                    		<div class="article__items" style="width: 100%;">
 				                    	    <div class="article__item" style="width: 100%;">
 			                                    <img src="<c:url value = '/resources/image/article/alternative.jpg'/>" class="article__image" />
@@ -170,9 +170,6 @@
         </div>
     </div>
 
-                                        
-    
-
 <footer>
        
     
@@ -231,7 +228,7 @@ $('.content').on('click', function() {
 	
 });
 </script>
-<c:if test="${fn:length(article.files) ne 0}">
+<c:if test="${not empty article.files}">
 	<script>
 	function getIndexOfSlide(articleItems) {
 		var articleItems = articleItems[0];
@@ -295,9 +292,6 @@ $('.content').on('click', function() {
 		
 	});
 	
-	$('.article__image').on('error', function() {
-		this.src = "<c:url value = '/resources/image/article/alternative.jpg'/>";
-	});
 	</script>
 </c:if>
 <script>

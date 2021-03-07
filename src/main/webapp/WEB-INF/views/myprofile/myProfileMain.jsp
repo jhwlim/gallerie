@@ -21,11 +21,51 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 <link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=1.0">
-<link rel="stylesheet" href="/spring/resources/css/profile/profile.css?ver=1.0">
+<link rel="stylesheet" href="/spring/resources/css/profile/profile.css?ver=1.1">
 
+<style>
+.profile-img-edit {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+.profile-img-edit__container {
+    background-color: #ffffff;
+    width: 380px;
+    height: auto;
+    border-radius: 12px;
+    text-align: center;
+}
+.profile-img-edit__header {
+    font-size: 20px;
+    padding: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.profile-img-edit__option {
+    border-top: 1px solid #cccccc;
+    padding: 15px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.profile-img-edit__option--upload {
+    color: rgb(0, 110, 255);
+}
+.profile-img-edit__option--delete {
+    color: red;
+}
+</style>
 
 </head>
-<body>
+<body style="overflow:scroll;">
 
 <%@ include file="/WEB-INF/include/nav.jspf" %>
 
@@ -33,25 +73,24 @@
         <div class="container">
             <div class="profile">
                 <div class="profile-image">
-                    <figure class="summary__image-area" id="profileImageArea" 
-		   					${member.signedIn && member.hasImg ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' : ''}>
+                    <figure class="summary__image-area" id="profileImgEditOpen"> 
 		   					<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
 	    			</figure>
                 </div>
                 <div class="profile-user-settings">
                     <h1 class="profile-user-name">${member.id}</h1>
-                    <button class="btn profile-edit-btn">Edit Profile</button>
-                    <button class="btn profile-settings-btn" aria-label="Profile Settings"><i class="fas fa-cog" aria-hidden=""></i></button>
+                    <button class="profile-btn profile-edit-btn">Edit Profile</button>
+                    <button class="profile-btn profile-settings-btn" aria-label="Profile Settings"><i class="fas fa-cog" aria-hidden=""></i></button>
                 </div>
                 <div class="profile-stats">
                     <ul>
-                        <li><span class="profile-stat-count">164</span> posts</li>
+                        <li><span class="profile-stat-count">${fn:length(articles)}</span> posts</li>
                         <li><span class="profile-stat-count">188</span> followers</li>
                         <li><span class="profile-stat-count">206</span> following</li>
                     </ul>
                 </div>
                 <div class="profile-bio">
-                    <p><span class="profile-real-name">John Doe</span> Lorem ipsum dolor sit amet... 📷✈️🚞</p>
+                    <p><span class="profile-real-name">${member.name}</span> ${member.profile}</p>
                 </div>
             </div>
 <!--            End of Profile Section-->
@@ -61,78 +100,17 @@
     <main>
         <div class="container">
             <div class="gallery">
-                <div class="gallery-item" tabindex="0">
-                    <img src="/spring/resources/image/mypost/hiking.jpg" alt="alt="Gallery-1" class="gallery-image" >
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
-                        </ul>
-                    </div>
-    
-                </div>
-                <div class="gallery-item" tabindex="0">
-                    <img src="/spring/resources/image/mypost/hiking2.jpg" alt="alt="Gallery-1" class="gallery-image" >
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
-                        </ul>
-                    </div>
-
-                </div>
-                <div class="gallery-item" tabindex="0">
-                    <img src="/spring/resources/image/mypost/hiking3.jpg" alt="alt="Gallery-1" class="gallery-image" >
-                    <div class="gallery-item-type">
-                        <span class="visually-hidden">Gallery</span>
-                        <i class="fas fa-clone" aria-hidden></i>
-                    </div>
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
-                        </ul>
-                    </div>
-    
-                </div>
-                <div class="gallery-item" tabindex="0">
-                    <img src="/spring/resources/image/mypost/hiking4.jpg" alt="alt="Gallery-1" class="gallery-image">
-                    <div class="gallery-item-type">                   
-                        <span class="visually-hidden">Video</span>
-                        <i class="fas fa-video" aria-hidden></i>
-                    </div>
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
-                        </ul>
-                    </div>
-
-                </div>
-                <div class="gallery-item" tabindex="0">
-                    <img src="/spring/resources/image/mypost/hiking5.jpg" alt="alt="Gallery-1" class="gallery-image" >
-                    <div class="gallery-item-type">
-                        <span class="visually-hidden">Gallery</span>
-                        <i class="fas fa-clone" aria-hidden></i>
-                    </div>
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
-                        </ul>
-                    </div>
-    
-                </div>
-                <div class="gallery-item" tabindex="0">
-                    <img src="/spring/resources/image/mypost/hiking6.jpg" alt="alt="Gallery-1" class="gallery-image" >
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> 2</li>
-                        </ul>
-                    </div>
-
-                </div>
+            	<c:forEach var="article" items="${articles}">
+	            	<div class="gallery-item" tabindex="0" onclick="location.href='<c:url value='/article/${article.id}'/>'">
+	                    <img src="<c:url value = '/image/article/${article.imgPath}/' />" alt="" class="gallery-image" >
+	                    <div class="gallery-item-info">
+	                        <ul>
+	                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden></i> ${article.likeCount}</li>
+	                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> ${article.commentCount}</li>
+	                        </ul>
+	                    </div>
+	                </div>            		
+            	</c:forEach>
             </div>
     <!--        End of Gallery-->
         </div>
@@ -144,72 +122,77 @@
 		<input type="file" accept="image/jpeg, image/png" name="file" class="file-upload" />
 		<input type="hidden" name="seqId" value="${member.seqId}" />
 	</form>
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-				  	<h5 class="modal-title">프로필 사진 바꾸기</h5>
-				</div>
-				<div class="modal-body">
-				  	<ul>
-				  		<li class="profile-upload">사진 업로드</li>
-				  		<li id="profileImgDelete">현재 사진 삭제</li>
-				  	</ul>
-				</div>
-				<div class="modal-footer" data-bs-dismiss="modal" id="modalClose">취소</div>
-			</div>
-		</div>
-	</div>
 	
-	<script>
-	var profileImageArea = document.getElementById('profileImageArea');
+	<div class="profile-img-edit" id="profileImgEdit">
+        <div class="profile-img-edit__container">
+            <header class="profile-img-edit__header">
+                프로필 사진 바꾸기
+            </header>
+            <ul class="profile-img-edit__list">
+                <li class="profile-img-edit__option profile-img-edit__option--upload profile-upload">사진 업로드</li>
+                <li class="profile-img-edit__option profile-img-edit__option--delete" id="profileImgDelete">현재 사진 삭제</li>
+                <li class="profile-img-edit__option" id="profileImgEditClose">취소</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $('#profileImgEditOpen').on('click', function(){
+            $('#profileImgEdit').css('display', 'flex');
+        });
+
+        $('#profileImgEditClose').on('click', function() {
+            $('#profileImgEdit').hide();
+        });
+    </script>
+    
+    <script>
+	var profileImgEdit = document.getElementById('profileImgEdit');
 	var hasImg = ${member.hasImg};
 	var prevImgPath = null;
 	
-	function setModal() {
-		profileImageArea.setAttribute('data-bs-toggle', 'modal');
-		profileImageArea.setAttribute('data-bs-target', '#exampleModal');
-	}
-	function removeModal() {
-		profileImageArea.removeAttribute('data-bs-toggle');
-		profileImageArea.removeAttribute('data-bs-target');
-	}
-	
-	if (!hasImg) {
-		$("#profileImageArea").on('click', function() {
+	if (!hasImg) { // 프로필 이미지가 설정되어 있지 않다면
+		$("#profileImgEditOpen").off('click'); // 모달창 생성하지 못하게 이벤트 제거
+		$('#profileImgEditOpen').on('click', function() { // 파일 업로드창 띄우기
 			$('.file-upload').click();
 		});
-	}	
+	}
 
 	$(".profile-upload").on('click', function(event) {
 		$('.file-upload').click();
 	});
 	
 	$(".file-upload").on('change', function() {
-		$("#uploadForm").submit();
+		if (this.files.length == 1) {
+			$("#uploadForm").submit();	
+			this.value = '';
+		}
 	});
 	
 	$('#uploadForm').ajaxForm({
 		beforeSend: function() {
 			prevImgPath = $('#profileImg').attr('src');
 			$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
-			$("#modalClose").click();
+			$("#profileImgEditClose").click();
+			$("#profileImgEditOpen").off('click'); // 파일 업로드창 띄우는 이벤트 제거			
 		},
 		success: function(fileName, status, xhr) {
 			switch (status) {
-			case "nocontent" :
+			case "nocontent" : // 서버에 전송된 파일이 null 인 경우
 				$("#profileImg").attr("src", prevImgPath);
 				break;
 			case "success" :
-				$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + fileName + "/");				
-				$("#profileImageArea").off('click');
-				$("#modalClose").click();
-				setModal();
+				$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + fileName + "/");
+				$("#navProfileImg").attr("src", "<c:url value = '/image/profile/' />" + fileName + "/"); // 네비게이션 프로필 이미지 변경
+				
+				$('#profileImgEditOpen').on('click', function(){ // 모달창 생성
+		            $('#profileImgEdit').css('display', 'flex');
+		        });
 				break;
 			}
 		},
 		error: function() {
-			console.log("Upload Fail");
+			alert("이미지 파일 업로드에 실패하였습니다.")
 		}
 	});
 	
@@ -221,23 +204,22 @@
 			data : "${member.seqId}",
 			beforeSend: function() {
 				$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
-				$("#modalClose").click();
+				$("#profileImgEditClose").click();
+				$("#profileImgEditOpen").off('click'); // 모달창 생성하지 못하게 이벤트 제거
 			},
 			complete : function() {
-				$("#profileImg").attr("src", "<c:url value = '/image/profile/blank.png/' />");
-				$("#modalClose").click();
-				$("#profileImageArea").on('click', function() {
+				$("#profileImg").attr("src", "<c:url value = '/image/profile/' />");
+				$("#navProfileImg").attr("src", "<c:url value = '/image/profile/' />"); // 네비게이션 프로필 이미지 변경
+				$('#profileImgEditOpen').on('click', function() { // 파일 업로드창 띄우기
 					$('.file-upload').click();
 				});
-				removeModal();
 			}
 		})
 	});
+	
+	
 	</script>
-
 </c:if>
-
-
 
 </body>
 </html>

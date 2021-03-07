@@ -1,5 +1,7 @@
 package com.kgitbank.spring.domain.myprofile.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,7 +33,7 @@ public class ProfileImageController {
 	private ProfileImageService service;
 
 	@PostMapping(produces="text/plain;charset=UTF-8")
-	public ResponseEntity<String> uploadFile(MultipartFile file, @RequestParam int seqId) {
+	public ResponseEntity<String> uploadFile(MultipartFile file, @RequestParam int seqId, HttpSession session) {
 		log.info("URL : /image/profile - POST");
 		log.info("seqId=" + seqId);
 		log.info("file=" + file);
@@ -43,26 +45,39 @@ public class ProfileImageController {
 		String savedFileName = service.uploadProfileImg(file, seqId);
 		log.info("savedFileName=" + savedFileName);
 		
+		session.setAttribute("userProfile", savedFileName); // 세션에 저장된 프로필 이미지 변경
+		
 		return savedFileName != null ? 
 				new ResponseEntity<>(savedFileName, HttpStatus.OK) 
 				: new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@GetMapping("/{imgPath}")
-	public ResponseEntity<byte[]> getImage(@PathVariable("imgPath") String imgPath) {
+	@GetMapping({"/", "/{imgPath}"})
+	public ResponseEntity<byte[]> getImage(@PathVariable(name="imgPath", required=false) String imgPath) {
 		log.info("URL : /image/profile - GET");
 		log.info("imgPath=" + imgPath);
-	
+		
+		HttpHeaders headers = null;
+		byte[] imgBytes = null;
+		
+		if (imgPath == null) {
+			headers = service.getHttpHeadersOfDefaultImage();
+			imgBytes = service.getDefaultImage();
+			return new ResponseEntity<>(imgBytes, headers, HttpStatus.OK);
+		}
+		
 		String savedFileName = imgPath;
-		HttpHeaders headers = new HttpHeaders();
 		
 		try {
-			headers.setContentType(FileUtils.parseMediaType(savedFileName));
-			byte[] imgBytes = service.getImage(savedFileName);
-			
+			imgBytes = service.getImage(savedFileName);
 			if (imgBytes == null) {
-				return new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+				headers = service.getHttpHeadersOfDefaultImage();
+				imgBytes = service.getDefaultImage();
+				return new ResponseEntity<>(imgBytes, headers, HttpStatus.NOT_FOUND);
 			}
+			
+			headers = new HttpHeaders();
+			headers.setContentType(FileUtils.parseMediaType(savedFileName));
 			
 			return new ResponseEntity<>(imgBytes, headers, HttpStatus.OK);
 			
@@ -74,11 +89,13 @@ public class ProfileImageController {
 	}
 	
 	@DeleteMapping(produces="text/plain")
-	public ResponseEntity<String> deleteFile(@RequestBody String seqId) {
+	public ResponseEntity<String> deleteFile(@RequestBody String seqId, HttpSession session) {
 		log.info("URL : /image/profile - DELETE");
 		log.info("seqId=" + seqId);
 		
 		service.deleteProfileImg(Integer.parseInt(seqId));
+		
+		session.removeAttribute("userProfile");
 		
 		return new ResponseEntity<String>("Delete Success", HttpStatus.OK);
 	}

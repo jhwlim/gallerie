@@ -26,7 +26,7 @@ img{
     padding: 0 2rem;
 }
 
-.btn{
+.profile-btn{
     all: unset;
     background: none;
     color: none;
@@ -35,7 +35,7 @@ img{
     border: none;
 }
 
-.btn:focus{
+.profile-btn:focus{
     outline: 0.5rem auto #4d90fe;
 
 }

@@ -1,5 +1,7 @@
 package com.kgitbank.spring.domain.article.controller;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,14 @@ public class ArticleFileController {
 
 	@Autowired
 	ArticleFileService service;
+	
+	@Resource(name="articleDefaultImgFileName")
+	private String defaultImagePath;
+	
+	@GetMapping("/image/article/")
+	public String getImage() {
+		return "redirect:/image/article/" + defaultImagePath + "/";
+	}
 	
 	@GetMapping("/image/article/{imgPath}")
 	public ResponseEntity<byte[]> getImage(@PathVariable(name = "imgPath") String imgPath) {

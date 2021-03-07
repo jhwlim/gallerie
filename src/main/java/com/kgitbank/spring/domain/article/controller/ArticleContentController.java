@@ -21,6 +21,7 @@ import com.kgitbank.spring.domain.article.dto.ArticleDto;
 import com.kgitbank.spring.domain.article.service.ArticleContentService;
 import com.kgitbank.spring.domain.model.ArticleLikeVO;
 import com.kgitbank.spring.domain.model.ArticleVO;
+import com.kgitbank.spring.domain.myprofile.service.ProfileMainService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -35,6 +36,9 @@ public class ArticleContentController {
 	
 	@Autowired
 	AccountService accService;
+	
+	@Autowired
+	ProfileMainService profileService;
 	
 	@GetMapping(value = "/{id}")
 	public String getContent(@PathVariable("id") String id, 
@@ -61,6 +65,10 @@ public class ArticleContentController {
 		
 		log.info(article);
 		model.addAttribute("article", article);
+		
+		// 작성자의 다른 게시물 조회
+		model.addAttribute("articles", profileService.selectGalleryBywriterId(article.getWriterSeqId()));
+		
 		return "article/article";
 	}
 	
@@ -72,8 +80,6 @@ public class ArticleContentController {
 		log.info("URL : /article - POST");
 		log.info("content=\n" + article.getContent());
 		log.info(files.length);
-		
-		session.setAttribute("user", "test00"); // 테스트용 세션 생성 - 최종 merge 전 삭제
 		
 		String id = (String) session.getAttribute("user");
 		if (id != null) {
@@ -91,8 +97,6 @@ public class ArticleContentController {
 	public ResponseEntity<String> deleteContent(@RequestBody ArticleDto articleInfo, HttpSession session) {
 		log.info("URL : /article - DELETE");
 		log.info("articleInfo=" + articleInfo);
-		
-		session.setAttribute("user", "test00"); // 테스트용 세션 생성 - 최종 merge 전 삭제
 		
 		// 로그인한 사용자 정보와 삭제하려는 게시물 작성자의 seqId가 동일한지 확인
 		String loginId = (String) session.getAttribute("user");

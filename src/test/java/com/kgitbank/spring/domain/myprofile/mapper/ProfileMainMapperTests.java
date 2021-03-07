@@ -42,12 +42,10 @@ public class ProfileMainMapperTests {
 	@Ignore
 	@Test
 	public void updateProfileImgBySeqIdTest() {
-		
 		int seqId = 1;
 		String imgPath = "/test";
 		
 		MemberVO member = new MemberVO();
-		
 		member.setSeqId(seqId);
 		member.setImgPath(imgPath);
 		
@@ -58,15 +56,13 @@ public class ProfileMainMapperTests {
 	
 	@Ignore
 	@Test
-	public void selectProfileImgBySeqIdTest() {
-		
-		int seqId = 1;
-		
+	public void selectProfileImgBySeqIdTest() {	
+		int seqId = 1;	
 		log.info(imgMapper.selectProfileImgBySeqId(seqId));
 	}
 	
 	@Test
 	public void selectArticleSummarysTest() {
-		log.info(mapper.selectArticleSummarys(2));
+		log.info("Result : " + mapper.selectGalleryBywriterId(2));
 	}
 }

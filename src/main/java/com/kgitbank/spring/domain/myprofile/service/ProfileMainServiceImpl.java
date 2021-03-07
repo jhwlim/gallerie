@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kgitbank.spring.domain.myprofile.dto.ArticleSummaryDto;
+import com.kgitbank.spring.domain.myprofile.dto.GalleryDto;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 import com.kgitbank.spring.domain.myprofile.mapper.ProfileMainMapper;
 
@@ -46,8 +46,9 @@ public class ProfileMainServiceImpl implements ProfileMainService {
 	}
 
 	@Override
-	public List<ArticleSummaryDto> selectArticleSummarys(int writerSeqId) {
-		return mapper.selectArticleSummarys(writerSeqId);
+	public List<GalleryDto> selectGalleryBywriterId(int writerSeqId) {
+		return mapper.selectGalleryBywriterId(writerSeqId);
 	}
 
+	
 }

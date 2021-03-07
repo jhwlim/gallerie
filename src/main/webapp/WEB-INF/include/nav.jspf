@@ -58,7 +58,7 @@
                              <a href="#" class="link-menu">
                                  <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border topbar-profile-photo">
                                      <img src="<c:url value = '/image/profile/${sessionScope.userProfile}/' />" alt="..."
-                                         style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                                         style="transform: scale(1.5); width: 100%; position: absolute; left: 0;" id="navProfileImg">
                                  </div>
                              </a>
                          </li>
