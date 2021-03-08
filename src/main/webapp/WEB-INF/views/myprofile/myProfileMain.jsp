@@ -141,44 +141,7 @@
 				<div class="row">
 					<div class="col-8" style="padding: 0;">
 						<div class="d-flex flex-column mt-4 mb-4">
-							<div class="article">
-								<c:choose>
-									<c:when test="${empty article.files}">
-										<div class="article__items" style="width: 100%;">
-											<div class="article__item" style="width: 100%;">
-												<img
-													src="<c:url value = '/resources/image/article/alternative.jpg'/>"
-													class="article__image" />
-											</div>
-										</div>
-									</c:when>
-									<c:otherwise>
-										<div class="article__items"
-											style="width: calc(100% * ${fn:length(article.files)});">
-											<c:forEach var="file" items="${article.files}"
-												varStatus="status">
-												<div
-													class="article__item ${status.first ? 'article__on' : ''}"
-													style="width: calc(100% / ${fn:length(article.files)})">
-													<img
-														src="<c:url value = '/image/article/${file.imgPath}/' />"
-														class="article__image" />
-												</div>
-											</c:forEach>
-										</div>
-										<figure class="article__btn article__btn--prev">
-											<img
-												src="<c:url value = '/resources/image/static/prev_btn.png' />"
-												alt="" class="article__btn-image" />
-										</figure>
-										<figure class="article__btn article__btn--next">
-											<img
-												src="<c:url value = '/resources/image/static/next_btn.png' />"
-												alt="" class="article__btn-image" />
-										</figure>
-									</c:otherwise>
-								</c:choose>
-							</div>
+							<div class="article" id="article"></div>
 						</div>
 					</div>
 					<div class="col-4" style="padding: 0;">
@@ -189,19 +152,18 @@
 										<div
 											class="rounded-circle overflow-hidden d-flex justify-content-center border align-items-center post-profile-photo mr-3"
 											style="width: 36px; height: 36px;">
-											<img
+											<img id="articleModalWriterImg"
 												src="<c:url value = '/image/profile/${article.imgPath}/'/>"
 												alt="..."
 												style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
 										</div>
-										<span class="font-weight-bold">아이디</span>
+										<span class="font-weight-bold" id="articleModalWriterId"></span>
 									</div>
 								</div>
 								<div class="card-body p-0">
 									<div class="pl-3 pr-3 pb-2"
 										style="height: 280px; overflow: auto; padding-top: 16px;">
-										<p class="d-block mb-1" style="white-space: pre-wrap;">게시물
-											내용</p>
+										<p class="d-block mb-1" style="white-space: pre-wrap;" id="articleModalContent"></p>
 										<small class="text-muted">4 HOURS AGO</small>
 										<div class="comments" style="margin-top: 10px;">
 
@@ -249,11 +211,9 @@
 										class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1 article__btns">
 										<ul class="list-inline d-flex flex-row align-items-center m-0">
 											<li class="list-inline-item">
-												<button class="btn p-0" value="${article.id}">
-													<div
-														class="content ${article.hasLike ? 'heart-active' : ''}">
-														<span
-															class="heart ${article.hasLike ? 'heart-active' : ''}"></span>
+												<button class="btn p-0" id="articleModalLikeBtn">
+													<div id="articleModalHeart" class="content">
+														<span class="heart"></span>
 													</div>
 												</button>
 											</li>
@@ -300,9 +260,9 @@
 											</button>
 										</div>
 									</div>
-									<div class="article__likes"
+									<div class="article__likes" id="articleModalLikeCnt"
 										style="font-weight: bold; padding: 0 16px;">
-										<span>${article.likeCount}</span> likes
+										<span></span> likes
 									</div>
 									<div class="position-relative comment-box">
 										<form>
@@ -487,14 +447,53 @@ $(document).on('scroll', getGallery);
 </script>
 	<script>
 function openArticleModal(id) {
-	console.log(id);
-	
 	$.ajax({
 		type : "GET",
 		url : "<c:url value='/article/' />" + id,
-		success : function(result) {
-			console.log(result);
+		success : function(article) {
+			// 모달 값 세팅하기
+			$('#articleModalWriterImg').attr('src', '/spring/image/profile/' + article.imgPath + "/");
+			$('#articleModalWriterId').text(article.writerId);
+			$('#articleModalContent').text(article.content);
+			$('#articleModalLikeBtn').val(article.id);
+			if (article.hasLike) {
+				$('#articleModalHeart, #articleModalHeart span').addClass('heart-active');
+			} else {
+				$('#articleModalHeart, #articleModalHeart span').removeClass('heart-active');
+			}
+			$('#articleModalLikeCnt span').text(article.likeCount);
 			
+			// 이미지 값 설정하기
+			var files = article.files;
+			
+			$('.article').html("");
+			$('.article').append(createArticleItems());
+			
+			if (files.length == 0) {
+				$('.article__items').append(createArticleItem('100%', "<c:url value = '/resources/image/article/alternative.jpg'/>"));
+			} else {
+				var len = files.length;
+				$('.article__items').css('width', (100 * len) + '%');
+				for (var i in files) {
+					var el = createArticleItem((100 / len) + '%', "<c:url value = '/image/article/'/>" + files[i].imgPath + "/");
+					if (i == 0) {
+						$(el).addClass('article__on');
+					}
+					$('.article__items').append(el);
+				}
+				var prevBtn = createArticlePrevBtn();
+				$(prevBtn).on('click', function() {
+					addArticlePrevBtn();
+				});
+				$('.article').append(prevBtn);
+				
+				var nextBtn = createArticleNextBtn();
+				$(nextBtn).on('click', function() {
+					addArticleNextBtn();
+				});
+				$('.article').append(nextBtn);
+			}
+
 			$('#articleModalOpen').click();
 		}
 	});
@@ -510,8 +509,54 @@ $('#articleModalClose').on('click', function() {
     $('body').css('overflow-y', 'scroll');
 });
 
+function createArticleItems() {
+	articleItems = document.createElement('div');
+	articleItems.classList.add('article__items');
+	return articleItems;
+}
+function createArticleItem(width, src) {
+	articleItem = document.createElement('div');
+	articleItem.classList.add('article__item');
+	articleItem.style.width = width;
+	
+	articleImage = document.createElement('img');
+	articleImage.classList.add('article__image');
+	articleImage.src = src;
+	articleItem.appendChild(articleImage);
+	return articleItem;
+}
+function createArticlePrevBtn() {
+	articleBtn = document.createElement('figure');
+	articleBtn.classList.add('article__btn', 'article__btn--prev');
+	
+	btnImage = document.createElement('img');
+	btnImage.classList.add('article__btn-image');
+	btnImage.src = '/spring/resources/image/static/prev_btn.png';
+	articleBtn.appendChild(btnImage);
+	return articleBtn;
+}
+function createArticleNextBtn() {
+	articleBtn = document.createElement('figure');
+	articleBtn.classList.add('article__btn', 'article__btn--next');
+	
+	btnImage = document.createElement('img');
+	btnImage.classList.add('article__btn-image');
+	btnImage.src = '/spring/resources/image/static/next_btn.png';
+	articleBtn.appendChild(btnImage);
+	return articleBtn;
+}
+
 </script>
 	<script>
+	$(document).ready(function(){
+		$('.content').click(function(){
+			$('.content').toggleClass("heart-active")
+		  	$('.text').toggleClass("heart-active")
+		  	$('.numb').toggleClass("heart-active")
+		  	$('.heart').toggleClass("heart-active")
+		});
+	});
+
 	function getIndexOfSlide(articleItems) {
 		var articleItems = articleItems[0];
 		var children = articleItems.children;
@@ -524,8 +569,10 @@ $('#articleModalClose').on('click', function() {
 		}
 		return -1;
 	}
-	$('.article__btn--prev').on('click', function() {
-		var articleItems = $(this).parent().children(".article__items");
+	
+	function addArticlePrevBtn() {
+		var articleItems = $(".article__items");
+		
 		var idx = getIndexOfSlide(articleItems);
 		articleItems[0].children[idx].classList.remove('article__on');
 		
@@ -537,10 +584,11 @@ $('#articleModalClose').on('click', function() {
 		articleItems[0].children[idx].classList.add('article__on');
 		
 		moveSlide(articleItems, idx);
-	});
+	}
 	
-	$('.article__btn--next').on('click', function() {
-		var articleItems = $(this).parent().children(".article__items");
+	function addArticleNextBtn() {
+		var articleItems = $(".article__items");
+		
 		var idx = getIndexOfSlide(articleItems);
 		articleItems[0].children[idx].classList.remove('article__on');
 		
@@ -548,8 +596,8 @@ $('#articleModalClose').on('click', function() {
 		idx = (idx + 1) % slideLen;
 		articleItems[0].children[idx].classList.add('article__on');
 		
-		moveSlide(articleItems, idx);
-	});
+		moveSlide(articleItems, idx);	
+	}
 	
 	function moveSlide(target, idx) {
 		var width = $('.article').width();
@@ -571,6 +619,38 @@ $('#articleModalClose').on('click', function() {
 				'margin-left': -width * idx
 			});	
 		})
+	});
+	
+	$('.content').on('click', function() {
+		var $like = $(this).parents('.article__btns').next('.article__likes');
+		var likeCnt = $($like).children('span');
+		var hasLike = $(this).hasClass('heart-active');
+		
+		var data = {
+				articleId : $(this).parent().val()
+		};
+		
+		if (hasLike) { // 좋아요 상태
+			$.ajax({
+				url: "<c:url value = '/article/like'/> ",
+				method: 'DELETE',
+				contentType : "application/json",
+				data: JSON.stringify(data),
+				success: function() {
+					likeCnt.text(parseInt(likeCnt.text())-1);
+				}
+			});
+		} else {
+			$.ajax({
+				url: "<c:url value = '/article/like'/> ",
+				method: 'POST',
+				contentType : "application/json",
+				data: JSON.stringify(data),
+				success: function() {
+					likeCnt.text(parseInt(likeCnt.text())+1);
+				}
+			});
+		}
 		
 	});
 </script>

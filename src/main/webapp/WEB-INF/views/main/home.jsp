@@ -469,7 +469,7 @@ $('#writeBtn').on('click', function(evt) {
 		formData.append('files', file);
 	}
 	console.log(fileList);
-	/*
+	
 	$.ajax({
 		url: "/spring/article/",
 		type: 'post',
@@ -481,7 +481,7 @@ $('#writeBtn').on('click', function(evt) {
 			location.href = ".";
 		}
 	});
-	*/
+	
 });
 </script>
 </body>
