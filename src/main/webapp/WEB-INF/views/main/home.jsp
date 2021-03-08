@@ -316,17 +316,6 @@
             </div>
         </div>
     </div>
-    
-    <script>
-    $(document).ready(function(){
-      $('.content').click(function(){
-        $('.content').toggleClass("heart-active")
-        $('.text').toggleClass("heart-active")
-        $('.numb').toggleClass("heart-active")
-        $('.heart').toggleClass("heart-active")
-      });
-    });
-  </script>
 
 <footer>
     <!-- JS, Popper.js, and jQuery -->
@@ -442,6 +431,9 @@ $('#fileSelector').on('change', function() {
             delImg.addEventListener('click', function() {
                 var figure = this.parentElement.parentElement;
                 figure.remove();
+                
+                var idx = fileList.indexOf(file);
+                fileList.splice(idx, 1);
             });
         }    
     }
@@ -476,7 +468,8 @@ $('#writeBtn').on('click', function(evt) {
 		}
 		formData.append('files', file);
 	}
-	
+	console.log(fileList);
+	/*
 	$.ajax({
 		url: "/spring/article/",
 		type: 'post',
@@ -488,7 +481,7 @@ $('#writeBtn').on('click', function(evt) {
 			location.href = ".";
 		}
 	});
-	
+	*/
 });
 </script>
 </body>
