@@ -437,7 +437,7 @@ getGallery = function getGallery() {
 						$('.loader').remove();
 					}
 				}
-			})
+			});
 		}
 	}
 }
@@ -454,7 +454,7 @@ function openArticleModal(id) {
 			// 모달 값 세팅하기
 			$('#articleModalWriterImg').attr('src', '/spring/image/profile/' + article.imgPath + "/");
 			$('#articleModalWriterId').text(article.writerId);
-			$('#articleModalContent').text(article.content);
+			$('#articleModalContent').html(article.content);
 			$('#articleModalLikeBtn').val(article.id);
 			if (article.hasLike) {
 				$('#articleModalHeart, #articleModalHeart span').addClass('heart-active');
@@ -495,6 +495,9 @@ function openArticleModal(id) {
 			}
 
 			$('#articleModalOpen').click();
+		},
+		error : function() {
+			location.href = "/spring/";
 		}
 	});
 }
@@ -609,8 +612,8 @@ function createArticleNextBtn() {
 	
 	$(window).resize(function() {
 		var article = $('.article');
-		var articleItemsList = $('.article__items');
-		var width = $('.article').width();
+		var articleItemsList = article.children('.article__items');
+		var width = article.width();
 		
 		$.each(articleItemsList, function(i, item) {
 			articleItems = $(item);

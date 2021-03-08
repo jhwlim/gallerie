@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="pl-3 pr-3 pb-2" style="height: 280px; overflow: auto; padding-top: 16px;">
-                                            <p class="d-block mb-1" style="white-space: pre-wrap; flex-wrap;">${article.content}</p>
+                                            <p class="d-block mb-1" style="white-space: pre-wrap; flex-wrap;" id="articleContent">${article.content}</p>
 	                                        <small class="text-muted">4 HOURS AGO</small>
     									<div class="comments" style="margin-top: 10px;">
  
@@ -193,6 +193,7 @@ $(document).ready(function(){
 	  	$('.numb').toggleClass("heart-active")
 	  	$('.heart').toggleClass("heart-active")
 	});
+	
 });
 
 $('.content').on('click', function() {
@@ -279,8 +280,8 @@ $('.content').on('click', function() {
 	
 	$(window).resize(function() {
 		var article = $('.article');
-		var articleItemsList = $('.article__items');
-		var width = $('.article').width();
+		var articleItemsList = article.children('.article__items');
+		var width = article.width();
 		
 		$.each(articleItemsList, function(i, item) {
 			articleItems = $(item);

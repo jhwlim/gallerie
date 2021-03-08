@@ -48,7 +48,13 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 
 	@Override
 	public ArticleDto selectArticleWithWriterInfoById(int id) {
-		return mapper.selectArticleWithWriterInfoById(id);
+		ArticleDto article = mapper.selectArticleWithWriterInfoById(id);
+		
+		// DB에 저장된 content로 부터 tagList를 가져온다. -> replace 진행
+		String content = article.getContent();
+		article.setContent(replaceTagToAnchorTag(content, getTagsFromContent(content)));
+		
+		return article;
 	}
 
 	@Override
@@ -61,7 +67,7 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 		ArticleDto article = null;
 		
 		try {
-			article = mapper.selectArticleWithWriterInfoById(Integer.parseInt(id));
+			article = selectArticleWithWriterInfoById(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
@@ -169,6 +175,13 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 		return new ArrayList<>(tags);
 	}
 
+	private String replaceTagToAnchorTag(String content, List<TagVO> tags) {
+		for (TagVO tag : tags) {
+			String s = "#" + tag.getTagName();
+			content = content.replaceAll(s, "<a>" + s + "</a>");
+		}
+		return content;
+	}
 
 	@Override
 	public int deleteArticleById(int id) {
