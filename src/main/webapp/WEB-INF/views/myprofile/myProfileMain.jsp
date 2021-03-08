@@ -1,137 +1,361 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/include/jstl.jspf" %>
-    
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/include/jstl.jspf"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
 
 
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+	crossorigin="anonymous"></script>
 <!-- jquery.form.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"
+	integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn"
+	crossorigin="anonymous"></script>
 
 <!-- css -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-<link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=1.0">
-<link rel="stylesheet" href="/spring/resources/css/profile/profile.css?ver=1.1">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+<link rel="stylesheet"
+	href="/spring/resources/css/mainpage/main.css?ver=1.0">
+<link rel="stylesheet"
+	href="/spring/resources/css/profile/profile.css?ver=1.1">
+<link rel="stylesheet"
+	href="<c:url value = '/resources/css/profile/profile_img_edit.css?ver=1.0' />" />
+<link rel="stylesheet"
+	href="<c:url value = '/resources/css/article/article.css?ver=2.0' />" />
 
 <style>
-.profile-img-edit {
-    display: none;
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
+.article-modal {
+	display: none;
+	position: fixed;
+	z-index: 10;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.8);
+	justify-content: center;
+	align-items: center;
 }
-.profile-img-edit__container {
-    background-color: #ffffff;
-    width: 380px;
-    height: auto;
-    border-radius: 12px;
-    text-align: center;
+
+.article-modal__container {
+	display: flex;
+	justify-content: center;
 }
-.profile-img-edit__header {
-    font-size: 20px;
-    padding: 30px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-.profile-img-edit__option {
-    border-top: 1px solid #cccccc;
-    padding: 15px;
-    cursor: pointer;
-    font-weight: 500;
-}
-.profile-img-edit__option--upload {
-    color: rgb(0, 110, 255);
-}
-.profile-img-edit__option--delete {
-    color: red;
+
+.article-modal__close {
+	border: 0;
+	color: white;
+	background-color: transparent;
+	font-size: 20px;
+	width: 34px;
+	height: 34px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	padding: 5px;
 }
 </style>
-
 </head>
-<body style="overflow:scroll;">
+<body style="overflow-y: scroll;">
 
-<%@ include file="/WEB-INF/include/nav.jspf" %>
+	<%@ include file="/WEB-INF/include/nav.jspf"%>
 
-<header>
-    <div class="container">
-        <div class="profile">
-            <div class="profile-image">
-                <figure class="summary__image-area" id="profileImgEditOpen"> 
- 					<img src="<c:url value = '/image/profile/${member.imgPath}/' />" class="summary__image" id="profileImg"/>
- 			</figure>
-            </div>
-            <div class="profile-user-settings">
-                <h1 class="profile-user-name">${member.id}</h1>
-                <button class="profile-btn profile-edit-btn">Edit Profile</button>
-                <button class="profile-btn profile-settings-btn" aria-label="Profile Settings"><i class="fas fa-cog" aria-hidden=""></i></button>
-            </div>
-            <div class="profile-stats">
-                <ul>
-                    <li><span class="profile-stat-count">${member.post}</span> posts</li>
-                    <li><span class="profile-stat-count">188</span> followers</li>
-                    <li><span class="profile-stat-count">206</span> following</li>
-                </ul>
-            </div>
-            <div class="profile-bio">
-                <p><span class="profile-real-name">${member.name}</span> ${member.profile}</p>
-            </div>
-        </div>
-<!--            End of Profile Section-->
-    </div>
-<!--        End of Container-->
-</header>
-<main> 
-    <div class="container">
-    	<!-- Gallery-->
-        <div class="gallery" id="gallery" style="min-height: 400px;">
-			<c:if test="${member.post == 0}">
+	<header>
+		<div class="container">
+			<div class="profile">
+				<div class="profile-image">
+					<figure class="summary__image-area" id="profileImgEditOpen">
+						<img src="<c:url value = '/image/profile/${member.imgPath}/' />"
+							class="summary__image" id="profileImg" />
+					</figure>
+				</div>
+				<div class="profile-user-settings">
+					<h1 class="profile-user-name">${member.id}</h1>
+					<c:if test="${member.signedIn}">
+						<button class="profile-btn profile-edit-btn">Edit Profile</button>
+					</c:if>
+					<c:if test="${!member.signedIn}">
+						<button class="profile-btn profile-edit-btn">Follow</button>
+					</c:if>
+					<button class="profile-btn profile-settings-btn"
+						aria-label="Profile Settings">
+						<i class="fas fa-cog" aria-hidden=""></i>
+					</button>
+				</div>
+				<div class="profile-stats">
+					<ul>
+						<li><span class="profile-stat-count">${member.post}</span>
+							posts</li>
+						<li><span class="profile-stat-count">188</span> followers</li>
+						<li><span class="profile-stat-count">206</span> following</li>
+					</ul>
+				</div>
+				<div class="profile-bio">
+					<p>
+						<span class="profile-real-name">${member.name}</span>
+						${member.profile}
+					</p>
+				</div>
+			</div>
+			<!--            End of Profile Section-->
+		</div>
+		<!--        End of Container-->
+	</header>
+	<main>
+		<div class="container">
+			<!-- Gallery-->
+			<div class="gallery" id="gallery" style="min-height: 400px;">
+				<c:if test="${member.post == 0}">
 				게시물이 작성되지 않았음.
 			</c:if>
-        </div>
-        <div class="loader"></div>
-  	</div>       
-</main>
-<footer>
-	<h1>FOOTER</h1>
-</footer>
-	
-<c:if test="${member.signedIn}">
-	<form method="POST" action="<c:url value='/image/profile' />" enctype="multipart/form-data" id="uploadForm">
-		<input type="file" accept="image/jpeg, image/png" name="file" class="file-upload" />
-		<input type="hidden" name="seqId" value="${member.seqId}" />
-	</form>
-	
-	<div class="profile-img-edit" id="profileImgEdit">
-        <div class="profile-img-edit__container">
-            <header class="profile-img-edit__header">
-                프로필 사진 바꾸기
-            </header>
-            <ul class="profile-img-edit__list">
-                <li class="profile-img-edit__option profile-img-edit__option--upload profile-upload">사진 업로드</li>
-                <li class="profile-img-edit__option profile-img-edit__option--delete" id="profileImgDelete">현재 사진 삭제</li>
-                <li class="profile-img-edit__option" id="profileImgEditClose">취소</li>
-            </ul>
-        </div>
-    </div>
+			</div>
+			<div class="loader"></div>
+		</div>
+	</main>
+	<footer>
+		<h1>FOOTER</h1>
+	</footer>
+	<!-- Article Modal -->
+	<button id="articleModalOpen">모달버튼</button>
 
-    <script>
+	<div class="article-modal" id="articleModal">
+		<div class="container article-modal__container">
+			<div class="col-9">
+				<div class="row">
+					<div class="col-8" style="padding: 0;">
+						<div class="d-flex flex-column mt-4 mb-4">
+							<div class="article">
+								<c:choose>
+									<c:when test="${empty article.files}">
+										<div class="article__items" style="width: 100%;">
+											<div class="article__item" style="width: 100%;">
+												<img
+													src="<c:url value = '/resources/image/article/alternative.jpg'/>"
+													class="article__image" />
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="article__items"
+											style="width: calc(100% * ${fn:length(article.files)});">
+											<c:forEach var="file" items="${article.files}"
+												varStatus="status">
+												<div
+													class="article__item ${status.first ? 'article__on' : ''}"
+													style="width: calc(100% / ${fn:length(article.files)})">
+													<img
+														src="<c:url value = '/image/article/${file.imgPath}/' />"
+														class="article__image" />
+												</div>
+											</c:forEach>
+										</div>
+										<figure class="article__btn article__btn--prev">
+											<img
+												src="<c:url value = '/resources/image/static/prev_btn.png' />"
+												alt="" class="article__btn-image" />
+										</figure>
+										<figure class="article__btn article__btn--next">
+											<img
+												src="<c:url value = '/resources/image/static/next_btn.png' />"
+												alt="" class="article__btn-image" />
+										</figure>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+					</div>
+					<div class="col-4" style="padding: 0;">
+						<div class="d-flex flex-column mt-4 mb-4">
+							<div class="card" style="height: 500px;">
+								<div class="card-header" style="padding: 12px 16px;">
+									<div class="d-flex flex-row align-items-center">
+										<div
+											class="rounded-circle overflow-hidden d-flex justify-content-center border align-items-center post-profile-photo mr-3"
+											style="width: 36px; height: 36px;">
+											<img
+												src="<c:url value = '/image/profile/${article.imgPath}/'/>"
+												alt="..."
+												style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+										</div>
+										<span class="font-weight-bold">아이디</span>
+									</div>
+								</div>
+								<div class="card-body p-0">
+									<div class="pl-3 pr-3 pb-2"
+										style="height: 280px; overflow: auto; padding-top: 16px;">
+										<p class="d-block mb-1" style="white-space: pre-wrap;">게시물
+											내용</p>
+										<small class="text-muted">4 HOURS AGO</small>
+										<div class="comments" style="margin-top: 10px;">
+
+											<div class="comment">
+												<div class="comment__profile">
+													<img src="<c:url value = '/image/profile/${"imgPath"}/'/>"
+														alt="" class="comment__image" />
+												</div>
+												<div class="comment__text">
+													<div class="comment__writer">a.7.m3ff</div>
+													<div>❤️💓💓💓💓💓</div>
+													<span class="comment__date">2 HOURS AGO</span>
+												</div>
+											</div>
+											<div class="comment">
+												<div class="comment__profile">
+													<img src="<c:url value = '/image/profile/${"imgPath"}/'/>"
+														alt="" class="comment__image" />
+												</div>
+												<div class="comment__text">
+													<div class="comment__writer">adri_rez77</div>
+													<div>Hi</div>
+													<span class="comment__date">4 HOURS AGO</span>
+												</div>
+											</div>
+											<div class="comment">
+												<div class="comment__profile">
+													<img src="<c:url value = '/image/profile/${"imgPath"}/'/>"
+														alt="" class="comment__image" />
+												</div>
+												<div class="comment__text">
+													<div class="comment__writer">samkolder</div>
+													<div>Lorem ipsum dolor sit amet, consectetur
+														adipisicing elit. Non aliquid adipisci eveniet praesentium
+														culpa officia ullam illum delectus vel totam dolorem illo
+														ratione cumque nemo numquam incidunt eos aspernatur
+														aliquam.</div>
+													<span class="comment__date">1 HOURS AGO</span>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div
+										class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1 article__btns">
+										<ul class="list-inline d-flex flex-row align-items-center m-0">
+											<li class="list-inline-item">
+												<button class="btn p-0" value="${article.id}">
+													<div
+														class="content ${article.hasLike ? 'heart-active' : ''}">
+														<span
+															class="heart ${article.hasLike ? 'heart-active' : ''}"></span>
+													</div>
+												</button>
+											</li>
+											<li class="list-inline-item ml-2">
+												<button class="btn p-0">
+													<svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
+														class="bi bi-chat" fill="currentColor"
+														xmlns="http://www.w3.org/2000/svg">
+                                                     <path
+															fill-rule="evenodd"
+															d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
+                                                 </svg>
+												</button>
+											</li>
+											<li class="list-inline-item ml-2">
+												<button class="btn p-0">
+													<svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
+														class="bi bi-share" fill="currentColor"
+														xmlns="http://www.w3.org/2000/svg">
+                                                     <path
+															fill-rule="evenodd"
+															d="M11.724 3.947l-7 3.5-.448-.894 7-3.5.448.894zm-.448 9l-7-3.5.448-.894 7 3.5-.448.894z" />
+                                                     <path
+															fill-rule="evenodd"
+															d="M13.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm-11-6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                                                 </svg>
+												</button>
+											</li>
+										</ul>
+										<div>
+											<button class="btn p-0">
+												<svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
+													class="bi bi-hdd" fill="currentColor"
+													xmlns="http://www.w3.org/2000/svg">
+                                                 <path
+														fill-rule="evenodd"
+														d="M14 9H2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1zM2 8a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2z" />
+                                                 <path
+														d="M5 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-2 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                                 <path
+														fill-rule="evenodd"
+														d="M4.094 4a.5.5 0 0 0-.44.26l-2.47 4.532A1.5 1.5 0 0 0 1 9.51v.99H0v-.99c0-.418.105-.83.305-1.197l2.472-4.531A1.5 1.5 0 0 1 4.094 3h7.812a1.5 1.5 0 0 1 1.317.782l2.472 4.53c.2.368.305.78.305 1.198v.99h-1v-.99a1.5 1.5 0 0 0-.183-.718L12.345 4.26a.5.5 0 0 0-.439-.26H4.094z" />
+                                             </svg>
+											</button>
+										</div>
+									</div>
+									<div class="article__likes"
+										style="font-weight: bold; padding: 0 16px;">
+										<span>${article.likeCount}</span> likes
+									</div>
+									<div class="position-relative comment-box">
+										<form>
+											<input class="w-100 border-0 p-3 input-post"
+												placeholder="Add a comment...">
+											<button class="btn btn-primary position-absolute btn-ig">Post</button>
+										</form>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button class="article-modal__close" id="articleModalClose">X</button>
+	</div>
+
+	<script>
+    $('#articleModalOpen').on('click', function(){
+        $('#articleModal').css('display', 'flex');
+    });
+
+    $('#articleModalClose').on('click', function() {
+        $('#articleModal').hide();
+    });
+</script>
+
+	<c:if test="${member.signedIn}">
+		<form method="POST" action="<c:url value='/image/profile' />"
+			enctype="multipart/form-data" id="uploadForm">
+			<input type="file" accept="image/jpeg, image/png" name="file"
+				class="file-upload" /> <input type="hidden" name="seqId"
+				value="${member.seqId}" />
+		</form>
+
+		<div class="profile-img-edit" id="profileImgEdit">
+			<div class="profile-img-edit__container">
+				<header class="profile-img-edit__header"> 프로필 사진 바꾸기 </header>
+				<ul class="profile-img-edit__list">
+					<li
+						class="profile-img-edit__option profile-img-edit__option--upload profile-upload">사진
+						업로드</li>
+					<li
+						class="profile-img-edit__option profile-img-edit__option--delete"
+						id="profileImgDelete">현재 사진 삭제</li>
+					<li class="profile-img-edit__option" id="profileImgEditClose">취소</li>
+				</ul>
+			</div>
+		</div>
+
+		<script>
         $('#profileImgEditOpen').on('click', function(){
             $('#profileImgEdit').css('display', 'flex');
         });
@@ -140,8 +364,8 @@
             $('#profileImgEdit').hide();
         });
     </script>
-    
-    <script>
+
+		<script>
 	var profileImgEdit = document.getElementById('profileImgEdit');
 	var hasImg = ${member.hasImg};
 	var prevImgPath = null;
@@ -212,9 +436,9 @@
 		})
 	});
 	</script>
-</c:if>
-<script src="<c:url value='/resources/js/article/gallery.js'/> "></script>
-<script>
+	</c:if>
+	<script src="<c:url value='/resources/js/article/gallery.js'/> "></script>
+	<script>
 let isAjaxFinished = true;
 
 getGallery = function getGallery() {
@@ -241,7 +465,10 @@ getGallery = function getGallery() {
 					var articles = result.articles;
 					
 					for (var article of articles) {
-						addGalleryItem(article);
+						var galleryItem = addGalleryItem(article);
+						$(galleryItem).on('click', function() {
+							openArticleModal($(this).data('id'));
+						});
 					}
 					
 					if (hasMore) {
@@ -256,7 +483,96 @@ getGallery = function getGallery() {
 }
 $(document).ready(getGallery);
 $(document).on('scroll', getGallery);
-</script>
 
+</script>
+	<script>
+function openArticleModal(id) {
+	console.log(id);
+	
+	$.ajax({
+		type : "GET",
+		url : "<c:url value='/article/' />" + id,
+		success : function(result) {
+			console.log(result);
+			
+			$('#articleModalOpen').click();
+		}
+	});
+}
+
+$('#articleModalOpen').on('click', function(){
+    $('#articleModal').css('display', 'flex');
+    $('body').css('overflow-y', 'hidden');
+});
+
+$('#articleModalClose').on('click', function() {
+    $('#articleModal').hide();
+    $('body').css('overflow-y', 'scroll');
+});
+
+</script>
+	<script>
+	function getIndexOfSlide(articleItems) {
+		var articleItems = articleItems[0];
+		var children = articleItems.children;
+		
+		// article__on 이 붙은 article의 index 찾기
+		for (var i = 0; i < children.length; i++) {
+			if (children[i].classList.contains("article__on")) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	$('.article__btn--prev').on('click', function() {
+		var articleItems = $(this).parent().children(".article__items");
+		var idx = getIndexOfSlide(articleItems);
+		articleItems[0].children[idx].classList.remove('article__on');
+		
+		var slideLen = articleItems[0].children.length;
+		idx = (idx - 1) % slideLen;
+		if (idx < 0) {
+			idx += slideLen;
+		}
+		articleItems[0].children[idx].classList.add('article__on');
+		
+		moveSlide(articleItems, idx);
+	});
+	
+	$('.article__btn--next').on('click', function() {
+		var articleItems = $(this).parent().children(".article__items");
+		var idx = getIndexOfSlide(articleItems);
+		articleItems[0].children[idx].classList.remove('article__on');
+		
+		var slideLen = articleItems[0].children.length;
+		idx = (idx + 1) % slideLen;
+		articleItems[0].children[idx].classList.add('article__on');
+		
+		moveSlide(articleItems, idx);
+	});
+	
+	function moveSlide(target, idx) {
+		var width = $('.article').width();
+	
+		target.stop().animate({
+			'margin-left': -width * idx
+		});
+	}
+	
+	$(window).resize(function() {
+		var article = $('.article');
+		var articleItemsList = $('.article__items');
+		var width = $('.article').width();
+		
+		$.each(articleItemsList, function(i, item) {
+			articleItems = $(item);
+			var idx = getIndexOfSlide(articleItems);
+			articleItems.css({
+				'margin-left': -width * idx
+			});	
+		})
+		
+	});
+</script>
 </body>
 </html>

@@ -2,9 +2,7 @@ function addGalleryItem(article) {
 	var gallery = document.getElementById('gallery');
 	var galleryItem = document.createElement('div');
 	galleryItem.className = 'gallery-item';
-	galleryItem.addEventListener('click', function() {
-		location.href = "/spring/image/article/" + article.id + "/";
-	});
+	galleryItem.dataset.id = article.id;
 	gallery.append(galleryItem);
 	
 	if (article.imgPath == null) {
@@ -31,4 +29,6 @@ function addGalleryItem(article) {
 	galleryItemComments.className = 'gallery-item-comments';
 	galleryItemComments.innerHTML = '<span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> ' + article.commentCount;
 	ul.appendChild(galleryItemComments);
+	
+	return galleryItem;
 }

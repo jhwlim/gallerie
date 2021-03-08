@@ -13,6 +13,8 @@ import com.kgitbank.spring.domain.model.FileVO;
 
 public interface ArticleContentService {
 	
+	public ArticleDto selectArticleWithWriterInfoById(int id);
+	
 	public ArticleDto selectArticleWithWriterInfoById(String id);
 	
 	public List<FileVO> selectFileByArticleId(int articleId);

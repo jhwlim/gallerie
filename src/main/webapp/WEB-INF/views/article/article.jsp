@@ -291,7 +291,6 @@ $('.content').on('click', function() {
 		})
 		
 	});
-	
 	</script>
 </c:if>
 <script>

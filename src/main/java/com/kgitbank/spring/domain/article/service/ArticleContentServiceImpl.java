@@ -45,6 +45,12 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 	@Autowired
 	ArticleContentMapper mapper;
 	
+
+	@Override
+	public ArticleDto selectArticleWithWriterInfoById(int id) {
+		return mapper.selectArticleWithWriterInfoById(id);
+	}
+
 	@Override
 	public ArticleDto selectArticleWithWriterInfoById(String id) {
 		// 아이디 유효성 검사
@@ -198,5 +204,6 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 	public int selectTotalCountOfArticlesByWriterSeqId(int writerSeqId) {
 		return mapper.selectTotalCountOfArticlesByWriterSeqId(writerSeqId);
 	}
+
 
 }
