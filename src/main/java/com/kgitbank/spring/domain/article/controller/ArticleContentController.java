@@ -18,7 +18,6 @@ import lombok.extern.log4j.Log4j;
 
 
 @Controller
-@RequestMapping(value = "/post")
 @Log4j
 public class ArticleContentController {
 
@@ -28,11 +27,11 @@ public class ArticleContentController {
 	@Autowired
 	AccountService accService;
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/post/{id}")
 	public String getContent(@PathVariable("id") String id, 
 							 Model model,
 							 HttpSession session) {
-		log.info("URL : /article/ - GET");
+		log.info("URL : /post/ - GET");
 		log.info("id=" + id);
 		
 		String loginId = (String) session.getAttribute("user");
@@ -57,6 +56,13 @@ public class ArticleContentController {
 		return "article/article";
 	}
 	
+	@GetMapping(value = "/tag/{tag}")
+	public String searchArticlesByTagName(@PathVariable String tag) {
+		log.info("URL : /post/ - GET");
+		log.info("tag=" + tag);
+		
+		return "article/tag";
+	}
 	
 	
 }

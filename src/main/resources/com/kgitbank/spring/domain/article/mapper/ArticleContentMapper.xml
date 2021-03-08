@@ -51,8 +51,44 @@
 		OFFSET #{articleIndex} * #{articleCount} ROWS FETCH NEXT #{articleCount} ROWS ONLY
 	</select>
 	
+	<select id="selectGalleryByTagName" resultType="com.kgitbank.spring.domain.article.dto.GalleryDto">
+		SELECT DISTINCT
+		    a.article_id as id, 
+		    alc.like_count,
+		    cc.comment_count,
+		    f.img_path
+		FROM
+		    tag a
+		    LEFT OUTER JOIN
+		    (SELECT article_id, COUNT(*) as like_count FROM article_like GROUP BY article_id) alc
+		    ON a.article_id = alc.article_id
+		    LEFT OUTER JOIN
+		    (SELECT article_id, COUNT(*) as comment_count FROM comments GROUP BY article_id) cc
+		    ON a.article_id = cc.article_id
+		    LEFT OUTER JOIN
+		    (SELECT article_id, img_path FROM files WHERE num = 1) f
+		    ON a.article_id = f.article_id
+		WHERE
+		    tag_name LIKE #{tagName}
+		ORDER BY a.article_id DESC
+		OFFSET #{articleIndex} * #{articleCount} ROWS FETCH NEXT #{articleCount} ROWS ONLY
+	</select>
+	
 	<select id="selectTotalCountOfArticlesByWriterSeqId" resultType="int">
 		SELECT COUNT(*) FROM articles WHERE writer_seq_id = #{writerSeqId}
+	</select>
+	
+	<select id="selectTotalCountOfArticlesByTagName" resultType="int">
+		SELECT 
+		    COUNT(*) 
+		FROM (
+		    SELECT DISTINCT 
+		    	tag.article_id 
+		    FROM 
+		    	tag 
+		    WHERE 
+		    	tag_name LIKE #{tagName}
+		)
 	</select>
 	
 	<delete id="deleteArticleById">

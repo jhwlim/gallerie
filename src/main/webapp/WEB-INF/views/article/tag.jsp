@@ -77,55 +77,10 @@
 
 	<%@ include file="/WEB-INF/include/nav.jspf"%>
 
-	<header>
-		<div class="container">
-			<div class="profile">
-				<div class="profile-image">
-					<figure class="summary__image-area" id="profileImgEditOpen">
-						<img src="<c:url value = '/image/profile/${member.imgPath}/' />"
-							class="summary__image" id="profileImg" />
-					</figure>
-				</div>
-				<div class="profile-user-settings">
-					<h1 class="profile-user-name">${member.id}</h1>
-					<c:if test="${member.signedIn}">
-						<button class="profile-btn profile-edit-btn">Edit Profile</button>
-					</c:if>
-					<c:if test="${!member.signedIn}">
-						<button class="profile-btn profile-edit-btn">Follow</button>
-					</c:if>
-					<button class="profile-btn profile-settings-btn"
-						aria-label="Profile Settings">
-						<i class="fas fa-cog" aria-hidden=""></i>
-					</button>
-				</div>
-				<div class="profile-stats">
-					<ul>
-						<li><span class="profile-stat-count">${member.post}</span>
-							posts</li>
-						<li><span class="profile-stat-count">188</span> followers</li>
-						<li><span class="profile-stat-count">206</span> following</li>
-					</ul>
-				</div>
-				<div class="profile-bio">
-					<p>
-						<span class="profile-real-name">${member.name}</span>
-						${member.profile}
-					</p>
-				</div>
-			</div>
-			<!--            End of Profile Section-->
-		</div>
-		<!--        End of Container-->
-	</header>
 	<main>
 		<div class="container">
 			<!-- Gallery-->
-			<div class="gallery" id="gallery" style="min-height: 400px;">
-				<c:if test="${member.post == 0}">
-				게시물이 작성되지 않았음.
-			</c:if>
-			</div>
+			<div class="gallery" id="gallery" style="min-height: 400px;"></div>
 			<div class="loader"></div>
 		</div>
 	</main>
@@ -153,6 +108,8 @@
 											class="rounded-circle overflow-hidden d-flex justify-content-center border align-items-center post-profile-photo mr-3"
 											style="width: 36px; height: 36px;">
 											<img id="articleModalWriterImg"
+												src="<c:url value = '/image/profile/${article.imgPath}/'/>"
+												alt="..."
 												style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
 										</div>
 										<span class="font-weight-bold" id="articleModalWriterId"></span>
@@ -410,9 +367,10 @@ getGallery = function getGallery() {
 			var articleIndex = Math.floor(cntOfArticle/articleCount);
 			
 			var data = {
-				writerSeqId : ${member.seqId},
+				tagName : "${tag}",
 				articleIndex : articleIndex,
 			};
+			console.log(data);
 			
 			$.ajax({
 				type : "GET",

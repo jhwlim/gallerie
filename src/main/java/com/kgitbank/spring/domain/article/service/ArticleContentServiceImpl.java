@@ -218,5 +218,15 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 		return mapper.selectTotalCountOfArticlesByWriterSeqId(writerSeqId);
 	}
 
+	@Override
+	public List<GalleryDto> selectGalleryByTagName(GalleryPageDto page) {
+		return mapper.selectGalleryByTagName(page);
+	}
+
+	@Override
+	public int selectTotalCountOfArticlesByTagName(String tagName) {
+		return mapper.selectTotalCountOfArticlesByTagName(tagName);
+	}
+
 
 }

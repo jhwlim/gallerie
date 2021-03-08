@@ -40,15 +40,24 @@ public class ArticleRestController {
 		log.info("URL : /article/ - GET by ajax");
 		log.info("data=" + data);
 		
-		data.setArticles(service.selectGalleryByWriterSeqId(data));
-		int totalCnt = service.selectTotalCountOfArticlesByWriterSeqId(data.getWriterSeqId());
+		int totalCnt = 0;
+		
+		if (data.getWriterSeqId() > 0) {
+			data.setArticles(service.selectGalleryByWriterSeqId(data));
+			totalCnt = service.selectTotalCountOfArticlesByWriterSeqId(data.getWriterSeqId());	
+		} else if (data.getTagName() != null) {
+			data.setArticles(service.selectGalleryByTagName(data));
+			totalCnt = service.selectTotalCountOfArticlesByTagName(data.getTagName());
+		}
+		
 		int idx = data.getArticleIndex();
 		
 		boolean hasMore = (idx+1) * data.getArticleCount() < totalCnt;
-		log.info(hasMore);
+		log.info("hasMore ? " + hasMore);
 		data.setHasMore(hasMore);
 		
-		return new ResponseEntity<>(data, HttpStatus.OK);
+		log.info("articles=" + data.getArticles());
+		return data.getArticles() != null ? new ResponseEntity<>(data, HttpStatus.OK) : new ResponseEntity<GalleryPageDto>(HttpStatus.NOT_FOUND);
 	}
 	
 	
