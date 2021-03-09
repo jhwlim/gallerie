@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgitbank.spring.domain.account.mapper.LoginMapper">
+	<select id="getLogin" resultType="com.kgitbank.spring.domain.model.MemberVO">
+		<![CDATA[
+			SELECT
+	    		*
+			FROM 
+				members
+			WHERE id = #{id}
+		]]>		
+	</select>
+	
+	<update id="keepLogin">
+		update members set sessionkey = #{sessionId}, sessionlimit = #{next} where email=#{email}
+	</update>
+	
+	<select id="checkUserWithSessionkey" resultType="com.kgitbank.spring.domain.model.MemberVO">
+		select * from members where sessionkey = #{sessionId} and sessionLimit > sysdate
+	</select>
+
+	<insert id="loginHistory">
+		insert into logins values(
+			login_seq.nextval,
+			#{memberSeqId},
+			sysdate,
+			null,
+			#{ip}
+		)
+	</insert>
+	
+</mapper>

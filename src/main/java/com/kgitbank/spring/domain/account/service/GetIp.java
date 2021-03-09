@@ -1,4 +1,4 @@
-package com.kgitbank.spring.global.util;
+package com.kgitbank.spring.domain.account.service;
 
 import javax.servlet.http.HttpServletRequest;
 

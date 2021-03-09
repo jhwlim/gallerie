@@ -1,4 +1,4 @@
-package com.kgitbank.spring.global.util;
+package com.kgitbank.spring.global.config;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
