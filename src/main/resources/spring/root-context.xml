@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+        xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+                http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521/XE" />
+		<property name="username" value="sys as sysdba" />
+		<property name="password" value="1234" />
+	</bean>
+	
+	<bean id="hikariConfig2" class="com.zaxxer.hikari.HikariConfig">
+		<property name="dataSourceClassName" value="oracle.jdbc.pool.OracleDataSource" />
+		<property name="dataSourceProperties" >
+			<props>
+				<prop key="user">sys as sysdba</prop>
+				<prop key="password">1234</prop>
+				<prop key="url">jdbc:oracle:thin:@localhost:1521/XE</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig2" />
+	</bean>
+	
+	<bean id="dataSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:component-scan base-package="com.kgitbank.model" />
+	<context:component-scan base-package="com.kgitbank.service" />
+	<mybatis-spring:scan base-package="com.kgitbank.mapper" />
+	
+</beans>

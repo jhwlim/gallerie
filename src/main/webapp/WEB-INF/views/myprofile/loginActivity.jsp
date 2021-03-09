@@ -237,6 +237,7 @@ window.initMap = function() {
 
 // Append the 'script' element to 'head'
 document.head.appendChild(script);
+
 window.onload = function() {
 	if (!navigator.geolocation) {
 		document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
