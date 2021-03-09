@@ -14,16 +14,6 @@
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
 
-<!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"
-	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-	crossorigin="anonymous"></script>
-<!-- jquery.form.js -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"
-	integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn"
-	crossorigin="anonymous"></script>
-
 <!-- css -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
@@ -39,101 +29,19 @@
 	href="<c:url value = '/resources/css/article/article.css?ver=2.0' />" />
 <link rel="stylesheet"
 	href="<c:url value = '/resources/css/article/article_modal.css?ver=1.0' />" />
+<link rel="stylesheet"
+	href="<c:url value = '/resources/css/article/follow_modal.css?ver=1.0' />" />
 
-<style>
-.follow-modal {
-    display: none;
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-}
-.follow-modal__container {
-    background-color: #ffffff;
-    width: 340px;
-    height: auto;
-    border-radius: 12px;
-    text-align: center;
-    position: relative;
-}
-.follow-modal__header {
-    font-size: 20px;
-    padding: 16px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    border-bottom: 1px solid lightgray;
-    margin-bottom: 20px;
-}
-.follow-modal__list {
-    list-style-type: none;
-    padding-left: 0;
-    max-height: 300px;
-    overflow-y: scroll;
-}
-.follow-modal__item {
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-.follow-modal__figure {
-    display: inline-block;
-    width: 36px;
-    height: 36px;
-    margin: 0 10px;
-    overflow: hidden;
-    border-radius: 50%;
-}
-.follow-modal__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.follow-modal__user {
-    display: inline-block;
-    width: 80%;
-    text-align: left;
-    font-size: 12px;
-}
-.follow-modal__id {
-	margin: 0;
-}
-.follow-modal__btn {
-    position: absolute;
-    top: 3px;
-    right: 10px;
-    height: 30px;
-    border-radius: 4px;
-    color: white;
-    background-color: rgb(63, 124, 236);
-    border: 1px solid rgb(63, 124, 236);
-}
-.follow-modal__btn--followed {
-    color: black;
-    border: 1px solid gray;
-    background-color: lightgray;
-}
-.follow-modal__close {
-    border: 0;
-    background-color: transparent;
-    font-size: 20px;
-    width: 34px;
-    height: 34px;
-    position: absolute;
-    top: 13px;
-    right: 5px;
-    cursor: pointer;
-    padding: 5px;
-}
-</style>
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+	crossorigin="anonymous"></script>
+<!-- jquery.form.js -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"
+	integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn"
+	crossorigin="anonymous"></script>
+
 </head>
 <body style="overflow-y: scroll;">
 
@@ -205,24 +113,6 @@
 	<footer>
 		<h1>FOOTER</h1>
 	</footer>
-	
-	<!-- Follow Modal 
-	<div class="modal fade" id="followModal" role="dialog"
-		data-backdrop="static">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="follow_title"></h4>
-				</div>
-				<div class="modal-body">
-					<table class="modal_table" id="follow_table">
-					</table>
-				</div>
-				<div class="modal-footer" data-bs-dismiss="modal" id="followClose">닫기</div>
-			</div>
-
-		</div>
-	</div> -->
 
 	<!-- Follow Modal -->
 	<div class="follow-modal" id="followModal">
@@ -232,7 +122,6 @@
             <button class="follow-modal__close" id="followClose">X</button>
         </div>
     </div>
-
 
 	<!-- Article Modal -->
 	<button id="articleModalOpen" style="display: none"></button>
@@ -809,15 +698,6 @@ var followlist = {
 for(obj in followlist){
    	console.log("팔로우" + followlist[obj].seqId)
    }
-
-	//<c:forEach items="${follow.dtoFollowList}" var="item">
-	//	followlist.push("${item}");
-	//</c:forEach>
-	//
-//	for (const [key, value] of Object.entries(followlist)) {
-//		  console.log('${key} : ${value}');
-//	}
-	
 	
 	 $('#follow').on('click',function(){
 	        $('#followModal').css('display', 'flex');
