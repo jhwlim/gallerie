@@ -5,10 +5,15 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.domain.follow.service.FollowService;
@@ -16,7 +21,10 @@ import com.kgitbank.spring.domain.model.FollowVO;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 import com.kgitbank.spring.domain.myprofile.service.ProfileMainService;
 
+import lombok.extern.log4j.Log4j;
+
 @Controller
+@Log4j
 public class FollowController {
 	
 	@Autowired
@@ -25,6 +33,8 @@ public class FollowController {
 	@Autowired
 	FollowService followService;
 	
+	@Autowired
+	AccountService accService;
 	
 	@GetMapping(value="/follow/{id}")
 	public String follow(@PathVariable String id, Model model, HttpSession session) {
@@ -121,10 +131,31 @@ public class FollowController {
 	}
 	
 	
+
+	@ResponseBody
+	@PostMapping("/follow")
+	public void followByAjax(@RequestBody FollowVO vo, HttpSession session) {
+		log.info("URL : /follow - POST");
+		log.info("followVO=" + vo);
+		
+		String loginId = (String) session.getAttribute("user");
+		int loginSeqId = accService.selectMemberById(loginId).getSeqId();
+		vo.setFollowerId(loginSeqId);
+		followService.following(vo);
+	}
 	
 	
-	
-	
+	@ResponseBody
+	@DeleteMapping("/follow")
+	public void ufollowByAjax(@RequestBody FollowVO vo, HttpSession session) {
+		log.info("URL : /follow - DELETE");
+		log.info("followVO=" + vo);
+		
+		String loginId = (String) session.getAttribute("user");
+		int loginSeqId = accService.selectMemberById(loginId).getSeqId();
+		vo.setFollowerId(loginSeqId);
+		followService.ufollow(vo);
+	}
 	
 	
 	

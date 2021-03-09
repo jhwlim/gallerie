@@ -737,23 +737,60 @@ for(obj in followlist){
 	        $('#follow_title').text("팔로워"); 
 	        $('#follow_table').html("");
 	        for(obj in followerlist){
-	        	console.log("팔로워" + followerlist[obj].name)
 	        	var tmp2 = myFollowSeqId.includes(followerlist[obj].seqId)
-	        	console.log(sessionId + "==" + followerlist[obj].id);
 	        	if(sessionId == followerlist[obj].id){
         			tmp2 = true;
         			console.log("boolean값 바뀜" + tmp2);
         		}
 	        	
-        		$('#follow_table').append(createFollowModalItem(followerlist[obj], tmp2, followerlist[obj].id == "${user}"));
-	        		        
+	        	var isLoginId = followerlist[obj].id == "${user}";
+	        	var item = createFollowModalItem(followerlist[obj], tmp2, isLoginId);
+        		$('#follow_table').append(item);
+        		
+        		var btn = $(item).find('.follow-modal__btn');
+	        	console.log(btn);
+        		$(btn).data('seqId', followerlist[obj].seqId);
+        		
+        		$(btn).on('click', $.addFollowEvent);
 	        }
 	   });
 	 
 	 $('#followClose').on('click', function(){
 		 $('#followModal').hide();
 	 });
-
+	
+	 $.addFollowEvent = function() {
+		 var btn = this;
+		 var seqId = $(this).data('seqId');
+		 console.log(seqId);
+		 var isFollowed = $(this).hasClass('follow-modal__btn--followed');
+		 
+		 if (isFollowed) {
+			 $.ajax({
+				url: "<c:url value = '/follow'/> ",
+				method: 'DELETE',
+				contentType : "application/json",
+				data: JSON.stringify({followId : seqId}),
+				complete : function() {
+					$(btn).removeClass('follow-modal__btn--followed');
+					$(btn).text('팔로우');
+				}
+			});
+		 } else {
+			 $.ajax({
+				url: "<c:url value = '/follow'/> ",
+				method: 'POST',
+				contentType : "application/json",
+				data: JSON.stringify({followId : seqId}),
+				complete : function() {
+					$(btn).addClass('follow-modal__btn--followed');
+					$(btn).text('팔로잉');
+				}
+			});
+		 }
+	 };
+	
+	 
 	 function createFollowModalItem(obj, isFollowed, isLoginId) {
 		 var item = document.createElement('li');
 		 item.classList.add('follow-modal__item');
