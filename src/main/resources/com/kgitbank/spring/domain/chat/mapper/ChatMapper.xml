@@ -51,6 +51,6 @@
 		WHERE
 			room_id = #{roomId} AND sender_seq_id != #{seqId} AND read = 'N'
 	</update>
-	
+		
 
 </mapper>

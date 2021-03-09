@@ -65,5 +65,7 @@ public class ChatServiceImpl implements ChatService{
 	public int updateMessageRead(ChattingUser user) {
 		return mapper.updateMessageRead(user);
 	}
+	
+	
 
 }

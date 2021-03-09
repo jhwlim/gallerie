@@ -111,9 +111,10 @@ public class EchoHandler extends TextWebSocketHandler {
 		@Override
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 			// 연결을 끊은 세션 삭제하기
+						
 			ChattingUser user = sessionIdMap.get((String) session.getId());
 			int roomId = user.getRoomId();
-			
+						
 			List<WebSocketSession> connectedSessions = sessions.get(roomId);
 			log.info("세션 삭제 전 : " + connectedSessions);
 			connectedSessions.remove(session);
@@ -125,6 +126,8 @@ public class EchoHandler extends TextWebSocketHandler {
 			
 			for(WebSocketSession connectedSession : connectedSessions) {
 				connectedSession.sendMessage(new TextMessage(gson.toJson(newMvo)));
+				
+				
 			}
 			
 		}

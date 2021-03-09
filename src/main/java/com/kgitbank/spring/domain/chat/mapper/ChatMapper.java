@@ -21,7 +21,6 @@ public interface ChatMapper {
 	
 	public int updateMessageRead(ChattingUser user);
 	
-
 }
 
 

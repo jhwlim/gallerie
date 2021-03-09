@@ -32,4 +32,5 @@ public class MessageVO {
 	private int senderSeqId; // messages_r
 	private char read; // messages_r
 	
+	
 }
