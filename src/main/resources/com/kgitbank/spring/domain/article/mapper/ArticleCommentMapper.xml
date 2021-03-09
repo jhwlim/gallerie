@@ -4,8 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.article.mapper.ArticleCommentMapper">
 
+	<!-- 댓글목록(댓글작성자의 아이디, 내용, 게시날짜) -->
+	<select id="listComment" resultType="CommentVO">
+		SELECT DISTINCT
+		    m.img_path, m.id as writer_id, c.*
+		FROM
+		    members m, articles a, comments c
+		WHERE
+		    m.seq_id = c.member_seq_id
+		AND
+		    a.id = c.article_id
+		AND
+		    c.article_id = #{articleId}
+		ORDER BY 
+			c.write_date desc
+	</select>
+	
 	<!-- 댓글작성 -->
-	<insert id="insertComment">
+	<insert id="insertComment" parameterType="CommentVO">
 		INSERT INTO
 			comments
 		VALUES (
@@ -13,28 +29,14 @@
 		)
 	</insert>
 
-	<!-- 댓글목록(댓글작성자의 아이디, 내용, 게시날짜) -->
-	<select id="commentList" resultType="CommentVO">
-		SELECT DISTINCT
-		    m.id, c.content, c.write_date
-		FROM
-		    members m, articles a, comments c
-		WHERE
-		    m.seq_id = a.writer_seq_id
-		AND
-		    a.id = c.article_id
-		AND
-		    c.article_id = #{articleId};
-	</select>
-
 	<!-- 댓글수정 -->
-	<update id="updateComment">
+	<update id="updateComment" parameterType="CommentVO">
 		UPDATE 
 			comments 
 		SET 
 			content = #{content} 
 		WHERE 
-			article_id = #{articleId};
+			article_id = #{articleId}
 	</update>
 
 	<!-- 댓글삭제 -->
@@ -42,8 +44,20 @@
 		DELETE FROM 
 			comments 
 		WHERE 
-			article_id = #{articleId};
+			id = #{id}
 	</delete>
+	
+	<!-- members테이블의 seq_id -->
+	<select id="getMemberSeqId" resultType="int">
+		SELECT
+		    seq_id
+		FROM 
+			members
+		WHERE 
+			id=#{id}
+	</select>
+	
+	
 </mapper>
 
 

@@ -67,11 +67,11 @@ public class ArticleContentController {
 		article.setHasLike(service.selectCountLikeByMemberSeqIdAndArticleId(likeVO) == 1 ? true : false);
 		
 		// 게시물에 대한 댓글 리스트를 조회
-		// List<CommentVO> comments = commentService.list(article.getId());
-		// log.info("댓글 리스트 : " + comments);
-		// article.setComments(comments);
-		
-		log.info(article);
+		List<CommentVO> comments = commentService.listComment(article.getId());
+		log.info("댓글 리스트 : " + comments);
+		article.setComments(comments);
+
+		log.info("게시글 : " + article);
 		model.addAttribute("article", article);
 		return "article/content";
 	}

@@ -13,10 +13,11 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
 
 	@Autowired
 	ArticleCommentMapper mapper;
+	
 	// 댓글목록
 	@Override
-	public List<CommentVO> list(int id) {
-		return mapper.list(id);
+	public List<CommentVO> listComment(int articleId) {
+		return mapper.listComment(articleId);
 	}
 	// 댓글작성
 	@Override
@@ -33,6 +34,11 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
 	public void deleteComment(CommentVO comment) {
 		mapper.deleteComment(comment);
 	}
-
-
+	
+	// members테이블의 SeqId
+	@Override
+	public int getMemberSeqId(String id) {
+		return mapper.getMemberSeqId(id);
+	}
+	
 }
