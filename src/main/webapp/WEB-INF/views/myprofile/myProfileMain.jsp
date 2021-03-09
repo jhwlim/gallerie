@@ -453,6 +453,7 @@ function openArticleModal(id) {
 			$('#articleModalWriterImg').attr('src', '/spring/image/profile/' + article.imgPath + "/");
 			$('#articleModalWriterId').text(article.writerId);
 			$('#articleModalContent').html(article.content);
+			setTagHref($('#articleModalContent a'));
 			$('#articleModalLikeBtn').val(article.id);
 			if (article.hasLike) {
 				$('#articleModalHeart, #articleModalHeart span').addClass('heart-active');
@@ -654,6 +655,17 @@ function createArticleNextBtn() {
 		}
 		
 	});
+	
+	function setTagHref(tags) {
+		console.log(tags);
+		for (var tag of tags) {
+			console.log(tag);
+			var text = tag.innerText;
+			tag.href = "/spring/tag/" + text.substring(1);
+		}
+	}
+
+	
 </script>
 </body>
 </html>

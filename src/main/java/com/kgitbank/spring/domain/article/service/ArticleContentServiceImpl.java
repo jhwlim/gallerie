@@ -1,10 +1,8 @@
 package com.kgitbank.spring.domain.article.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,7 +90,7 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 			insertArticle(article);
 			
 			// 게시물 내용으로 부터 해시태그를 분류하여 리스트에 저장하고, DB에 저장하기 
-			insertTags(getTagsFromContent(article.getContent()));				
+			insertTags(new ArrayList<TagVO>(new HashSet<>(getTagsFromContent(article.getContent()))));				
 			
 			if (files != null && files.length > 0) {
 				// 유효성 검사 - 지원하지 않은 파일 형식일 때 처리
@@ -163,7 +161,7 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 			return null;
 		}
 		
-		Set<TagVO> tags = new HashSet<>();
+		List<TagVO> tags = new ArrayList<>();
 		
 		Pattern tagPattern = Pattern.compile("\\#([0-9a-zA-Z가-힣_]+)");
 		Matcher matcher = tagPattern.matcher(content);
@@ -172,15 +170,24 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 			tags.add(new TagVO(matcher.group(1)));
 		}
 		
-		return new ArrayList<>(tags);
+		return tags;
 	}
 
 	private String replaceTagToAnchorTag(String content, List<TagVO> tags) {
+		StringBuilder sb = new StringBuilder();
+		int beginIdx = 0;
+		int idx = 0;
 		for (TagVO tag : tags) {
 			String s = "#" + tag.getTagName();
-			content = content.replaceAll(s, "<a>" + s + "</a>");
+			idx = content.indexOf(s, beginIdx);
+			
+			sb.append(content.substring(beginIdx, idx));
+			beginIdx = idx + s.length();
+			sb.append("<a>" + s + "</a>");
 		}
-		return content;
+		sb.append(content.substring(beginIdx));
+		
+		return sb.toString();
 	}
 
 	@Override

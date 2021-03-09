@@ -228,6 +228,18 @@ $('.content').on('click', function() {
 	}
 	
 });
+
+function setTagHref(tags) {
+	console.log(tags);
+	for (var tag of tags) {
+		console.log(tag);
+		var text = tag.innerText;
+		tag.href = "/spring/tag/" + text.substring(1);
+	}
+}
+
+setTagHref($('#articleContent a'));
+
 </script>
 <c:if test="${not empty article.files}">
 	<script>
