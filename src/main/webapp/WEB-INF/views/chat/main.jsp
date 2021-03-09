@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import = "java.util.Date" %>
-<%@ page import = "java.text.SimpleDateFormat" %>
-<%
-	Date time = new Date();
-	SimpleDateFormat formatter =
-			new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-%>
-
+<%@ include file="/WEB-INF/include/jstl.jspf" %>
 
 <!DOCTYPE html>
 <html>
@@ -27,6 +18,7 @@
 <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/sockjs.js"/>"></script>
 
+<c:if test="${!empty receiverId}">
 <script type="text/javascript">
 var webSocket = {
 		init: function(param) {
@@ -95,7 +87,7 @@ var webSocket = {
 			var msgData = {
 					bang_id : bang_id,
 					senderId : "${sessionScope.user}",
-					receiverId : "${oldChat.receiver_id}",
+					receiverId : "${receiver_id}",
 					cmd : cmd,
 					content : msg,
 					roomId : ${roomId}
@@ -108,9 +100,12 @@ var webSocket = {
 <script type="text/javascript">
 	$(window).on('load', function () {
 		webSocket.init({ url: '<c:url value="/chat" />' });	
+		$('#message').on('keypress', function(event) {
+			if(event.keyCode==13){webSocket.sendChat();}
+		});
 	});
 </script>
-
+</c:if>
 
 </head>
 <body>
@@ -238,75 +233,43 @@ var webSocket = {
                                 <div class="friend-list">
                                     <div style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;">
                                         <div class="friend-box">
-                                            <a class="friend-link"
-                                                href="./test03" tabindex="0">
-                                                <div aria-labelledby="f3f5b8b2e7dd90c f38b0de929975b8 fcdb6a166078a"
-                                                    class="friend-label">
-                                                    <div class="friend-profile-container">
-                                                        <div class="friend-profile-picture">
-                                                            <span class="friend-profile-span" role="link" tabindex="-1">
-                                                                <img alt="test03님의 프로필 사진"
-                                                                    class="friend-profile-img" crossorigin="anonymous"
-                                                                    data-testid="user-avatar" draggable="false"
-                                                                    src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-19/s150x150/147208432_175950497277258_6886039917539978012_n.jpg?tp=1&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_ohc=IjhP7di22bsAX8RTHhz&amp;oh=3691cca1f7e94f8232bf710a7291e2fe&amp;oe=606CB1C9"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="friend-text-box">
-                                                        <div class="friend-text-id-box" id="f3f5b8b2e7dd90c">
-                                                            <div class="friend-text-id">
-                                                                <div class="friend-id-long">
-                                                                    <div class="friend-id-short">
-                                                                        <div class="friend-text-id">${receiverId }</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="friend-activity-hr" id="f38b0de929975b8">
-                                                            <div class="friend-activity-box">
-                                                                <div class="friend-act-long">
-                                                                    <span class="friend-act-short">
-                                                                        <span class="friend-act-time">최근 활동: <%= formatter.format(time) %></span>
-                                                                     </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a class="friend-link"
-                                                href="./test04" tabindex="0">
-                                                <div aria-labelledby="f3f5b8b2e7dd90c f38b0de929975b8 fcdb6a166078a"
-                                                    class="friend-label">
-                                                    <div class="friend-profile-container">
-                                                        <div class="friend-profile-picture">
-                                                            <span class="friend-profile-span" role="link" tabindex="-1">
-                                                                <img alt="test04님의 프로필 사진"
-                                                                    class="friend-profile-img" crossorigin="anonymous"
-                                                                    data-testid="user-avatar" draggable="false"
-                                                                    src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-19/s150x150/147208432_175950497277258_6886039917539978012_n.jpg?tp=1&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_ohc=IjhP7di22bsAX8RTHhz&amp;oh=3691cca1f7e94f8232bf710a7291e2fe&amp;oe=606CB1C9"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="friend-text-box">
-                                                        <div class="friend-text-id-box" id="f3f5b8b2e7dd90c">
-                                                            <div class="friend-text-id">
-                                                                <div class="friend-id-long">
-                                                                    <div class="friend-id-short">
-                                                                        <div class="friend-text-id">test04</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="friend-activity-hr" id="f38b0de929975b8">
-                                                            <div class="friend-activity-box">
-                                                                <div class="friend-act-long">
-                                                                    <span class="friend-act-short">
-                                                                        <span class="friend-act-time">최근 활동: 7시간 전</span></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
+                                        	<c:forEach var="friend" items="${friends}">
+                                        		<a class="friend-link"
+	                                                href="<c:url value='/message/${friend.userId}'/>" tabindex="0">
+	                                                <div aria-labelledby="f3f5b8b2e7dd90c f38b0de929975b8 fcdb6a166078a"
+	                                                    class="friend-label">
+	                                                    <div class="friend-profile-container">
+	                                                        <div class="friend-profile-picture">
+	                                                            <span class="friend-profile-span" role="link" tabindex="-1">
+	                                                                <img alt="test03님의 프로필 사진"
+	                                                                    class="friend-profile-img" crossorigin="anonymous"
+	                                                                    data-testid="user-avatar" draggable="false"
+	                                                                    src="<c:url value='/image/profile/${friend.imgPath}/'/>"></span>
+	                                                        </div>
+	                                                    </div>
+	                                                    <div class="friend-text-box">
+	                                                        <div class="friend-text-id-box" id="f3f5b8b2e7dd90c">
+	                                                            <div class="friend-text-id">
+	                                                                <div class="friend-id-long">
+	                                                                    <div class="friend-id-short">
+	                                                                        <div class="friend-text-id">${friend.userId}</div>
+	                                                                    </div>
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>
+	                                                        <div class="friend-activity-hr" id="f38b0de929975b8">
+	                                                            <div class="friend-activity-box">
+	                                                                <div class="friend-act-long">
+	                                                                    <span class="friend-act-short">
+	                                                                        <span class="friend-act-time">최근 대화: <fmt:formatDate value="${friend.sendDate}" type="both"/></span>
+	                                                                     </span>
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                            </a>
+                                        	</c:forEach> 
                                         </div>
                                         <div class="next-friend-box"></div>
                                     </div>
@@ -322,13 +285,14 @@ var webSocket = {
                                 <div class="right-top-box-b">
                                     <div class="profile-top-side"></div>
                                     <div class="profile-top-a">
+                                    	<c:if test="${!empty receiverId}">
                                         <div class="profile-img-box">
                                             <div
                                                 class="profile-img-box-b">
                                                 <button class="profile-img-btn-b" type="button">
                                                     <div class="profile-img-btn-c">
                                                         <span class="profile-img-c" role="link" tabindex="-1">
-                                                            <img alt="viva949494님의 프로필 사진" class="friend-profile-img-c" crossorigin="anonymous" data-testid="user-avatar" draggable="false" src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-19/s150x150/147208432_175950497277258_6886039917539978012_n.jpg?tp=1&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_ohc=Jkng2sE5gsIAX-SEpeF&amp;oh=430a8bb066db1313dad0f2ebc95b05e3&amp;oe=606CB1C9"></span>
+                                                            <img alt="viva949494님의 프로필 사진" class="friend-profile-img-c" crossorigin="anonymous" data-testid="user-avatar" draggable="false" src="<c:url value='/image/profile/${receiver.imgPath}/'/>"></span>
                                                     </div>
                                                 </button>
                                             </div>
@@ -336,15 +300,16 @@ var webSocket = {
                                                 <button class="right-profile-btn" type="button">
                                                     <div class="right-profile-id-box">
                                                         <div class="right-profile-id">
-                                                            <div class="right-profile-id-b">${receiverId }</div>
+                                                            <div class="right-profile-id-b">${receiver.id}</div>
                                                         </div>
                                                         <div class="right-profile-id-hr">
-                                                            <div class="right-profile-time">최근 활동: 어제</div>
+                                                            <div class="right-profile-time">최근 활동: 어제*******</div>
                                                         </div>
                                                     </div>
                                                 </button>
                                             </div>
                                         </div>
+                                        </c:if>
                                     </div>
                                     <div class="right-info-container">
                                         <button class="right-info-btn" type="button">
@@ -402,7 +367,7 @@ var webSocket = {
                                                 </button>
                                             </div>
                                             <div class="input-message">
-                                            	<input type="text" id="message" onkeypress="if(event.keyCode==13){webSocket.sendChat();}" placeholder="메시지 입력..." />
+                                            	<input type="text" id="message" placeholder="메시지 입력..." />
                                                 
                                             </div>
                                             <button class="special-input-btn" type="button">

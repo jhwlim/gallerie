@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kgitbank.spring.domain.chat.dto.ChattingRoom;
 import com.kgitbank.spring.domain.chat.service.ChatService;
+import com.kgitbank.spring.domain.model.MemberVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -31,7 +32,7 @@ public class ChatController {
 	private ChatService service;
 	
 	@RequestMapping(value = {"", "/", "/{receiverId}"}, method = RequestMethod.GET)
-	public String viewChatPage(@PathVariable(name = "receiverId", required = false) String receiverId, HttpSession session, Model model) {
+	public String getChatPage(@PathVariable(name = "receiverId", required = false) String receiverId, HttpSession session, Model model) {
 		
 		// 로그인한 아이디 가져오기
 		String loginId = (String) session.getAttribute("user");
@@ -42,26 +43,30 @@ public class ChatController {
 		int loginSeqId = service.selectMemberById(loginId).getSeqId();
 		
 		if (receiverId == null) {
-			return "chat/main";
+			
 		} else {
-			int receiverSeqId = service.selectMemberById(receiverId).getSeqId();
+			MemberVO receiver = service.selectMemberById(receiverId);
+			if (receiver == null) {
+				return "redirect:/message";
+			}
+			int receiverSeqId = receiver.getSeqId();
+			log.info(receiverSeqId);
 			
 			ChattingRoom room = service.selectRoomIdByUserSeqIds(loginSeqId, receiverSeqId);
+			log.info(room);
 			if (room == null) { // 자기 자신에게 메시지를 보내는 경우
-				return "/message/" + receiverId;
+				return "redirect:/message";
 			} else {
+				model.addAttribute("receiver", receiver);
 				model.addAttribute("roomId", room.getSeqId());
 				model.addAttribute("messages", service.selectMessageByRoomId(room.getSeqId())); // 이전에 대화했던 메시지 내용		
 			}	
 		}
 		
-		// 팔로우하고 있는 리스트
-		List<String> list = new ArrayList<>();
-		list.add("test02");
-		list.add("test03");
-		list.add("test04");
-		model.addAttribute("friends", list);
-	
+		// 최근 대화 상대 목록
+		model.addAttribute("friends", service.selectContactList(loginSeqId));
+		log.info(service.selectContactList(loginSeqId));
+		
 		return "chat/main";
 	}
 	

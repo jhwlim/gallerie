@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kgitbank.spring.domain.chat.dto.ChattingRoom;
 import com.kgitbank.spring.domain.chat.dto.ChattingUser;
+import com.kgitbank.spring.domain.chat.dto.ContactDto;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.model.MessageVO;
 
@@ -19,5 +20,6 @@ public interface ChatService {
 	
 	public int updateMessageRead(ChattingUser user);
 	
+	public List<ContactDto> selectContactList(int userSeqId);
 
 }
