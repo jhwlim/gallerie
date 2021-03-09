@@ -6,14 +6,10 @@
 		http://www.springframework.org/schema/websocket https://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
 
 	<websocket:handlers allowed-origins="*">
-	
-		<websocket:mapping handler="echoHandler" path="/chat"/>
+		<websocket:mapping handler="ChatSocketHandler" path="/chat"/>
 		<websocket:sockjs websocket-enabled="true"/>
-		<!-- 추가 -->
 	</websocket:handlers>
 	
-	<bean id="echoHandler" class="com.kgitbank.spring.global.util.EchoHandler"/>
-	
-	
+	<bean id="ChatSocketHandler" class="com.kgitbank.spring.domain.chat.handler.ChatSocketHandler"/>
 
 </beans>

@@ -1,4 +1,4 @@
-package com.kgitbank.spring.global.util;
+package com.kgitbank.spring.domain.chat.handler;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Component
-public class EchoHandler extends TextWebSocketHandler {
+public class ChatSocketHandler extends TextWebSocketHandler {
 	
 		@Autowired
 		ChatService service;

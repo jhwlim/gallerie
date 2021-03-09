@@ -21,28 +21,17 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+@RequestMapping("/message")
 @Controller
 @AllArgsConstructor
 @Log4j
 public class ChatController {
 	
-	
 	@Setter(onMethod_ = {@Autowired})
 	private ChatService service;
 	
-	/*
-	@RequestMapping(value = "/chat.do", method = RequestMethod.GET)
-	public String viewChatPage(@RequestParam String id, Model model) {
-		
-		model.addAttribute("receiver_id", id);
-		
-		return "chat/chat";
-	}
-	*/
-	
-		
-	@RequestMapping(value = "/chat.do/{receiverId}", method = RequestMethod.GET)
-	public String viewChatPage(@PathVariable String receiverId, HttpSession session, Model model) {
+	@RequestMapping(value = {"", "/", "/{receiverId}"}, method = RequestMethod.GET)
+	public String viewChatPage(@PathVariable(name = "receiverId", required = false) String receiverId, HttpSession session, Model model) {
 		
 		// 로그인한 아이디 가져오기
 		String loginId = (String) session.getAttribute("user");
@@ -51,24 +40,29 @@ public class ChatController {
 		}
 		
 		int loginSeqId = service.selectMemberById(loginId).getSeqId();
-		int receiverSeqId = service.selectMemberById(receiverId).getSeqId();
 		
-		ChattingRoom room = service.selectRoomIdByUserSeqIds(loginSeqId, receiverSeqId);
-		log.info("room=" + room);
-		if (room == null) { // 자기 자신에게 메시지를 보내는 경우
-			return "/chat.do/" + receiverId;
+		if (receiverId == null) {
+			return "chat/main";
 		} else {
-			model.addAttribute("roomId", room.getSeqId());
-			model.addAttribute("messages", service.selectMessageByRoomId(room.getSeqId())); // 이전에 대화했던 메시지 내용
+			int receiverSeqId = service.selectMemberById(receiverId).getSeqId();
 			
-			List<String> freiends = new ArrayList<>();
-			freiends.add("test02");
-			freiends.add("test03");
-			freiends.add("test04");
-			model.addAttribute("friends", freiends);
+			ChattingRoom room = service.selectRoomIdByUserSeqIds(loginSeqId, receiverSeqId);
+			if (room == null) { // 자기 자신에게 메시지를 보내는 경우
+				return "/message/" + receiverId;
+			} else {
+				model.addAttribute("roomId", room.getSeqId());
+				model.addAttribute("messages", service.selectMessageByRoomId(room.getSeqId())); // 이전에 대화했던 메시지 내용		
+			}	
 		}
 		
-		return "chat/chat";
+		// 팔로우하고 있는 리스트
+		List<String> list = new ArrayList<>();
+		list.add("test02");
+		list.add("test03");
+		list.add("test04");
+		model.addAttribute("friends", list);
+	
+		return "chat/main";
 	}
 	
 }
