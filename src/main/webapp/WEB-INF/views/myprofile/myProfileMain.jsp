@@ -37,39 +37,101 @@
 	href="<c:url value = '/resources/css/profile/profile_img_edit.css?ver=1.0' />" />
 <link rel="stylesheet"
 	href="<c:url value = '/resources/css/article/article.css?ver=2.0' />" />
+<link rel="stylesheet"
+	href="<c:url value = '/resources/css/article/article_modal.css?ver=1.0' />" />
 
 <style>
-.article-modal {
-	display: none;
-	position: fixed;
-	z-index: 10;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgba(0, 0, 0, 0.8);
-	justify-content: center;
-	align-items: center;
+.follow-modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
 }
-
-.article-modal__container {
-	display: flex;
-	justify-content: center;
+.follow-modal__container {
+    background-color: #ffffff;
+    width: 340px;
+    height: auto;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
 }
-
-.article-modal__close {
-	border: 0;
-	color: white;
-	background-color: transparent;
-	font-size: 20px;
-	width: 34px;
-	height: 34px;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	cursor: pointer;
-	padding: 5px;
+.follow-modal__header {
+    font-size: 20px;
+    padding: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 20px;
+}
+.follow-modal__list {
+    list-style-type: none;
+    padding-left: 0;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+.follow-modal__item {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.follow-modal__figure {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    margin: 0 10px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.follow-modal__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.follow-modal__user {
+    display: inline-block;
+    width: 80%;
+    text-align: left;
+    font-size: 12px;
+}
+.follow-modal__id {
+	margin: 0;
+}
+.follow-modal__btn {
+    position: absolute;
+    top: 3px;
+    right: 10px;
+    height: 30px;
+    border-radius: 4px;
+    color: white;
+    background-color: rgb(63, 124, 236);
+    border: 1px solid rgb(63, 124, 236);
+}
+.follow-modal__btn--followed {
+    color: black;
+    border: 1px solid gray;
+    background-color: lightgray;
+}
+.follow-modal__close {
+    border: 0;
+    background-color: transparent;
+    font-size: 20px;
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    top: 13px;
+    right: 5px;
+    cursor: pointer;
+    padding: 5px;
 }
 </style>
 </head>
@@ -113,10 +175,8 @@
 					<ul>
 						<li><span class="profile-stat-count">${member.post}</span>
 							posts</li>
-						<li><span id="follower" class="profile-stat-count">${follow.followerList.size()}</span>
-							followers</li>
-						<li><span id="follow" class="profile-stat-count">${follow.followList.size()}</span>
-							following</li>
+						<li><span class="profile-stat-count">${follow.followerList.size()}</span> <span id="follower">followers</span></li>
+						<li><span class="profile-stat-count">${follow.followList.size()}</span>	<span id="follow">following</span></li>
 					</ul>
 				</div>
 				<div class="profile-bio">
@@ -146,12 +206,10 @@
 		<h1>FOOTER</h1>
 	</footer>
 	
-	<!-- Follow Modal -->
+	<!-- Follow Modal 
 	<div class="modal fade" id="followModal" role="dialog"
 		data-backdrop="static">
 		<div class="modal-dialog">
-
-			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="follow_title"></h4>
@@ -164,7 +222,17 @@
 			</div>
 
 		</div>
-	</div>
+	</div> -->
+
+	<!-- Follow Modal -->
+	<div class="follow-modal" id="followModal">
+        <div class="follow-modal__container">
+            <header class="follow-modal__header" id="follow_title">팔로우</header>
+            <ul class="follow-modal__list" id="follow_table"></ul>
+            <button class="follow-modal__close" id="followClose">X</button>
+        </div>
+    </div>
+
 
 	<!-- Article Modal -->
 	<button id="articleModalOpen" style="display: none"></button>
@@ -752,7 +820,8 @@ for(obj in followlist){
 	
 	
 	 $('#follow').on('click',function(){
-	        $('#followModal').modal('show');  
+	        $('#followModal').css('display', 'flex');
+	        
 	        $('#follow_title').text("팔로우");
 	        $('#follow_table').html("");
 	        for(obj in followlist){
@@ -762,12 +831,9 @@ for(obj in followlist){
         			tmp = true;
         			console.log("boolean값 바뀜" + tmp);
         		}
-	        	if(!tmp){
-	        		
-	        		$('#follow_table').append("<tr><td>"+followlist[obj].name+"팔로우"+"</td></tr>");
-	        	}else{
-	        		$('#follow_table').append("<tr><td>"+followlist[obj].name+"</td></tr>");
-	        	}
+	        	
+	        	$('#follow_table').append(createFollowModalItem(followlist[obj], tmp, followlist[obj].id == "${user}"));	        		
+	        	
 	        }
 	        
 	        
@@ -786,12 +852,12 @@ for(obj in followlist){
 	    	console.log("팔로우" + followerlist[obj].seqId)
 	    }
 	 $('#follower').on('click',function(){
-	        $('#followModal').modal('show');  
+	        $('#followModal').css('display', 'flex');
+	        
 	        $('#follow_title').text("팔로워"); 
 	        $('#follow_table').html("");
 	        for(obj in followerlist){
 	        	console.log("팔로워" + followerlist[obj].name)
-	        	//$('#follow_table').append("<tr><td>"+followerlist[obj].name+"</td></tr>");
 	        	var tmp2 = myFollowSeqId.includes(followerlist[obj].seqId)
 	        	console.log(sessionId + "==" + followerlist[obj].id);
 	        	if(sessionId == followerlist[obj].id){
@@ -799,17 +865,58 @@ for(obj in followlist){
         			console.log("boolean값 바뀜" + tmp2);
         		}
 	        	
-	        	if(!tmp2){
-	        		$('#follow_table').append("<tr><td>"+followerlist[obj].name+"팔로우"+"</td></tr>");
-	        	}else{
-	        		$('#follow_table').append("<tr><td>"+followerlist[obj].name+"</td></tr>");
-	        	}
+        		$('#follow_table').append(createFollowModalItem(followerlist[obj], tmp2, followerlist[obj].id == "${user}"));
+	        		        
 	        }
 	   });
 	 
 	 $('#followClose').on('click', function(){
-		 $('#followModal').modal('hide');
+		 $('#followModal').hide();
 	 });
+
+	 function createFollowModalItem(obj, isFollowed, isLoginId) {
+		 var item = document.createElement('li');
+		 item.classList.add('follow-modal__item');
+		 
+		 var figure = document.createElement('figure');
+		 figure.classList.add('follow-modal__figure');
+		 item.appendChild(figure);
+		 
+		 var img = document.createElement('img');
+		 img.classList.add('follow-modal__image');
+		 img.src = '/spring/image/profile/' + obj.img + "/";
+		 figure.appendChild(img);
+		 
+		 var user = document.createElement('div');
+		 user.classList.add('follow-modal__user');
+		 item.appendChild(user);
+		 
+		 var id = document.createElement('p');
+		 id.classList.add('follow-modal__id');
+		 id.innerText = obj.id;
+		 user.appendChild(id);
+		 
+		 var name = document.createElement('span');
+		 name.classList.add('follow-modal__name');
+		 name.innerText = obj.name;
+		 user.appendChild(name);
+		 
+		 if (!isLoginId) {
+			 var btn = document.createElement('button');
+			 btn.classList.add('follow-modal__btn');
+			 if (isFollowed) {
+				 btn.classList.add('follow-modal__btn--followed')
+				 btn.innerText = '팔로잉';
+			 } else {
+				 btn.innerText = '팔로우';
+			 }
+			 user.appendChild(btn);	 
+		 }
+		 
+		 return item;
+	 }
+	 
+
 </script>
 </body>
 </html>

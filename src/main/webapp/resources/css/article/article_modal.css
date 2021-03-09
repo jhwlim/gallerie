@@ -1,0 +1,30 @@
+.article-modal {
+	display: none;
+	position: fixed;
+	z-index: 10;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.8);
+	justify-content: center;
+	align-items: center;
+}
+.article-modal__container {
+	display: flex;
+	justify-content: center;
+}
+.article-modal__close {
+	border: 0;
+	color: white;
+	background-color: transparent;
+	font-size: 20px;
+	width: 34px;
+	height: 34px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	padding: 5px;
+}
