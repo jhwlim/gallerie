@@ -8,11 +8,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
-
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -92,7 +92,17 @@
 						<button class="profile-btn profile-edit-btn">Edit Profile</button>
 					</c:if>
 					<c:if test="${!member.signedIn}">
-						<button class="profile-btn profile-edit-btn">Follow</button>
+						<button class="profile-btn profile-edit-btn">
+							<c:if test="${member.id ne user }">
+								<c:if test="${myfollow.followCheck eq false}">
+									<a href="/spring/follow/${member.id }">팔로우하기</a>
+								</c:if>
+								<c:if test="${myfollow.followCheck eq true}">
+									<a href="/spring/ufollow/${member.id }">팔로우해제</a>
+								</c:if>
+							</c:if>
+						</button>
+						
 					</c:if>
 					<button class="profile-btn profile-settings-btn"
 						aria-label="Profile Settings">
@@ -120,18 +130,7 @@
 		</div>
 		<!--        End of Container-->
 	</header>
-	<c:if test="${member.id ne user }">
-		<c:if test="${myfollow.followCheck eq false}">
-			<div style="float: right">
-				<a href="/spring/follow/${member.id }">팔로우하기</a>
-			</div>
-		</c:if>
-		<c:if test="${myfollow.followCheck eq true}">
-			<div style="float: right">
-				<a href="/spring/ufollow/${member.id }">팔로우해제</a>
-			</div>
-		</c:if>
-	</c:if>
+	
 	<main>
 		<div class="container">
 			<!-- Gallery-->
@@ -146,6 +145,7 @@
 	<footer>
 		<h1>FOOTER</h1>
 	</footer>
+	
 	<!-- Follow Modal -->
 	<div class="modal fade" id="followModal" role="dialog"
 		data-backdrop="static">
@@ -167,7 +167,7 @@
 	</div>
 
 	<!-- Article Modal -->
-	<button id="articleModalOpen" style="display: none">모달버튼</button>
+	<button id="articleModalOpen" style="display: none"></button>
 
 	<div class="article-modal" id="articleModal">
 		<div class="container article-modal__container">

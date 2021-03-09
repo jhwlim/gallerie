@@ -24,6 +24,9 @@
     font-weight: 600;
     letter-spacing: 1px;
 }
+.profile-img-edit__list {
+	list-style: none;
+}
 .profile-img-edit__option {
     border-top: 1px solid #cccccc;
     padding: 15px;
