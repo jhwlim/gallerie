@@ -72,5 +72,65 @@ public class FollowController {
 		
 		return "redirect:/myprofile/"+id;
 	}
+	
+	@GetMapping(value="/ufollow/{id}")
+	public String ufollow(@PathVariable String id, Model model, HttpSession session) {
+		
+		if (id == null) {
+			return "redirect:/";
+		}
+		
+		ProfileDto member = profileService.selectMemberById(id);
+		if (member == null) {
+			return "redirect:/";
+		}
+		
+		if(session.getAttribute("user") == null) {
+			return "redirect:/";
+		}
+		
+		boolean followed = false;
+		
+		String loginId = (String) session.getAttribute("user");
+		
+		ProfileDto login_id = profileService.selectMemberById(loginId);
+		ProfileDto search_id = profileService.selectMemberById(id);
+		
+		System.out.println(login_id.getId() + " - " + search_id.getId());
+		System.out.println(login_id.getSeqId() + " - " + search_id.getSeqId());
+		
+		List<Integer> followList = followService.selectFollow(login_id);
+		System.out.println(followList);
+		
+		if(followList.contains(search_id.getSeqId())) {
+			followed = true;
+		}
+		
+		FollowVO vo = new FollowVO();
+		
+		vo.setFollowerId(login_id.getSeqId());
+		vo.setFollowId(search_id.getSeqId());
+		if(followed) {
+			followService.ufollow(vo);
+		}else {
+			System.out.println("팔로우되어있지않음");
+		}
+		
+		
+		return "redirect:/myprofile/"+id;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -91,21 +91,156 @@
     			<div class="summary__row">
     				<span>게시물</span>
     				&nbsp;&nbsp;
-    				<span>팔로워</span>
+    				<span id="follow">${follow.followList.size()}팔로우</span>
     				&nbsp;&nbsp;
-    				<span>팔로우</span>
+    				<span id="follower">${follow.followerList.size()}팔로워</span>
     			</div>
     			<div class="summary__row">
+    	
     				<span class="summary__name">${member.name}</span>
     			</div>
     			<div class="summary__row">
     				<span class="summary__profile">${member.profile}</span>
     			</div>
-    			<div style="float : right"><a href="/spring/follow/${member.id }">팔로우하기</a></div>
+    			<c:if test="${member.id ne user }">
+    			<c:if test="${myfollow.followCheck eq false}"><div style="float : right"><a href="/spring/follow/${member.id }">팔로우하기</a></div></c:if>
+    			<c:if test="${myfollow.followCheck eq true}"><div style="float : right"><a href="/spring/ufollow/${member.id }">팔로우해제</a></div></c:if>
+    			</c:if>
     		</div>
     	</div>
     </div>    
 </div>
+
+
+
+
+<div class="modal fade" id="followModal" role="dialog" data-backdrop="static">  
+    <div class="modal-dialog">
+
+      <!-- Modal content-->   
+      <div class="modal-content">
+      	  <div class="modal-header">
+         	 <h4 class="modal-title" id="follow_title"></h4>
+       	 </div>
+      	  <div class="modal-body">
+        	  <table class="modal_table" id="follow_table">
+        	  </table>
+        </div>
+        	<div class="modal-footer" data-bs-dismiss="modal" id="followClose">닫기</div>
+      	</div>
+      	
+    </div>
+	</div>
+
+
+	
+	<script>
+	
+	var sessionId = "${user}";
+	console.log(sessionId);
+	
+	var myFollowSeqId = [];
+	var myFollowList = {
+			  <c:forEach items="${myfollow.dtoFollowList}" var="item">
+			  "${item.id}": {
+			    name:"${item.name}",
+			    img:"${item.imgPath}",
+			    seqId:"${item.seqId}"
+			  },
+			  </c:forEach>
+			}
+	for(obj in myFollowList){
+    	console.log(myFollowList[obj].seqId)
+    	myFollowSeqId.push(myFollowList[obj].seqId);
+    }
+	
+	var followlist = {
+			  <c:forEach items="${follow.dtoFollowList}" var="item">
+			  "${item.id}": {
+				id:"${item.id}",
+			    name:"${item.name}",
+			    img:"${item.imgPath}",
+			    seqId:"${item.seqId}"
+			  },
+			  </c:forEach>
+			}
+	for(obj in followlist){
+    	console.log("팔로우" + followlist[obj].seqId)
+    }
+	
+		//<c:forEach items="${follow.dtoFollowList}" var="item">
+		//	followlist.push("${item}");
+		//</c:forEach>
+		//
+	//	for (const [key, value] of Object.entries(followlist)) {
+	//		  console.log('${key} : ${value}');
+	//	}
+		
+		
+		 $('#follow').on('click',function(){
+		        $('#followModal').modal('show');  
+		        $('#follow_title').text("팔로우");
+		        $('#follow_table').html("");
+		        for(obj in followlist){
+		        	console.log(followlist[obj].name)
+		        	var tmp = myFollowSeqId.includes(followlist[obj].seqId)
+		        	if(sessionId == followlist[obj].id){
+	        			tmp = true;
+	        			console.log("boolean값 바뀜" + tmp);
+	        		}
+		        	if(!tmp){
+		        		
+		        		$('#follow_table').append("<tr><td>"+followlist[obj].name+"팔로우"+"</td></tr>");
+		        	}else{
+		        		$('#follow_table').append("<tr><td>"+followlist[obj].name+"</td></tr>");
+		        	}
+		        }
+		        
+		        
+		   });
+		 var followerlist = {
+				  <c:forEach items="${follow.dtoFollowerList}" var="item">
+				  "${item.id}": {
+					id:"${item.id}",
+				    name:"${item.name}",
+				    img:"${item.imgPath}",
+				    seqId:"${item.seqId}"
+				  },
+				  </c:forEach>
+				}
+		 for(obj in followerlist){
+		    	console.log("팔로우" + followerlist[obj].seqId)
+		    }
+		 $('#follower').on('click',function(){
+		        $('#followModal').modal('show');  
+		        $('#follow_title').text("팔로워"); 
+		        $('#follow_table').html("");
+		        for(obj in followerlist){
+		        	console.log("팔로워" + followerlist[obj].name)
+		        	//$('#follow_table').append("<tr><td>"+followerlist[obj].name+"</td></tr>");
+		        	var tmp2 = myFollowSeqId.includes(followerlist[obj].seqId)
+		        	console.log(sessionId + "==" + followerlist[obj].id);
+		        	if(sessionId == followerlist[obj].id){
+	        			tmp2 = true;
+	        			console.log("boolean값 바뀜" + tmp2);
+	        		}
+		        	
+		        	if(!tmp2){
+		        		$('#follow_table').append("<tr><td>"+followerlist[obj].name+"팔로우"+"</td></tr>");
+		        	}else{
+		        		$('#follow_table').append("<tr><td>"+followerlist[obj].name+"</td></tr>");
+		        	}
+		        }
+		   });
+		 
+		 $('#followClose').on('click', function(){
+			 $('#followModal').modal('hide');
+		 });
+	</script>
+
+
+
+
 
 <c:if test="${member.signedIn}">
 	<form method="POST" action="<c:url value='/image/profile' />" enctype="multipart/form-data" id="uploadForm">
@@ -128,6 +263,19 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<script>
 	var profileImageArea = document.getElementById('profileImageArea');
@@ -201,6 +349,9 @@
 			}
 		})
 	});
+	
+
+	
 	</script>
 
 </c:if>

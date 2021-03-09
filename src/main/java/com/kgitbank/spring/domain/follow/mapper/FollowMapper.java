@@ -9,6 +9,9 @@ public interface FollowMapper {
 	
 	public void following(FollowVO vo);
 	
+	public void ufollow(FollowVO vo);
+	
+	public ProfileDto seqsearch(Integer id);
 	
 	public List<Integer> selectFollow(ProfileDto vo);
 	

@@ -8,6 +8,15 @@
 		INSERT INTO follow VALUES(#{followerId}, #{followId})
 	</update>
 	
+	<delete id="ufollow">
+		DELETE FROM follow
+           WHERE follower_id = #{followerId} and follow_id = #{followId}
+	</delete>
+	
+	<select id="seqsearch" resultType="com.kgitbank.spring.domain.myprofile.dto.ProfileDto">
+		select * from members where seq_id = #{id}
+	</select>
+	
 	
 	<select id="selectFollow" resultType="Integer">
 		select follow_id from follow where follower_id = #{seqId}

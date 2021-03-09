@@ -32,6 +32,18 @@ public class FollowServiceImpl implements FollowService {
 		return mapper.selectFollower(vo);
 	}
 
+	@Override
+	public void ufollow(FollowVO vo) {
+		mapper.ufollow(vo);
+		
+	}
+
+	@Override
+	public ProfileDto seqsearch(Integer id) {
+		
+		return mapper.seqsearch(id);
+	}
+
 
 	
 
