@@ -21,9 +21,18 @@
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
 		<constructor-arg ref="hikariConfig" />		
 	</bean>
-
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  	<constructor-arg ref="dataSource" />
+	</bean>
+	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	  	<property name="dataSource" ref="dataSource" />
+	  	<!-- 트랜잭션 설정 추가 -->
+	  	<property name="transactionFactory">
+      		<bean class="org.mybatis.spring.transaction.SpringManagedTransactionFactory" />
+		</property>
+		
 	  	<property name="configLocation" value="classpath:/config/mybatis-config.xml" />
 	</bean>
 
@@ -47,12 +56,20 @@
 	    </property>
     </bean>
 	
+	<bean id="articleUploadPath" class="java.lang.String">
+		<constructor-arg value="C:\MyInstagram\article\" /> 
+	</bean>
+	
 	<bean id="profileUploadPath" class="java.lang.String">
 		<constructor-arg value="C:\MyInstagram\profile\" /> 
 	</bean>
 	
 	<bean id="profileDefaultImgFileName" class="java.lang.String">
 		<constructor-arg value="blank.png"/>
+	</bean>
+	
+	<bean id="articleDefaultImgFileName" class="java.lang.String">
+		<constructor-arg value="alternative.jpg"/>
 	</bean>
 	
 	<context:component-scan base-package="com.kgitbank.spring.domain.**.service" />

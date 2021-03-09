@@ -75,4 +75,8 @@
 				
 	</update>
 	
+	<select id="selectMemberById" resultType="MemberVO">
+		SELECT seq_id FROM members WHERE id = #{id}
+	</select>
+	
 </mapper>

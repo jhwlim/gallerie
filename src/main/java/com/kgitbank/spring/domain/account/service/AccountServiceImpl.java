@@ -65,6 +65,21 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	
-
+	/**
+	 * 아이디로 회원정보 조회
+	 * 
+	 * @param	id 회원 아이디
+	 * @return	MemberVO 회원정보, 회원정보가 없다면 null
+	 * @author jhwlim
+	 */
+	@Override
+	public MemberVO selectMemberById(String id) {
+		// 유효성 검사
+		if (id == null) {
+			return null;
+		}
+		
+		return accMapper.selectMemberById(id);
+	}
 
 }

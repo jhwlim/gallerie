@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,31 +61,21 @@ public class ProfileImageServiceImpl implements ProfileImageService {
 
 	@Override
 	public byte[] getImage(String savedFileName) {
-		
-		byte[] imgBytes = null;
-		InputStream in = null;
-		
-		try {
-			in = new FileInputStream(uploadPath + savedFileName);
-		} catch (FileNotFoundException e) {
-			log.warn(e.getMessage());
-			savedFileName = defaultImgFile;
-			try {
-				in = new FileInputStream(uploadPath + savedFileName);
-			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
-			}
-		}
-
-		try {
-			imgBytes = IOUtils.toByteArray(in);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return imgBytes;
+		return getImageBytesFromFile(savedFileName);
 	}
 
+	@Override
+	public byte[] getDefaultImage() {
+		return getImageBytesFromFile(defaultImgFile);
+	}
+	
+	@Override
+	public HttpHeaders getHttpHeadersOfDefaultImage() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(FileUtils.parseMediaType(defaultImgFile));
+		return headers;
+	}
+	
 	@Override
 	public void deleteProfileImg(int seqId) {
 		
@@ -97,5 +88,23 @@ public class ProfileImageServiceImpl implements ProfileImageService {
 			mapper.updateProfileImgBySeqId(member);
 		}
 	}
+
+	private byte[] getImageBytesFromFile(String savedFileName) {
+		
+		byte[] imgBytes = null;
+		InputStream in = null;
+		
+		try {
+			in = new FileInputStream(uploadPath + savedFileName);
+			imgBytes = IOUtils.toByteArray(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return imgBytes;
+	}
+
+	
+	
 
 }

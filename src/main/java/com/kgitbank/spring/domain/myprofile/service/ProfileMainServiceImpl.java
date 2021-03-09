@@ -43,4 +43,5 @@ public class ProfileMainServiceImpl implements ProfileMainService {
 		return member;
 	}
 
+	
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kgitbank.spring.domain.follow.service.FollowService;
 import com.kgitbank.spring.domain.model.ProfileFollowVO;
+import com.kgitbank.spring.domain.article.service.ArticleContentService;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 import com.kgitbank.spring.domain.myprofile.service.ProfileMainService;
 
@@ -29,36 +30,33 @@ public class ProfileMainController {
 	
 	@Autowired
 	FollowService followService;
+
+	@Autowired
+	ArticleContentService acService;
 	
 	@GetMapping({"/", "/{id}"})
 	public String main(@PathVariable(name = "id", required = false) String id, Model model, HttpSession session) {
 		log.info("URL : /myprofile/" + id + " - GET");
 		log.info("id=" + id);
 		
-		if(session.getAttribute("user") == null) {
-			return "redirect:/";
-		}
-		
-		if (id == null) {
-			log.warn("id is null");
+		String loginedId = (String) session.getAttribute("user");		
+		if(loginedId == null 
+				|| id == null) {
 			return "redirect:/";
 		}
 		
 		ProfileDto member = service.selectMemberById(id);
-		if (member == null) {
-			log.warn("page not found");
+		if (member == null) { // 아이디가 존재하지 않는 경우
 			return "redirect:/";
 		}
 		
-		String loginedId = (String) session.getAttribute("user");
-		log.info("loginedId=" + loginedId);
-		
 		member.setSignedIn(id.equals(loginedId));
+		member.setPost(acService.selectTotalCountOfArticlesByWriterSeqId(member.getSeqId()));
 		log.info("member=" + member);
 		
 		model.addAttribute("member", member);
 		
-		
+		// 로그인한 아이디의 팔로우/팔로워 리스트 조회
 		ProfileDto user = service.selectMemberById(loginedId);
 		
 		// 유저세션 팔로우리스트
@@ -120,7 +118,8 @@ public class ProfileMainController {
 		
 		model.addAttribute("follow", reqProfileFollowVO);
 		
-		
 		return "myprofile/myProfileMain";
 	}
+	
+	
 }

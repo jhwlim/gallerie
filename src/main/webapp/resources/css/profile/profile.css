@@ -1,18 +1,17 @@
 @charset "UTF-8";
-:root{
-    font-size: 10px;
-}
+
 
 *,
 *::before,
 ::after {
+	margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body{
     font-family: "Open Sans", Arial, sans-serif;
     min-height: 100vh;
-    background-color: #fafafa;
     color: #262626;
     padding-bottom: 3rem;
 }
@@ -21,13 +20,13 @@ img{
     display: block;
 }
 
-.container{
+.container {
     max-width: 93.5rem;
     margin: 0 auto;
     padding: 0 2rem;
 }
 
-.btn{
+.profile-btn{
     all: unset;
     background: none;
     color: none;
@@ -36,7 +35,7 @@ img{
     border: none;
 }
 
-.btn:focus{
+.profile-btn:focus{
     outline: 0.5rem auto #4d90fe;
 
 }
@@ -111,7 +110,7 @@ img{
 
 .profile-stats li {
     display: inline-block;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     line-height: 1.5;
     margin-right: 4rem;
     cursor: pointer;
@@ -395,3 +394,7 @@ img{
 	border: 1px solid gray;
 	overflow: hidden;
 } 
+
+.nav-bar *{
+	font-size: 16px;
+}
