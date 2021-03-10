@@ -10,6 +10,7 @@
 	  	SET
   		 	name = #{name},
   		 	email = #{email},
+  		 	profile = #{profile},
   		 	phone = #{phone}
   		 WHERE
   		 	id = #{id}

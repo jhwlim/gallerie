@@ -23,7 +23,7 @@ import lombok.extern.log4j.Log4j;
 
 
 @Controller
-@RequestMapping(value = "/myprofile")
+@RequestMapping(value = "/myprofile/account")
 @Log4j
 public class MyprofileController {
 	@Autowired
@@ -37,31 +37,31 @@ public class MyprofileController {
 	SecurityPwEncoder encoder;
 	
 	// 프로필 메인 페이지
-	@GetMapping(value = "/myprofilemain")
-	public String main() {
-		return "myprofile/myprofilemain";
-	}
+//	@GetMapping(value = "/myprofilemain")
+//	public String main() {
+//		return "myprofile/myprofilemain";
+//	}
 	
 	// 프로필 수정하는 페이지
-	@RequestMapping(value = "/update")
+	@RequestMapping(value = "/edit")
 	public String update() {
-		return "myprofile/update";
+		return "myprofile/account/edit";
 	}
 	
-	@PostMapping(value = "/update")
+	@PostMapping(value = "/edit")
 	public String update(MemberVO vo) {
-		vo.setId("abc5678");
+//		vo.setId("abc5678");
 		service.updateMyprofile(vo);
-		return "redirect:/myprofile/update";
+		return "redirect:/myprofile/account/edit";
 	}
 	
-	// 비밀번호 변경 페이지
-	@GetMapping(value = "/updatepw")
+	// 비밀번호 확인 페이지
+	@GetMapping(value = "/checkpw")
 	public String currentpw() {
-		return "myprofile/updatepw";
+		return "myprofile/account/checkpw";
 	}
 	
-	@PostMapping(value = "/updatepw")
+	@PostMapping(value = "/checkpw")
 	public String currentpw(MemberVO vo, Model model, @RequestParam("test") String test) {
 		vo.setId("abc5678");
 		log.info(test);
@@ -71,23 +71,20 @@ public class MyprofileController {
 			log.info(vo.getPw());
 			model.addAttribute("oldpw", vo.getPw());
 			model.addAttribute("test", test);
-			return "myprofile/changepw";
+			return "myprofile/account/changepw";
 		} else {
 			log.info("불일치");
-			return "redirect:/myprofile/updatepw";
+			return "redirect:/myprofile/account/checkpw";
 		}
 	}
 	
+	// 비밀번호 변경 페이지
 	@GetMapping(value = "/changepw")
 	public String updatepw(@RequestParam(name="test", required=false) String test) {
-//		log.info(testDto);
-//		if (testDto.getTest() == null) {
-//			return "redirect:/myprofile/updatepw";
-//		}
 		if (test == null) {
 			return "redirect:/myprofile/updatepw";
 		}
-		return "myprofile/changepw";
+		return "myprofile/account/changepw";
 	}
 	
 	@PostMapping(value = "/changepw")
@@ -95,7 +92,7 @@ public class MyprofileController {
 		vo.setId("abc5678");
 		
 		service.updatepw(vo);
-		return "redirect:/myprofile/updatepw";
+		return "redirect:/myprofile/account/updatepw";
 
 	}
 	
@@ -110,7 +107,7 @@ public class MyprofileController {
 		List<LoginVO> list = service.getLoginActivityList(mv, lv);
 		log.info(list);
 		model.addAttribute("loginActivity", list);
-		return "myprofile/loginActivity";
+		return "myprofile/account/loginActivity";
 	}
 	
     @GetMapping(value = "/GeoIP")
