@@ -1,8 +1,10 @@
 package com.kgitbank.spring.domain.myprofile.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,17 +69,22 @@ public class MyprofileController {
 	}
 	
 	@PostMapping(value = "/checkpw")
-	public String currentpw(MemberVO vo, HttpSession session, Model model) {
+	public String currentpw(MemberVO vo, HttpSession session, Model model, HttpServletResponse response) throws IOException {
 		String loginId = (String) session.getAttribute("user");
 		vo.setId(loginId);
 		
 		if (encoder.matches(vo.getPw(), service.currentpw(vo))) {
 			log.info("일치");
 			log.info(vo.getPw());
+			model.addAttribute("oldpw", vo.getPw());
 			return "myprofile/changepw";
 		} else {
 			log.info("불일치");
-			return "redirect:/myprofile/checkpw";
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('비밀번호를 확인해주세요.');</script>");
+			out.flush();
+			return "myprofile/checkpw";
 		}
 	}
 	
@@ -85,7 +92,7 @@ public class MyprofileController {
 	@GetMapping(value = "/changepw")
 	public String updatepw(@RequestParam(name="test", required=false) String test) {
 		if (test == null) {
-			return "redirect:/myprofile/checkpw";
+			return "myprofile/checkpw";
 		}
 		return "myprofile/changepw";
 	}
@@ -96,16 +103,14 @@ public class MyprofileController {
 		vo.setId(loginId);
 		
 		service.updatepw(vo);
-		return "redirect:/myprofile/updatepw";
+		return "myprofile/checkpw";
 	}
 	
 	// 로그인활동 페이지
 	@GetMapping(value = "/loginActivity")
 	public String loginActivity(Model model) {
 		MemberVO mv = new MemberVO();
-//		mv.setSeqId(1);
 		LoginVO lv = new LoginVO();
-//		lv.setMemberSeqId(1);
 		
 		List<LoginVO> list = service.getLoginActivityList(mv, lv);
 		log.info(list);

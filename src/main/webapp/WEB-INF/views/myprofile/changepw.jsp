@@ -19,7 +19,7 @@
 
 body {
 	min-width: 630px;
-	min-height: 1200px;
+	min-height: 1000px;
 }
 
 a {
@@ -38,7 +38,7 @@ hr {
 main {
 	height: 100%;
 	width: 44%;
-	margin: 100px 28% 40px;
+	margin: 100px 28% 530px;
 	background-color: white;
 	border: 1px solid gainsboro;
 	display: grid;
@@ -104,7 +104,7 @@ input[type=text]:focus {
 	display: grid;
 	grid-template-columns: auto auto;
 	grid-gap: 20px;
-	margin: 5% 3% 0 2%;
+	margin: 5% 3% 0 17%;
 }
 
 .pwd {
@@ -135,6 +135,7 @@ input[type=password] {
 	padding: 10px;
 	background-color: rgb(233, 227, 227);
 	border: 0px;
+	width: 70%;
 }
 
 input[type=submit] {
@@ -239,7 +240,7 @@ input[type=submit] {
 		</div>
 	</div> 
 	<div class="main2">
-	<form action="<c:url value='/account/changepw' />" method="POST" onsubmit="return validateJoin()">
+	<form class="j_from" action="<c:url value='/account/changepw' />" method="POST" onsubmit="return validateJoin()">
 			<div class="pwd">
 				<div  class="password_1">새 비밀번호</div>
 			</div>
@@ -312,7 +313,7 @@ function validateJoin() {
 	if (pw1.value == "" || pw.value == "") {
 		alert('비밀번호를 입력해주세요');
 		return false;
-	} else if (pw1.value == oldPw) {
+	} else if (pw1.value === oldPw) {
 		alert('현재 비밀번호와 다른 비밀번호를 설정해주세요');
 		return false;
 	} else if (pw1.value === pw.value) {
@@ -326,8 +327,6 @@ function validateJoin() {
 		return false;
 	} 
 }
-
-
 </script>
 
 </body>

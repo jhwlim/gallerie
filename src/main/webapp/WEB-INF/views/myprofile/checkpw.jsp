@@ -308,45 +308,6 @@ input[type=submit] {
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
 	</footer>
-<script type="text/javascript">
-<!-- 
-$(function() {
-	let chk1 = false;
-	$('#pw').on('keyup', function() {
-		if($("#pw").val() === ""){
-			$('#pwMsg').html('비밀번호를 입력해주세요.');
-			chk1 = false;
-		} else {
-			const pw = $('#pw').val();
-			$.ajax({
-				type: "POST",
-				url: "./updatepw",
-				headers: {
-					"Content-Type": "application/json",
-	                "X-HTTP-Method-Override": "POST"
-				},
-				data: pw,
-				datatype: "json",
-				success: function(result) {
-					console.log(result);
-					if(result === "ok") {
-						$('#pwMsg').html('');
-						chk1 = true;
-					} else {
-						$('#pwMsg').html('');
-						alert('비밀번호가 일치하지않습니다.');
-						chk1 = false;
-					}
-				},
-				error : function(error) {
-	                console.log("error : " + error);
-	            }
-			});
-		}
-	});
--->
-</script>	
-
 </body>
 </html>
 
