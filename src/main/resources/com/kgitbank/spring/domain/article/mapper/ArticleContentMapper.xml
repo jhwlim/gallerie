@@ -91,6 +91,7 @@
 		    LEFT OUTER JOIN
 		    (SELECT article_id, img_path FROM files WHERE num = 1) f
 		    ON a.id = f.article_id
+		WHERE like_count > 0 OR comment_count > 0
 		ORDER BY like_count DESC nulls LAST, comment_count DESC nulls LAST
 		OFFSET #{articleIndex} * #{articleCount} ROWS FETCH NEXT #{articleCount} ROWS ONLY
 	</select>
@@ -114,9 +115,12 @@
 	
 	<select id="selectTotalCountOfArticles" resultType="int">
 		SELECT 
-		    COUNT(*) 
-		FROM 
-			articles
+			COUNT(*) 
+		FROM (
+        	SELECT article_id FROM article_like GROUP BY article_id
+        UNION
+        	SELECT article_id FROM comments GROUP BY article_id
+        )
 	</select>
 	
 	

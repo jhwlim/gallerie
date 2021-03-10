@@ -1,5 +1,7 @@
 package com.kgitbank.spring.domain.article.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.domain.article.dto.ArticleDto;
 import com.kgitbank.spring.domain.article.dto.GalleryPageDto;
+import com.kgitbank.spring.domain.article.service.ArticleCommentService;
 import com.kgitbank.spring.domain.article.service.ArticleContentService;
 import com.kgitbank.spring.domain.model.ArticleLikeVO;
 import com.kgitbank.spring.domain.model.ArticleVO;
+import com.kgitbank.spring.domain.model.CommentVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -34,7 +38,9 @@ public class ArticleRestController {
 	@Autowired
 	AccountService accService;
 	
-
+	@Autowired
+	ArticleCommentService commentService;
+	
 	@GetMapping(value = "/", produces="application/json")
 	public ResponseEntity<GalleryPageDto> getGallery(GalleryPageDto data) {
 		log.info("URL : /article/ - GET by ajax");
@@ -85,6 +91,9 @@ public class ArticleRestController {
 		// 해당 게시물에 로그인한 아이디가 좋아요를 눌렀는지 확인
 		ArticleLikeVO likeVO = new ArticleLikeVO(article.getId(), accService.selectMemberById(loginId).getSeqId());
 		article.setHasLike(service.selectCountLikeByMemberSeqIdAndArticleId(likeVO) == 1 ? true : false);
+		
+		List<CommentVO> comments = commentService.listComment(article.getId());
+		article.setComments(comments);
 		log.info(article);
 		
 		return new ResponseEntity<>(article, HttpStatus.OK);

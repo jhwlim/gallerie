@@ -47,8 +47,10 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 	@Override
 	public ArticleDto selectArticleWithWriterInfoById(int id) {
 		ArticleDto article = mapper.selectArticleWithWriterInfoById(id);
-		
-		// DB에 저장된 content로 부터 tagList를 가져온다. -> replace 진행
+		if (article == null) {
+			return null;
+		}
+		// DB에 저장된 content 로 부터 tagList를 가져온다. -> replace 진행
 		String content = article.getContent();
 		article.setContent(replaceTagToAnchorTag(content, getTagsFromContent(content)));
 		

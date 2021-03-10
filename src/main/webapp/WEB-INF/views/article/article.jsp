@@ -240,7 +240,7 @@ $('[name=commentDeleteBtn]').click(function(){
 	        data : JSON.stringify({id: id}),
 	        complete : function(){
 	            alert("삭제되었습니다.");
-	            location.href = "/spring/article/" + ${article.id};
+	            location.href = "/spring/post/" + ${article.id};
 	        }
 	    });
 	}

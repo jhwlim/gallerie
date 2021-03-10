@@ -37,41 +37,9 @@
 	href="<c:url value = '/resources/css/profile/profile_img_edit.css?ver=1.0' />" />
 <link rel="stylesheet"
 	href="<c:url value = '/resources/css/article/article.css?ver=2.0' />" />
+<link rel="stylesheet"
+	href="<c:url value = '/resources/css/article/article_modal.css?ver=1.0' />" />
 
-<style>
-.article-modal {
-	display: none;
-	position: fixed;
-	z-index: 10;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgba(0, 0, 0, 0.8);
-	justify-content: center;
-	align-items: center;
-}
-
-.article-modal__container {
-	display: flex;
-	justify-content: center;
-}
-
-.article-modal__close {
-	border: 0;
-	color: white;
-	background-color: transparent;
-	font-size: 20px;
-	width: 34px;
-	height: 34px;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	cursor: pointer;
-	padding: 5px;
-}
-</style>
 </head>
 <body style="overflow-y: scroll;">
 
@@ -120,46 +88,7 @@
 										style="height: 280px; overflow: auto; padding-top: 16px;">
 										<p class="d-block mb-1" style="white-space: pre-wrap;" id="articleModalContent"></p>
 										<small class="text-muted">4 HOURS AGO</small>
-										<div class="comments" style="margin-top: 10px;">
-
-											<div class="comment">
-												<div class="comment__profile">
-													<img src="<c:url value = '/image/profile/${"imgPath"}/'/>"
-														alt="" class="comment__image" />
-												</div>
-												<div class="comment__text">
-													<div class="comment__writer">a.7.m3ff</div>
-													<div>❤️💓💓💓💓💓</div>
-													<span class="comment__date">2 HOURS AGO</span>
-												</div>
-											</div>
-											<div class="comment">
-												<div class="comment__profile">
-													<img src="<c:url value = '/image/profile/${"imgPath"}/'/>"
-														alt="" class="comment__image" />
-												</div>
-												<div class="comment__text">
-													<div class="comment__writer">adri_rez77</div>
-													<div>Hi</div>
-													<span class="comment__date">4 HOURS AGO</span>
-												</div>
-											</div>
-											<div class="comment">
-												<div class="comment__profile">
-													<img src="<c:url value = '/image/profile/${"imgPath"}/'/>"
-														alt="" class="comment__image" />
-												</div>
-												<div class="comment__text">
-													<div class="comment__writer">samkolder</div>
-													<div>Lorem ipsum dolor sit amet, consectetur
-														adipisicing elit. Non aliquid adipisci eveniet praesentium
-														culpa officia ullam illum delectus vel totam dolorem illo
-														ratione cumque nemo numquam incidunt eos aspernatur
-														aliquam.</div>
-													<span class="comment__date">1 HOURS AGO</span>
-												</div>
-											</div>
-										</div>
+										<div class="comments" id="comments" style="margin-top: 10px;"></div>
 									</div>
 
 									<div
@@ -220,12 +149,12 @@
 										<span></span> likes
 									</div>
 									<div class="position-relative comment-box">
-										<form>
-											<input class="w-100 border-0 p-3 input-post"
-												placeholder="Add a comment...">
-											<button class="btn btn-primary position-absolute btn-ig">Post</button>
-										</form>
-									</div>
+                                        <form name="commentInsertForm" class="commentInsertForm" action="/spring/comment/insert" method="POST">
+                                            <input type="hidden" name="id" value="" id="commentInsertFormId"/>
+						   					<input type="text" name="content" id="content" class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
+                                            <button name="commentInsertBtn" class="btn btn-primary position-absolute btn-ig">Post</button>
+                                        </form>
+                                    </div>
 								</div>
 							</div>
 
@@ -247,111 +176,6 @@
     });
 </script>
 
-	<c:if test="${member.signedIn}">
-		<form method="POST" action="<c:url value='/image/profile' />"
-			enctype="multipart/form-data" id="uploadForm">
-			<input type="file" accept="image/jpeg, image/png" name="file"
-				class="file-upload" /> <input type="hidden" name="seqId"
-				value="${member.seqId}" />
-		</form>
-
-		<div class="profile-img-edit" id="profileImgEdit">
-			<div class="profile-img-edit__container">
-				<header class="profile-img-edit__header"> 프로필 사진 바꾸기 </header>
-				<ul class="profile-img-edit__list">
-					<li
-						class="profile-img-edit__option profile-img-edit__option--upload profile-upload">사진
-						업로드</li>
-					<li
-						class="profile-img-edit__option profile-img-edit__option--delete"
-						id="profileImgDelete">현재 사진 삭제</li>
-					<li class="profile-img-edit__option" id="profileImgEditClose">취소</li>
-				</ul>
-			</div>
-		</div>
-
-		<script>
-        $('#profileImgEditOpen').on('click', function(){
-            $('#profileImgEdit').css('display', 'flex');
-        });
-
-        $('#profileImgEditClose').on('click', function() {
-            $('#profileImgEdit').hide();
-        });
-    </script>
-
-		<script>
-	var profileImgEdit = document.getElementById('profileImgEdit');
-	var hasImg = ${member.hasImg};
-	var prevImgPath = null;
-	
-	if (!hasImg) { // 프로필 이미지가 설정되어 있지 않다면
-		$("#profileImgEditOpen").off('click'); // 모달창 생성하지 못하게 이벤트 제거
-		$('#profileImgEditOpen').on('click', function() { // 파일 업로드창 띄우기
-			$('.file-upload').click();
-		});
-	}
-
-	$(".profile-upload").on('click', function(event) {
-		$('.file-upload').click();
-	});
-	
-	$(".file-upload").on('change', function() {
-		if (this.files.length == 1) {
-			$("#uploadForm").submit();	
-			this.value = '';
-		}
-	});
-	
-	$('#uploadForm').ajaxForm({
-		beforeSend: function() {
-			prevImgPath = $('#profileImg').attr('src');
-			$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
-			$("#profileImgEditClose").click();
-			$("#profileImgEditOpen").off('click'); // 파일 업로드창 띄우는 이벤트 제거			
-		},
-		success: function(fileName, status, xhr) {
-			switch (status) {
-			case "nocontent" : // 서버에 전송된 파일이 null 인 경우
-				$("#profileImg").attr("src", prevImgPath);
-				break;
-			case "success" :
-				$("#profileImg").attr("src", "<c:url value = '/image/profile/' />" + fileName + "/");
-				$("#navProfileImg").attr("src", "<c:url value = '/image/profile/' />" + fileName + "/"); // 네비게이션 프로필 이미지 변경
-				
-				$('#profileImgEditOpen').on('click', function(){ // 모달창 생성
-		            $('#profileImgEdit').css('display', 'flex');
-		        });
-				break;
-			}
-		},
-		error: function() {
-			alert("이미지 파일 업로드에 실패하였습니다.")
-		}
-	});
-	
-	$('#profileImgDelete').on('click', function() {
-		$.ajax({
-			type : "DELETE",
-			url : "<c:url value='/image/profile' />",
-			dataType : "text",
-			data : "${member.seqId}",
-			beforeSend: function() {
-				$("#profileImg").attr("src", "<c:url value = '/image/profile/loading.gif/' />");
-				$("#profileImgEditClose").click();
-				$("#profileImgEditOpen").off('click'); // 모달창 생성하지 못하게 이벤트 제거
-			},
-			complete : function() {
-				$("#profileImg").attr("src", "<c:url value = '/image/profile/' />");
-				$("#navProfileImg").attr("src", "<c:url value = '/image/profile/' />"); // 네비게이션 프로필 이미지 변경
-				$('#profileImgEditOpen').on('click', function() { // 파일 업로드창 띄우기
-					$('.file-upload').click();
-				});
-			}
-		})
-	});
-	</script>
-	</c:if>
 	<script src="<c:url value='/resources/js/article/gallery.js'/> "></script>
 	<script>
 let isAjaxFinished = true;
@@ -369,6 +193,7 @@ getGallery = function getGallery() {
 			var data = {
 				articleIndex : articleIndex,
 			};
+			console.log(data);
 			
 			$.ajax({
 				type : "GET",
@@ -448,7 +273,31 @@ function openArticleModal(id) {
 				});
 				$('.article').append(nextBtn);
 			}
-
+			var loginId = "${sessionScope.user}";
+			$("#comments").html("");
+			
+			for(comment of article.comments) {
+				$("#comments").append(createCommentItem(comment, comment.writerId == loginId));
+			}
+			
+			$('[name=commentDeleteBtn]').click(function(){
+				var id = $(this).data('id') + "";
+				var btn = this;
+				if(confirm("삭제하시겠습니까?")) {
+				    $.ajax({
+				        url : '/spring/comment/delete',
+				        type : 'post',
+				        contentType : "application/json",
+				        data : JSON.stringify({id: id}),
+				        complete : function(){
+				            alert("삭제되었습니다.");
+				            $(btn).closest('.listComment').remove();
+				        }
+				    });
+				}
+			});
+			
+			$('#commentInsertFormId').val(article.id);
 			$('#articleModalOpen').click();
 		},
 		error : function() {
@@ -466,45 +315,8 @@ $('#articleModalClose').on('click', function() {
     $('#articleModal').hide();
     $('body').css('overflow-y', 'scroll');
 });
-
-function createArticleItems() {
-	articleItems = document.createElement('div');
-	articleItems.classList.add('article__items');
-	return articleItems;
-}
-function createArticleItem(width, src) {
-	articleItem = document.createElement('div');
-	articleItem.classList.add('article__item');
-	articleItem.style.width = width;
-	
-	articleImage = document.createElement('img');
-	articleImage.classList.add('article__image');
-	articleImage.src = src;
-	articleItem.appendChild(articleImage);
-	return articleItem;
-}
-function createArticlePrevBtn() {
-	articleBtn = document.createElement('figure');
-	articleBtn.classList.add('article__btn', 'article__btn--prev');
-	
-	btnImage = document.createElement('img');
-	btnImage.classList.add('article__btn-image');
-	btnImage.src = '/spring/resources/image/static/prev_btn.png';
-	articleBtn.appendChild(btnImage);
-	return articleBtn;
-}
-function createArticleNextBtn() {
-	articleBtn = document.createElement('figure');
-	articleBtn.classList.add('article__btn', 'article__btn--next');
-	
-	btnImage = document.createElement('img');
-	btnImage.classList.add('article__btn-image');
-	btnImage.src = '/spring/resources/image/static/next_btn.png';
-	articleBtn.appendChild(btnImage);
-	return articleBtn;
-}
-
 </script>
+<script src="<c:url value ='/resources/js/article/get_article_modal.js' />"></script>
 	<script>
 	$(document).ready(function(){
 		$('.content').click(function(){
@@ -619,7 +431,8 @@ function createArticleNextBtn() {
 			tag.href = "/spring/tag/" + text.substring(1);
 		}
 	}
-
+	
+	
 </script>
 </body>
 </html>

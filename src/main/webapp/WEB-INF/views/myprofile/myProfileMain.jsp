@@ -26,7 +26,7 @@
 <link rel="stylesheet"
 	href="<c:url value = '/resources/css/profile/profile_img_edit.css?ver=1.0' />" />
 <link rel="stylesheet"
-	href="<c:url value = '/resources/css/article/article.css?ver=2.0' />" />
+	href="<c:url value = '/resources/css/article/article.css?ver=2.1' />" />
 <link rel="stylesheet"
 	href="<c:url value = '/resources/css/article/article_modal.css?ver=1.0' />" />
 <link rel="stylesheet"
@@ -155,46 +155,7 @@
 										<p class="d-block mb-1" style="white-space: pre-wrap;"
 											id="articleModalContent"></p>
 										<small class="text-muted">4 HOURS AGO</small>
-										<div class="comments" style="margin-top: 10px;">
-
-											<div class="comment">
-												<div class="comment__profile">
-													<img src="<c:url value = '/image/profile/${"imgPath"}/'/>"
-														alt="" class="comment__image" />
-												</div>
-												<div class="comment__text">
-													<div class="comment__writer">a.7.m3ff</div>
-													<div>❤️💓💓💓💓💓</div>
-													<span class="comment__date">2 HOURS AGO</span>
-												</div>
-											</div>
-											<div class="comment">
-												<div class="comment__profile">
-													<img src="<c:url value = '/image/profile/${"imgPath"}/'/>"
-														alt="" class="comment__image" />
-												</div>
-												<div class="comment__text">
-													<div class="comment__writer">adri_rez77</div>
-													<div>Hi</div>
-													<span class="comment__date">4 HOURS AGO</span>
-												</div>
-											</div>
-											<div class="comment">
-												<div class="comment__profile">
-													<img src="<c:url value = '/image/profile/${"imgPath"}/'/>"
-														alt="" class="comment__image" />
-												</div>
-												<div class="comment__text">
-													<div class="comment__writer">samkolder</div>
-													<div>Lorem ipsum dolor sit amet, consectetur
-														adipisicing elit. Non aliquid adipisci eveniet praesentium
-														culpa officia ullam illum delectus vel totam dolorem illo
-														ratione cumque nemo numquam incidunt eos aspernatur
-														aliquam.</div>
-													<span class="comment__date">1 HOURS AGO</span>
-												</div>
-											</div>
-										</div>
+										<div class="comments" id="comments" style="margin-top: 10px;"></div>
 									</div>
 
 									<div
@@ -255,12 +216,12 @@
 										<span></span> likes
 									</div>
 									<div class="position-relative comment-box">
-										<form>
-											<input class="w-100 border-0 p-3 input-post"
-												placeholder="Add a comment...">
-											<button class="btn btn-primary position-absolute btn-ig">Post</button>
-										</form>
-									</div>
+                                        <form name="commentInsertForm" class="commentInsertForm" action="/spring/comment/insert" method="POST">
+                                            <input type="hidden" name="id" value="" id="commentInsertFormId" />
+						   					<input type="text" name="content" id="content" class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
+                                            <button name="commentInsertBtn" class="btn btn-primary position-absolute btn-ig">Post</button>
+                                        </form>
+                                    </div>
 								</div>
 							</div>
 
@@ -475,6 +436,7 @@ function openArticleModal(id) {
 					}
 					$('.article__items').append(el);
 				}
+				
 				var prevBtn = createArticlePrevBtn();
 				$(prevBtn).on('click', function() {
 					addArticlePrevBtn();
@@ -487,7 +449,30 @@ function openArticleModal(id) {
 				});
 				$('.article').append(nextBtn);
 			}
-
+			var loginId = "${sessionScope.user}";
+			$("#comments").html("");
+			
+			for(comment of article.comments) {
+				$("#comments").append(createCommentItem(comment, comment.writerId == loginId));
+			}
+			
+			$('[name=commentDeleteBtn]').click(function(){
+				var id = $(this).data('id') + "";
+				var btn = this;
+				if(confirm("삭제하시겠습니까?")) {
+				    $.ajax({
+				        url : '/spring/comment/delete',
+				        type : 'post',
+				        contentType : "application/json",
+				        data : JSON.stringify({id: id}),
+				        complete : function(){
+				            alert("삭제되었습니다.");
+				            $(btn).closest('.listComment').remove();
+				        }
+				    });
+				}
+			});
+			$('#commentInsertFormId').val(article.id);
 			$('#articleModalOpen').click();
 		},
 		error : function() {
@@ -506,44 +491,8 @@ $('#articleModalClose').on('click', function() {
     $('body').css('overflow-y', 'scroll');
 });
 
-function createArticleItems() {
-	articleItems = document.createElement('div');
-	articleItems.classList.add('article__items');
-	return articleItems;
-}
-function createArticleItem(width, src) {
-	articleItem = document.createElement('div');
-	articleItem.classList.add('article__item');
-	articleItem.style.width = width;
-	
-	articleImage = document.createElement('img');
-	articleImage.classList.add('article__image');
-	articleImage.src = src;
-	articleItem.appendChild(articleImage);
-	return articleItem;
-}
-function createArticlePrevBtn() {
-	articleBtn = document.createElement('figure');
-	articleBtn.classList.add('article__btn', 'article__btn--prev');
-	
-	btnImage = document.createElement('img');
-	btnImage.classList.add('article__btn-image');
-	btnImage.src = '/spring/resources/image/static/prev_btn.png';
-	articleBtn.appendChild(btnImage);
-	return articleBtn;
-}
-function createArticleNextBtn() {
-	articleBtn = document.createElement('figure');
-	articleBtn.classList.add('article__btn', 'article__btn--next');
-	
-	btnImage = document.createElement('img');
-	btnImage.classList.add('article__btn-image');
-	btnImage.src = '/spring/resources/image/static/next_btn.png';
-	articleBtn.appendChild(btnImage);
-	return articleBtn;
-}
-
 </script>
+<script src="<c:url value ='/resources/js/article/get_article_modal.js' />"></script>
 	<script>
 	$(document).ready(function(){
 		$('.content').click(function(){
@@ -653,14 +602,11 @@ function createArticleNextBtn() {
 	});
 	
 	function setTagHref(tags) {
-		console.log(tags);
 		for (var tag of tags) {
-			console.log(tag);
 			var text = tag.innerText;
 			tag.href = "/spring/tag/" + text.substring(1);
 		}
 	}
-
 	
 </script>
 

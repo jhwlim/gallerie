@@ -42,6 +42,8 @@ public class ArticleCommentController {
 	// 댓글 작성
 	@RequestMapping(value = "/insert", method=RequestMethod.POST)
 	public String insertComment(@RequestParam String id, String content, HttpSession session) {
+		log.info(id);
+		
 		CommentVO vo = new CommentVO();
 		String loginId = (String) session.getAttribute("user"); // 로그인 아이디
 		
@@ -57,9 +59,8 @@ public class ArticleCommentController {
 	
 	// 댓글 삭제
 	@RequestMapping(value = "/delete", method=RequestMethod.POST)
-	public String deleteComment(@RequestBody CommentVO vo) {
+	public void deleteComment(@RequestBody CommentVO vo) {
 		service.deleteComment(vo);
-		return "redirect:/post/" + vo.getArticleId();
 	}
 	
 }
