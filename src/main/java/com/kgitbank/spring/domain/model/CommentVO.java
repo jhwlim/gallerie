@@ -16,4 +16,7 @@ public class CommentVO {
 	private String content;
 	private Date writeDate;
 	
+	private String writerId;
+	private String imgPath;
+	
 }

@@ -1,5 +1,7 @@
 package com.kgitbank.spring.domain.article.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.domain.article.dto.ArticleDto;
+import com.kgitbank.spring.domain.article.service.ArticleCommentService;
 import com.kgitbank.spring.domain.article.service.ArticleContentService;
 import com.kgitbank.spring.domain.model.ArticleLikeVO;
+import com.kgitbank.spring.domain.model.CommentVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -26,6 +29,9 @@ public class ArticleContentController {
 	
 	@Autowired
 	AccountService accService;
+
+	@Autowired
+	ArticleCommentService commentService;
 	
 	@GetMapping(value = "/post/{id}")
 	public String getContent(@PathVariable("id") String id, 
@@ -50,7 +56,12 @@ public class ArticleContentController {
 		ArticleLikeVO likeVO = new ArticleLikeVO(article.getId(), accService.selectMemberById(loginId).getSeqId());
 		article.setHasLike(service.selectCountLikeByMemberSeqIdAndArticleId(likeVO) == 1 ? true : false);
 		
-		log.info(article);
+		// 게시물에 대한 댓글 리스트를 조회
+		List<CommentVO> comments = commentService.listComment(article.getId());
+		log.info("댓글 리스트 : " + comments);
+		article.setComments(comments);
+
+		log.info("게시글 : " + article);
 		model.addAttribute("article", article);
 		
 		return "article/article";

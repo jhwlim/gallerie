@@ -138,28 +138,38 @@
 		   			</div>
 	   				
 	   				<!-- 작업하실 영역 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
-	   				
 	   				<div class="comments">
-	   					<!-- 작성된 댓글이 보여지는 영역 -->
-	   					<div class="comment">
-	   						<figure class="article__writer-figure">
-		    					<img src="<c:url value = '/image/profile/${"imgPath"}/'/>" alt="" class="article__writer-img"> 
-		    				</figure>
-		    				<div class="comment__content">
-		    				${"댓글 작성자 아이디"}
-	  						<p class="comment__text">
-	  							${"댓글 내용"}
-	  						</p>
-	   						${"댓글 작성일"}
-	   						</div>
-	   					</div>
+	   					<c:forEach var="comment" items="${article.comments}">	   					
+		   					<!-- 작성된 댓글이 보여지는 영역 -->
+		   					<div class="listComment">
+		   						<figure class="article__writer-figure">
+			    					<img src="<c:url value = '/image/profile/${comment.imgPath}/'/>" alt="" class="article__writer-img"> 
+			    				</figure>
+			    				<!-- comment__content에 내용들어가야 -->
+			    				<div class="comment__content">
+				    				${comment.writerId}
+			  						<p class="comment__text" id="content" name="content">
+			  						${comment.content}
+			  						</p>
+			   						${comment.writeDate}
+		   						</div>
+		   						<div class="comment__function">
+			   						<button name="commentDeleteBtn" data-id="${comment.id}">삭제</button>
+		   						</div>
+		   					</div>
+		   					<br>
+	   					</c:forEach>
 	   				</div>
    				</div>
-   				<div class="comment-write">
-   					<!-- 댓글을 작성하는 영역 -->
-   					<input type="text" />
-   					<button>작성</button>
-   				</div>
+   				<form name="commentInsertForm" class="commentInsertForm" action="/spring/comment/insert" method="POST">
+	   				<div class="comment-write">
+	   					<!-- 댓글을 작성하는 영역 -->
+	   					<input type="hidden" name="id" value="${article.id}"/>
+	   					<input type="hidden" name="memberSeqId" value="${comment.memberSeqId}"/>
+	   					<input type="text" id="content" name="content" placeholder="댓글작성"/>
+	   					<button name="commentInsertBtn">작성</button>
+	   				</div>
+	   			</form>
    			</div>
     	</div>
     	<hr>
@@ -174,6 +184,28 @@
 		</div>
     </div>    
 </div>
+<!-- 댓글관련 스크립트 -->
+<script type="text/javascript">
+//삭제버튼 클릭시
+//댓글 삭제 -> $.ajax로 삭제할 로직 짜기
+$('[name=commentDeleteBtn]').click(function(){
+	console.log($(this).data('id'));
+	var id = $(this).data('id') + "";
+	if(confirm("삭제하시겠습니까?")) {
+	    $.ajax({
+	        url : '/spring/comment/delete',
+	        type : 'post',
+	        contentType : "application/json",
+	        data : JSON.stringify({id: id}),
+	        complete : function(){
+	            alert("삭제되었습니다.");
+	            location.href = "/spring/article/" + ${article.id};
+	        }
+	    });
+	}
+});
+</script>
+<!-- 게시글 불러오기 스크립트 -->
 <script>
 $('.article__img').on('error', function() {
 	this.src = "<c:url value = '/resources/image/article/alternative.jpg'/>";
@@ -242,6 +274,12 @@ $('#likeBtn').on('click', function() {
 	
 });
 </script>
-
 </body>
 </html>
+
+
+
+
+
+
+

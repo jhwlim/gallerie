@@ -133,6 +133,8 @@ public class LoginController {
 			
 			logvo.setMemberSeqId(loginMember.getSeqId());
 			logvo.setIp(getip.getIp(req));
+			log.info(logvo);
+			
 			service.loginHistory(logvo);
 			String check = req.getParameter("remember");
 			
