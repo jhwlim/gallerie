@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgitbank.spring.domain.follow.mapper.FollowMapper">
+	
+	<update id="following">
+		INSERT INTO follow VALUES(#{followerId}, #{followId})
+	</update>
+	
+	<delete id="ufollow">
+		DELETE FROM follow
+           WHERE follower_id = #{followerId} and follow_id = #{followId}
+	</delete>
+	
+	<select id="seqsearch" resultType="com.kgitbank.spring.domain.myprofile.dto.ProfileDto">
+		select * from members where seq_id = #{id}
+	</select>
+	
+	
+	<select id="selectFollow" resultType="Integer">
+		select follow_id from follow where follower_id = #{seqId}
+	</select>
+	
+	<select id="selectFollower" resultType="Integer">
+		select follower_id from follow where follow_id = #{seqId}
+	</select>
+	
+</mapper>

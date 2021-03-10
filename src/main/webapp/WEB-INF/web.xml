@@ -21,8 +21,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml
-						 /WEB-INF/spring/appServlet/mybatis-config.xml
-						 /WEB-INF/spring/appServlet/ws-config.xml
+						 /WEB-INF/spring/appServlet/websocket-config.xml
 			</param-value>
 		</init-param>
 		<init-param>

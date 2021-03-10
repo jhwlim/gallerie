@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.kgitbank.spring.domain.article.dto.GalleryPageDto;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.model.mapper.ArticleLikeMapperTests;
 
@@ -30,6 +31,7 @@ public class ProfileMainMapperTests {
 	@Autowired
 	ProfileImageMapper imgMapper;
 	
+	@Ignore
 	@Test
 	public void selectMemberByIdTest() {
 		
@@ -41,12 +43,10 @@ public class ProfileMainMapperTests {
 	@Ignore
 	@Test
 	public void updateProfileImgBySeqIdTest() {
-		
 		int seqId = 1;
 		String imgPath = "/test";
 		
 		MemberVO member = new MemberVO();
-		
 		member.setSeqId(seqId);
 		member.setImgPath(imgPath);
 		
@@ -57,10 +57,9 @@ public class ProfileMainMapperTests {
 	
 	@Ignore
 	@Test
-	public void selectProfileImgBySeqIdTest() {
-		
-		int seqId = 1;
-		
+	public void selectProfileImgBySeqIdTest() {	
+		int seqId = 1;	
 		log.info(imgMapper.selectProfileImgBySeqId(seqId));
 	}
+	
 }

@@ -1,10 +1,6 @@
 package com.kgitbank.spring.domain.account.controller;
 
-
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,23 +14,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.kgitbank.spring.domain.account.dto.Sessionkey;
-import com.kgitbank.spring.domain.account.service.AccountService;
+import com.kgitbank.spring.domain.account.service.GetIp;
+import com.kgitbank.spring.domain.account.service.LoginService;
 import com.kgitbank.spring.domain.model.LoginVO;
 import com.kgitbank.spring.domain.model.MemberVO;
-import com.kgitbank.spring.global.util.GetIp;
+import com.kgitbank.spring.global.config.SessionConfig;
 import com.kgitbank.spring.global.util.SecurityPwEncoder;
-import com.kgitbank.spring.global.util.SessionConfig;
 
 import lombok.extern.log4j.Log4j;
 
-
 @Controller
-
 @Log4j
 public class LoginController {
 	
 	@Autowired
-	AccountService service;
+	LoginService service;
 	
 	@Autowired
 	SecurityPwEncoder encoder;
@@ -42,8 +36,6 @@ public class LoginController {
 	@Autowired
 	GetIp getip;
 	
-	
-
 	@GetMapping(value = "/")
 	public String main(HttpServletRequest req, HttpServletResponse rep, HttpSession session) {
 		
@@ -74,6 +66,8 @@ public class LoginController {
 						doubleLogin = SessionConfig.getSessionidCheck("user", loginMember.getId());
 						session.setAttribute("user", loginMember.getId());
 						
+						session.setAttribute("userProfile", loginMember.getImgPath()); // 프로필 이미지도 세션 영역에 추가
+						
 						LoginVO logvo = new LoginVO();
 						
 						logvo.setMemberSeqId(loginMember.getSeqId());
@@ -91,15 +85,13 @@ public class LoginController {
 							
 							service.keepLogin(key);
 						}
-						
-						
+					
 						return "/main/home";
 					}
 				}
 			}
 		}
-
-		
+	
 		return "account/login";
 	}
 
@@ -122,9 +114,7 @@ public class LoginController {
 		}else {
 			req.setAttribute("loginFailId", "해당 아이디가 없습니다.");
 		}
-		
-		
-		
+
 		log.info(loginMember);
 		
 		if(loginMember != null) {
@@ -133,6 +123,9 @@ public class LoginController {
 			System.out.println("현재 세션 아이디" + session.getId());
 			doubleLogin = SessionConfig.getSessionidCheck("user", loginMember.getId());
 			session.setAttribute("user", loginMember.getId());
+			
+			session.setAttribute("userProfile", loginMember.getImgPath()); // 프로필 이미지도 세션 영역에 추가
+			
 			System.out.println(getip.getIp(req));
 			
 			
@@ -196,8 +189,6 @@ public class LoginController {
 		}
 		return "redirect:/";
 	}
-	
-	
 	
 	@PostMapping(value = "/sessiondel")
 	public String sessiondel(HttpSession session) {

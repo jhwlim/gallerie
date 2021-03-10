@@ -4,8 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.chat.mapper.ChatMapper">
 	
-
-
 	<select id="selectMemberById" resultType="MemberVO">
 		SELECT * FROM members WHERE id = #{id}
 	</select>
@@ -14,14 +12,14 @@
 		SELECT * FROM chat_room WHERE small_user_seq_id = ${smallUserSeqId} AND large_user_seq_id = #{largeUserSeqId}
 	</select>
 	
-	<insert id="createRoomId" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-		<selectKey keyProperty="seqId" resultType="int" order="AFTER">			   
-    		SELECT room_seq.currval FROM DUAL
+	<insert id="createRoomId">
+		<selectKey keyProperty="seqId" resultType="int" order="BEFORE" >			   
+    		SELECT room_seq.nextval FROM DUAL
  		</selectKey>
 			INSERT INTO 
 				chat_room
 			VALUES
-				(room_seq.nextval, #{smallUserSeqId}, #{largeUserSeqId})	
+				(#{seqId}, #{smallUserSeqId}, #{largeUserSeqId})	
 	</insert>
 
 	<insert id="insertMessage">
@@ -51,6 +49,38 @@
 		WHERE
 			room_id = #{roomId} AND sender_seq_id != #{seqId} AND read = 'N'
 	</update>
-		
+	
+	<select id="selectContactList" resultType="com.kgitbank.spring.domain.chat.dto.ContactDto">
+		SELECT 
+		    a.*,
+		    m.id as user_id,
+		    m.img_path
+		FROM
+		    (SELECT 
+		        MAX(m.send_date) as send_date,
+		        r.small_user_seq_id as user_seq_id
+		    FROM 
+		        messages_r m
+		        INNER JOIN chat_room r 
+		        ON m.room_id = r.seq_id
+		    WHERE r.large_user_seq_id = #{userSeqId}
+		    GROUP BY r.small_user_seq_id
+		    
+		    UNION
+		    
+		    SELECT 
+		        MAX(m.send_date) as send_date,
+		        r.large_user_seq_id as user_seq_id
+		    FROM 
+		        messages_r m
+		        INNER JOIN chat_room r 
+		        ON m.room_id = r.seq_id
+		    WHERE r.small_user_seq_id = #{userSeqId}
+		    GROUP BY r.large_user_seq_id
+		    
+		    ORDER BY send_date DESC) a
+		    INNER JOIN members m
+		    ON a.user_seq_id = m.seq_id
+	</select>
 
 </mapper>

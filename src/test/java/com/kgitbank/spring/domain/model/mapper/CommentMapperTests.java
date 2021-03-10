@@ -49,11 +49,11 @@ public class CommentMapperTests {
 		log.info("createCommentTest - Complete");
 	}
 	
-	@Ignore
+	
 	@Test
 	public void createCommentSamples() {
 		
-		int articleId = 102; // articles 테이블에 존재하는 id
+		int articleId = 34; // articles 테이블에 존재하는 id
 		
 		for (int i = 0; i < 5; i++) {
 			

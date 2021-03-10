@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kgitbank.spring.domain.chat.dto.ChattingRoom;
 import com.kgitbank.spring.domain.chat.dto.ChattingUser;
+import com.kgitbank.spring.domain.chat.dto.ContactDto;
 import com.kgitbank.spring.domain.chat.mapper.ChatMapper;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.model.MessageVO;
@@ -40,7 +41,7 @@ public class ChatServiceImpl implements ChatService{
 		if (roomFromDB != null) {
 			return roomFromDB;			
 		} else {
-			room.setSeqId(mapper.createRoomId(room));
+			mapper.createRoomId(room);
 			return room;
 		}
 		
@@ -64,6 +65,11 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public int updateMessageRead(ChattingUser user) {
 		return mapper.updateMessageRead(user);
+	}
+
+	@Override
+	public List<ContactDto> selectContactList(int userSeqId) {
+		return mapper.selectContactList(userSeqId);
 	}
 	
 	

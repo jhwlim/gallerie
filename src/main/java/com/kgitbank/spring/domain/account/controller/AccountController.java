@@ -22,13 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-
-/*
-	- 회원가입
-	- 로그인
-	- 아이디/비밀번호 찾기
- */
-
 @Controller(value = "/account")
 @AllArgsConstructor
 @Log4j
@@ -42,11 +35,6 @@ public class AccountController {
 
 	@Resource(name="mailSender")
 	private JavaMailSenderImpl jms;
-	
-	@GetMapping(value = "/login")
-	public String login() {
-		return "account/login";
-	}
 
 	@GetMapping(value = "/signup")
 	public String join() {
