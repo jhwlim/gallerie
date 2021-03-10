@@ -235,5 +235,15 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 		return mapper.selectTotalCountOfArticlesByTagName(tagName);
 	}
 
+	@Override
+	public List<GalleryDto> selectGalleryOrderByLikeAndComment(GalleryPageDto page) {
+		return mapper.selectGalleryOrderByLikeAndComment(page);
+	}
+
+	@Override
+	public int selectTotalCountOfArticles() {
+		return mapper.selectTotalCountOfArticles();
+	}
+
 
 }

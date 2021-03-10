@@ -48,6 +48,9 @@ public class ArticleRestController {
 		} else if (data.getTagName() != null) {
 			data.setArticles(service.selectGalleryByTagName(data));
 			totalCnt = service.selectTotalCountOfArticlesByTagName(data.getTagName());
+		} else {
+			data.setArticles(service.selectGalleryOrderByLikeAndComment(data));
+			totalCnt = service.selectTotalCountOfArticles();
 		}
 		
 		int idx = data.getArticleIndex();

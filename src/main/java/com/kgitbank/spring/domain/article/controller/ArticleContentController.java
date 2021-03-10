@@ -64,5 +64,10 @@ public class ArticleContentController {
 		return "article/tag";
 	}
 	
-	
+	@GetMapping(value = "/hotclip") 
+	public String getHotClipPage() {
+		log.info("URL : /post/ - GET");
+		
+		return "article/hotclip";
+	}
 }

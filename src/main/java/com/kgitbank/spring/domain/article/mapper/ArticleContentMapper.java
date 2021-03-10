@@ -20,9 +20,13 @@ public interface ArticleContentMapper {
 	
 	public List<GalleryDto> selectGalleryByTagName(GalleryPageDto page);
 	
+	public List<GalleryDto> selectGalleryOrderByLikeAndComment(GalleryPageDto page);
+	
 	public int selectTotalCountOfArticlesByWriterSeqId(int writerSeqId);
 	
 	public int selectTotalCountOfArticlesByTagName(String tagName);
+	
+	public int selectTotalCountOfArticles();
 	
 	public void insertArticle(ArticleVO article);
 
