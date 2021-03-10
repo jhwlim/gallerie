@@ -10,7 +10,7 @@
 	  	SET
   		 	name = #{name},
   		 	email = #{email},
-  		 	profile = #{profile},
+  		 	profile = #{profile, jdbcType=VARCHAR},
   		 	phone = #{phone}
   		 WHERE
   		 	id = #{id}

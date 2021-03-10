@@ -10,8 +10,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.kgitbank.spring.domain.model.CommentVO;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.model.mapper.ArticleLikeMapperTests;
+import com.kgitbank.spring.domain.myprofile.service.MyprofileService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -29,6 +31,9 @@ public class ProfileMainMapperTests {
 	
 	@Autowired
 	ProfileImageMapper imgMapper;
+	
+	@Autowired
+	private MyprofileService service;
 	
 	@Test
 	public void selectMemberByIdTest() {
@@ -63,4 +68,23 @@ public class ProfileMainMapperTests {
 		
 		log.info(imgMapper.selectProfileImgBySeqId(seqId));
 	}
+	
+	@Test
+	public void updateIdTest() {
+		MemberVO vo = new MemberVO();
+		vo.setId("test00");
+		service.updateMyprofile(vo);
+	}
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+

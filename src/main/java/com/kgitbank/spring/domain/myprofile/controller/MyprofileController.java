@@ -3,12 +3,15 @@ package com.kgitbank.spring.domain.myprofile.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,9 +51,15 @@ public class MyprofileController {
 		return "myprofile/account/edit";
 	}
 	
-	@PostMapping(value = "/edit")
-	public String update(MemberVO vo) {
+	@RequestMapping(value = "/edit", method=RequestMethod.POST)
+	public String update(@RequestParam HttpSession session) {
+		MemberVO vo = new MemberVO();
 //		vo.setId("abc5678");
+//		vo.setId("test00");
+		log.info(vo);
+		String loginId = (String) session.getAttribute("user");
+		log.info("loginId: " + loginId);
+		vo.setId(loginId);
 		service.updateMyprofile(vo);
 		return "redirect:/myprofile/account/edit";
 	}
