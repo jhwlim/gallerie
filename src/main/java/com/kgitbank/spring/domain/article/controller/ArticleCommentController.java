@@ -49,19 +49,17 @@ public class ArticleCommentController {
 		vo.setArticleId(Integer.parseInt(id));
 		vo.setContent(content);
 		vo.setMemberSeqId(memberSeqId);
-		log.info(vo);
 		
 		service.insertComment(vo);
 
-		return "redirect:/article/" + id;
+		return "redirect:/post/" + id;
 	}
 	
 	// 댓글 삭제
 	@RequestMapping(value = "/delete", method=RequestMethod.POST)
-	public void deleteComment(@RequestBody CommentVO vo) {
-		log.info("articleId");
-		log.info(vo);
+	public String deleteComment(@RequestBody CommentVO vo) {
 		service.deleteComment(vo);
+		return "redirect:/post/" + vo.getArticleId();
 	}
 	
 }

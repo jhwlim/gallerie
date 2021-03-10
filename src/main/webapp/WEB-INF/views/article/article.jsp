@@ -11,7 +11,7 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=2.0">
-<link rel="stylesheet" href="<c:url value = '/resources/css/article/article.css?ver=1.0' />" />
+<link rel="stylesheet" href="<c:url value = '/resources/css/article/article.css?ver=1.1' />" />
 
 </head>
 <body style="overflow:scroll;">
@@ -71,37 +71,24 @@
                                             <p class="d-block mb-1" style="white-space: pre-wrap; flex-wrap;" id="articleContent">${article.content}</p>
 	                                        <small class="text-muted">4 HOURS AGO</small>
     									<div class="comments" style="margin-top: 10px;">
- 
-                                        	<div class="comment">
-    											<div class="comment__profile">
-    												<img src="<c:url value = '/image/profile/${"imgPath"}/'/>" alt="" class="comment__image"/>
-    											</div>
-    											<div class="comment__text">
-    												<div class="comment__writer">a.7.m3ff</div>
-	    											<div>❤️💓💓💓💓💓</div>
-	    											<span class="comment__date">2 HOURS AGO</span>
-	    										</div>
-    										</div>
-                                        	<div class="comment">
-    											<div class="comment__profile">
-    												<img src="<c:url value = '/image/profile/${"imgPath"}/'/>" alt="" class="comment__image"/>
-    											</div>
-    											<div class="comment__text">
-    												<div class="comment__writer">adri_rez77</div>
-	    											<div>Hi</div>
-	    											<span class="comment__date">4 HOURS AGO</span>
-	    										</div>
-    										</div>
-                                        	<div class="comment">
-    											<div class="comment__profile">
-    												<img src="<c:url value = '/image/profile/${"imgPath"}/'/>" alt="" class="comment__image"/>
-    											</div>
-    											<div class="comment__text">
-    												<div class="comment__writer">samkolder</div>
-	    											<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non aliquid adipisci eveniet praesentium culpa officia ullam illum delectus vel totam dolorem illo ratione cumque nemo numquam incidunt eos aspernatur aliquam.</div>
-    												<span class="comment__date">1 HOURS AGO</span>
-    											</div>
-    										</div>
+ 											<c:forEach var="comment" items="${article.comments}">	   					
+							   					<!-- 작성된 댓글이 보여지는 영역 -->
+							   					<div class="listComment">
+								   					<div class="comment">
+		    											<div class="comment__profile">
+		    												<img src="<c:url value = '/image/profile/${comment.imgPath}/'/>" alt="" class="comment__image"/>
+		    											</div>
+		    											<div class="comment__text">
+		    												<div class="comment__writer">${comment.writerId}</div>
+			    											<div>${comment.content}</div>
+			    											<span class="comment__date">${comment.writeDate}</span>
+			    											<c:if test="${comment.writerId == sessionScope.user}">
+				    											<button name="commentDeleteBtn" data-id="${comment.id}">Delete</button>
+			    											</c:if>
+			    										</div>
+		    										</div>
+							   					</div>
+						  					</c:forEach>
                                         </div>
 									</div>
 									
@@ -155,9 +142,11 @@
                                     	<span>${article.likeCount}</span> likes
                                     </div>
                                     <div class="position-relative comment-box">
-                                        <form>
-                                            <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
-                                            <button class="btn btn-primary position-absolute btn-ig">Post</button>
+                                        <form name="commentInsertForm" class="commentInsertForm" action="/spring/comment/insert" method="POST">
+                                            <input type="hidden" name="id" value="${article.id}"/>
+						   					<input type="hidden" name="memberSeqId" value="${comment.memberSeqId}"/>	
+                                            <input type="text" name="content" id="content" class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
+                                            <button name="commentInsertBtn" class="btn btn-primary position-absolute btn-ig">Post</button>
                                         </form>
                                     </div>
                                 </div>
@@ -240,6 +229,22 @@ function setTagHref(tags) {
 
 setTagHref($('#articleContent a'));
 
+$('[name=commentDeleteBtn]').click(function(){
+	console.log($(this).data('id'));
+	var id = $(this).data('id') + "";
+	if(confirm("삭제하시겠습니까?")) {
+	    $.ajax({
+	        url : '/spring/comment/delete',
+	        type : 'post',
+	        contentType : "application/json",
+	        data : JSON.stringify({id: id}),
+	        complete : function(){
+	            alert("삭제되었습니다.");
+	            location.href = "/spring/article/" + ${article.id};
+	        }
+	    });
+	}
+});
 </script>
 <c:if test="${not empty article.files}">
 	<script>
