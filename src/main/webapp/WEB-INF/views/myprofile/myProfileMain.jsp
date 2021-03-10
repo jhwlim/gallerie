@@ -608,14 +608,15 @@ function createArticleNextBtn() {
 		var article = $('.article');
 		var articleItemsList = article.children('.article__items');
 		var width = article.width();
-		
-		$.each(articleItemsList, function(i, item) {
-			articleItems = $(item);
-			var idx = getIndexOfSlide(articleItems);
-			articleItems.css({
-				'margin-left': -width * idx
-			});	
-		})
+		if (articleItemsList.length > 1) {
+			$.each(articleItemsList, function(i, item) {
+				articleItems = $(item);
+				var idx = getIndexOfSlide(articleItems);
+				articleItems.css({
+					'margin-left': -width * idx
+				});	
+			})
+		}
 	});
 	
 	$('.content').on('click', function() {

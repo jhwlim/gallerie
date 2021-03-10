@@ -369,7 +369,6 @@ getGallery = function getGallery() {
 			var data = {
 				articleIndex : articleIndex,
 			};
-			console.log(data);
 			
 			$.ajax({
 				type : "GET",
@@ -570,14 +569,15 @@ function createArticleNextBtn() {
 		var article = $('.article');
 		var articleItemsList = article.children('.article__items');
 		var width = article.width();
-		
-		$.each(articleItemsList, function(i, item) {
-			articleItems = $(item);
-			var idx = getIndexOfSlide(articleItems);
-			articleItems.css({
-				'margin-left': -width * idx
-			});	
-		})
+		if (articleItemsList.length > 1) {
+			$.each(articleItemsList, function(i, item) {
+				articleItems = $(item);
+				var idx = getIndexOfSlide(articleItems);
+				articleItems.css({
+					'margin-left': -width * idx
+				});	
+			})
+		}
 	});
 	
 	$('.content').on('click', function() {
@@ -614,9 +614,7 @@ function createArticleNextBtn() {
 	});
 	
 	function setTagHref(tags) {
-		console.log(tags);
 		for (var tag of tags) {
-			console.log(tag);
 			var text = tag.innerText;
 			tag.href = "/spring/tag/" + text.substring(1);
 		}
