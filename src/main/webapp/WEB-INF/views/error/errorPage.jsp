@@ -23,13 +23,25 @@
             toggleMenu.classList.toggle('active');
         }
         
-        function press(f){
-        	if(f.keyCode == 13){ 
-        		goProfile.submit();
-			}
-        }
-
     </script>  
+    
+    <script type ="text/javascript">
+
+		function onEnterSearch(){
+		
+		    var keyCode = window.event.keyCode;
+		
+		
+		
+		    if (keyCode == 13) { //엔테키 이면
+		
+		        myProfile.submit();
+		
+		    }
+		
+		} //onEnterLogin()
+
+    </script>
 	
 
     <div>
@@ -40,12 +52,12 @@
                         <img src="/spring/resources/css/error/images/ig-logo.png" alt="" loading="lazy">
                     </a>
                     <div>
-                        <form autocomplete="off" method="GET" action="/spring" name="goProfile">
+                        <form autocomplete="off" method="GET" action="/spring" name="myProfile" onkeydown="javascript:onEnterSearch();">
                             <div class="autocomplete" style="width:300px;">
-                              <input id="myInput"  type="text" name="myprofile" placeholder="검색" onkeypress="JavaScript:press(this.form)">
+                              <input id="myInput"  type="text" name="myProfile" placeholder="검색">
                               
                             </div>
-                            <input type="submit">
+                           
                             
                           </form>
                     </div>
