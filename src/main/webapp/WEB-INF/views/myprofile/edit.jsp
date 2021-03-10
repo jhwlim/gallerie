@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인 활동</title>
+<title>프로필 편집</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
@@ -20,7 +19,7 @@
 
 body {
 	min-width: 630px;
-	min-height: 1200px;
+	min-height: 1000px;
 }
 
 a {
@@ -29,17 +28,22 @@ a {
 }
 
 hr {
-	background-color: LightGray;
+	height: 40px;
+	width: 0;
+	background-color: black;
+	border-color: black;
+	display: inline-block;
 }
 
 main {
 	height: 100%;
 	width: 44%;
-	margin: 100px 28% 40px;
+	margin: 100px 28% 340px;
 	background-color: white;
 	border: 1px solid gainsboro;
 	display: grid;
 	grid-template-columns: 1fr 3fr;
+	text-align: center;
 }
 
 main>div {
@@ -83,7 +87,7 @@ input[type=text]:focus {
 	color: gainsboro;
 }
 
-.menu3 {
+.menu1 {
 	border-left-color: black !important;
 }
 
@@ -110,6 +114,26 @@ input[type=text]:focus {
 	height: 40px;
 }
 
+.liner {
+	padding: 50px;
+	grid-column: 1/2 span;
+}
+
+.liner>div {
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+}
+
+.key {
+	text-align: end;
+	padding-right: 32px;
+}
+
+.tablediv {
+	grid-template-columns: 5% auto;
+	display: grid;
+}
+
 .a_check {
 	height: 100%;
 }
@@ -117,23 +141,20 @@ input[type=text]:focus {
 .table {
 	display: inline-block;
 }
-
-.login_form {
-	margin-top: 16px;
-	margin-right: 64px;
-	margin-left: 64px;
-	margin-bottom: 16px;
-}
-
-.login_form2 {
-	margin-top: 16px;
-	margin-right: 64px;
-	margin-left: 64px;
-	margin-bottom: 16px;
+input[type=submit] {
+	display: inline-block;
+	width: 50%;
+	height: 100%;
+	padding: 10px;
+	background-color: rgb(56, 151, 240);
+	color: white;
+	border: 0px;
+	border-radius: 3px;
+	text-align: center;
 }
 
 </style>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
 </head>
 <body>
 	<div>
@@ -208,44 +229,60 @@ input[type=text]:focus {
         </nav>
     </div>
 
-	<main>
+	<main>		
 	<div class="main1">
 		<div class="menu1">
-			<a href="/spring/myprofile/account/edit">프로필 편집</a>
+			<a href="/spring/account/edit">프로필 편집</a>
 		</div>
 		<div class="menu2">
-			<a href="/spring/myprofile/account/checkpw">비밀번호 변경</a>
+			<a href="/spring/account/checkpw">비밀번호 변경</a>
 		</div>
 		<div class="menu3">
-			<a href="/spring/myprofile/account/loginActivity">로그인 활동</a>
+			<a href="/spring/account/loginActivity">로그인 활동</a>
 		</div>
-	</div> 
-	<div class="main2">
-	<form id="ipForm" action="<c:url value='/myprofile/account/loginActivity' />" method="POST">
-		<div class="login_form">
-			<h2 class="">로그인 활동</h2>
-		</div>
-		<div class="login_form2">
-			<h4 id="login_place">로그인한 위치</h4>
-			<br>
-				<div id="map" style="width:500px;height:300px;"></div>
-				<br>
-				<div>
-					<c:forEach items="${loginActivity }" var="login" >
-						<br>
-						<div><i class="fas fa-map-marker"></i></div>
-						<div class="test">
-				        ${login.location }
-				        <fmt:formatDate value="${login.loginDate}" pattern="yyyy-MM-dd HH:mm:ss"/>   
-				        <span class="ip">${login.ip }</span> 
-				        <br><br>
-				        </div>
-				        <hr>
-			    	</c:forEach>
-				</div>
-		</div>
-	</form>
 	</div>
+	<div class="main2">
+	<form action="<c:url value='/account/edit' />" method="POST" onsubmit="return validateUpdate()">
+		<div class="liner">
+		
+			<div class="line1">
+				<div class="key">
+					이름<br/>
+				</div>
+				<input class="a_name" type="text" id="name" name="name" 
+				placeholder="이름" value="${member.name}" size="30"><br />
+			</div>
+			<div class="line2">
+				<div class="key">
+					소개<br />
+				</div>
+				<!-- members테이블의 profile->자기소개글 -->
+				<textarea cols="32" id="profile" name="profile" value="${member.profile}" rows="5">
+				</textarea>
+				<br />
+			</div>
+			<div class="line3">
+				<div class="key">
+					이메일<br />
+				</div>
+				<input class="a_email" type="email" id="email" name="email" 
+				placeholder="이메일" size="30" value="${member.email}" ><br />
+			</div>
+			<div class="line4">
+				<div class="key">
+					전화번호<br />
+				</div>
+				<input type="tel" id="phone" name="phone" 
+				placeholder="전화번호" size="30" value="${member.phone}"><br />
+			</div>
+			<input type="hidden" name="id" value="${member.id}"/>
+			<div class="line5">
+				<div class="key">
+				</div>
+				<input type="submit" value="제출">
+			</div>
+	</div>
+	</form>	
 	</main>
 	<footer>
 		<div>
@@ -287,94 +324,22 @@ input[type=text]:focus {
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
 	</footer>
-	
-<script src = "<c:url value='/resources/config/config.js' />"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript">
-//Create the script tag, set the appropriate attributes
-var script = document.createElement('script');
-script.src = 'https://maps.googleapis.com/maps/api/js?key='+ config.MY_KEY +'&callback=initMap';
-script.async = true;
-
-// Attach your callback function to the `window` object
-window.initMap = function() {
-  // JS API is loaded and available
-};
-
-// Append the 'script' element to 'head'
-document.head.appendChild(script);
-
-window.onload = function() {
-	if (!navigator.geolocation) {
-		document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
-		return;
-	}
-	navigator.geolocation.getCurrentPosition(function(position) {
-		var lat = position.coords.latitude;
-		var lon = position.coords.longitude;
-		
-		console.log('위도 : ' + lat);
-		console.log('경도 : ' + lon);
-		
-		var initLoc = new google.maps.LatLng(lat,lon);
-		console.log(initLoc);
-		
-		var map = new google.maps.Map(document.getElementById('map'),{
-			zoom:6,
-            mapTypeId : google.maps.MapTypeId.ROADMAP,
-            gestureHandling: "none",
-            zoomControl: false,
-            fullscreenControl: false,
-            streetViewControl: false,
-            mapTypeControl: false,
-		});
-         map.setCenter(initLoc);
-         var marker = new google.maps.Marker({position:initLoc,map:map,title:'현재위치'})
-	});
-};
-
-
-$(".test").click(function() {
-
-	$.get( "https://api.ipify.org?format=json", function(login) {
-    });
-	
-	function showLocationOnMap (location) {
-		  var map;
-	      map = new google.maps.Map(document.getElementById('map'), {
-	          center: {lat: Number(location.latitude), lng: Number(location.longitude)},
-	          zoom: 6,
-	          gestureHandling: "none",
-	          zoomControl: false,
-	          fullscreenControl: false,
-	          streetViewControl: false,
-	          mapTypeControl: false,
-	      });
-	      var marker = new google.maps.Marker({
-	          position: {lat: Number(location.latitude), lng: Number(location.longitude)},
-	          map: map,
-	          title: "Public IP:"+location.ipAddress+" @ "+location.city
-	      });      
-	}
-	
-	$.ajax({
-		  url: "GeoIP",
-		  type: "POST",
-		  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		  data: $.param( {ipAddress : $(this).children(".ip").text()} ),
-		  success: function(data) {
-			  if (data.ipAddress != null) {
-				  console.log ("Success:"+data.ipAddress);    
-			    	showLocationOnMap(data);  	
-			  }
-		  },
-		  error: function(err) {
-		      console.log(err);
-		  },
-	  });
-	
-});
-</script>
+	<script>
+		function validateUpdate() {
+			
+			var name = document.querySelector("#name");
+			var profile = document.querySelector("#profile");
+			var email = document.querySelector("#email");
+			var phone = document.querySelector("#phone");
+			
+			if (name.value === "" || email.value === "" || phone.value === "") {
+				alert('내용을 입력해주세요.');
+				return false;
+			} else {
+				alert('프로필을 저장했습니다.');
+			}
+			
+		}
+	</script>
 </body>
 </html>

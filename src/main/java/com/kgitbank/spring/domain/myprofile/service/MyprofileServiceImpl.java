@@ -23,8 +23,8 @@ public class MyprofileServiceImpl implements MyprofileService {
 	private SecurityPwEncoder encoder;
 	
 	// 회원정보 수정
-	public int updateMyprofile(MemberVO vo) {
-		return mapper.updateMyprofile(vo);
+	public void updateMyprofile(MemberVO vo) {
+		mapper.updateMyprofile(vo);
 	}
 	
 	// 현재 비밀번호 비교하려고 가져오는 쿼리문

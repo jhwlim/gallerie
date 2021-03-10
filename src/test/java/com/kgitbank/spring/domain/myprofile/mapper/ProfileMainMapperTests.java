@@ -69,16 +69,6 @@ public class ProfileMainMapperTests {
 		log.info(imgMapper.selectProfileImgBySeqId(seqId));
 	}
 	
-	@Test
-	public void updateIdTest() {
-		MemberVO vo = new MemberVO();
-		vo.setId("test00");
-		service.updateMyprofile(vo);
-	}
-	
-	
-	
-	
 }
 
 

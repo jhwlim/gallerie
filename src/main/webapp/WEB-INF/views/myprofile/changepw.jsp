@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +19,7 @@
 
 body {
 	min-width: 630px;
-	min-height: 1000px;
+	min-height: 1200px;
 }
 
 a {
@@ -39,7 +38,7 @@ hr {
 main {
 	height: 100%;
 	width: 44%;
-	margin: 100px 28% 530px;
+	margin: 100px 28% 40px;
 	background-color: white;
 	border: 1px solid gainsboro;
 	display: grid;
@@ -91,13 +90,6 @@ input[type=text]:focus {
 	border-left-color: black !important;
 }
 
-.pwd {
-	display: inline-block;
-	text-align: left;
-	font-size: 15px;
-	width: 100px;
-}
-
 .user_ {
 	/* margin: 20px 0px 0px 0px;
     padding: 0px 0px 0px 10%;
@@ -112,13 +104,23 @@ input[type=text]:focus {
 	display: grid;
 	grid-template-columns: auto auto;
 	grid-gap: 20px;
-	margin: 5% 3% 0 17%;
+	margin: 5% 3% 0 2%;
+}
+
+.pwd {
+	display: inline-block;
+	text-align: left;
+	font-size: 15px;
+	width: 100px;
+	margin-top: 10px;
+	margin-left: 5px;
 }
 
 .pwd2 {
 	display: inline-block;
 	text-align: left;
 	padding-left: 0;
+	margin-left: 5px;
 }
 
 .ok_ {
@@ -129,23 +131,10 @@ input[type=text]:focus {
 	text-align: left;
 }
 
-.findpw {
-	width: 100%;
-	grid-column: 2/1 span;
-	display: inline-block;
-	text-align: left;
-	margin-bottom: 3%;
-}
-
-.findpw>a {
-	color: blue;
-}
-
 input[type=password] {
 	padding: 10px;
 	background-color: rgb(233, 227, 227);
 	border: 0px;
-	width: 70%;
 }
 
 input[type=submit] {
@@ -157,7 +146,9 @@ input[type=submit] {
 	color: white;
 	border: 0px;
 	border-radius: 3px;
+	margin-left: 5px;
 	text-align: center;
+	margin-bottom: 10px;
 }
 </style>
 
@@ -235,40 +226,43 @@ input[type=submit] {
         </nav>
     </div>
 
-		<main>
-		<div class="main1">
-			<div class="menu1">
-				<a href="/spring/myprofile/account/edit">프로필 편집</a>
-			</div>
-			<div class="menu2">
-				<a href="/spring/myprofile/account/checkpw">비밀번호 변경</a>
-			</div>
-			<div class="menu3">
-				<a href="/spring/myprofile/account/loginActivity">로그인 활동</a>
-			</div>
+<main>
+	<div class="main1">
+		<div class="menu1">
+			<a href="/spring/account/edit">프로필 편집</a>
 		</div>
-		<div class="main2">
-			<form class="j_from" action="<c:url value='/myprofile/account/updatepw' />" method="POST" >
-				<div class="pwd">
-					<div class="password_1">이전 비밀번호</div>
-				</div>
-				<div class="pwd2">
-					<input class="p1_t" id="pw" type="password" size="60"
-					name="pw" placeholder="현재 비밀번호 입력"></input>
-					<input type="hidden" value="1234" name="test"></input>
-					<span class="error_next_box" id="pwMsg" style="margin-top: 15px;"></span>
-				</div>
-				<div class="ok_">
-					<input type="submit" value="본인확인" ></input>
-				</div>
-				<div class="findpw">
-					<a href="http://localhost:8080/spring/findpw">비밀번호를 잊으셨나요?</a>
-					<br>
-				</div>
-			</form>
+		<div class="menu2">
+			<a href="/spring/account/checkpw">비밀번호 변경</a>
 		</div>
-		</main>
-	<footer>
+		<div class="menu3">
+			<a href="/spring/account/loginActivity">로그인 활동</a>
+		</div>
+	</div> 
+	<div class="main2">
+	<form action="<c:url value='/account/changepw' />" method="POST" onsubmit="return validateJoin()">
+			<div class="pwd">
+				<div  class="password_1">새 비밀번호</div>
+			</div>
+			<div class="pwd2">
+				<input id="pw1" name="pw1" type="password" size="60" 
+				placeholder="새 비밀번호 입력" ></input>
+			</div>
+			<br>
+
+			<div class="pwd">
+				<div  class="password_1">새 비밀번호 확인</div>
+			</div>
+			<div  class="pwd2">
+				<input id="pw" type="password" size="60" 
+				name="pw" placeholder="새 비밀번호 입력" value="${myprofile.pw}"></input>
+			</div>
+			<div class="ok_">
+				<input type="submit" value="비밀번호 변경"></input>
+			</div>
+	</form>
+	</div>
+</main>
+<footer>
 		<div>
 			<a href="#">INSTARGRAM 정보</a>
 		</div>
@@ -307,50 +301,37 @@ input[type=submit] {
 		<div>
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
-	</footer>
+</footer>
 <script type="text/javascript">
-<!-- 
-$(function() {
-	let chk1 = false;
-	$('#pw').on('keyup', function() {
-		if($("#pw").val() === ""){
-			$('#pwMsg').html('비밀번호를 입력해주세요.');
-			chk1 = false;
-		} else {
-			const pw = $('#pw').val();
-			$.ajax({
-				type: "POST",
-				url: "./updatepw",
-				headers: {
-					"Content-Type": "application/json",
-	                "X-HTTP-Method-Override": "POST"
-				},
-				data: pw,
-				datatype: "json",
-				success: function(result) {
-					console.log(result);
-					if(result === "ok") {
-						$('#pwMsg').html('');
-						chk1 = true;
-					} else {
-						$('#pwMsg').html('');
-						alert('비밀번호가 일치하지않습니다.');
-						chk1 = false;
-					}
-				},
-				error : function(error) {
-	                console.log("error : " + error);
-	            }
-			});
-		}
-	});
--->
-</script>	
+function validateJoin() {
+
+	var oldPw = "${oldpw}";
+	var pw1 = document.querySelector("#pw1");
+	var pw = document.querySelector("#pw");
+	
+	if (pw1.value == "" || pw.value == "") {
+		alert('비밀번호를 입력해주세요');
+		return false;
+	} else if (pw1.value == oldPw) {
+		alert('현재 비밀번호와 다른 비밀번호를 설정해주세요');
+		return false;
+	} else if (pw1.value === pw.value) {
+		alert('변경 완료');
+		return true;
+	} else {
+		pw1.value = "";
+		pw.value = "";
+		pw1.focus();
+		alert('비밀번호가 일치하지않습니다.');
+		return false;
+	} 
+}
+
+
+</script>
 
 </body>
 </html>
-
-
 
 
 

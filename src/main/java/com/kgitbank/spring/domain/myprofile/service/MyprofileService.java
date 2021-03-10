@@ -8,7 +8,7 @@ import com.kgitbank.spring.domain.model.MemberVO;
 
 public interface MyprofileService {
 
-	public int updateMyprofile(MemberVO vo);
+	public void updateMyprofile(MemberVO vo);
 	
 	public String currentpw(MemberVO vo);
 

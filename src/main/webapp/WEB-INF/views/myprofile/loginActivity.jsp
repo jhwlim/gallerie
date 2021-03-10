@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>비밀번호 변경</title>
+<title>로그인 활동</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
@@ -28,11 +29,7 @@ a {
 }
 
 hr {
-	height: 40px;
-	width: 0;
-	background-color: black;
-	border-color: black;
-	display: inline-block;
+	background-color: LightGray;
 }
 
 main {
@@ -86,66 +83,57 @@ input[type=text]:focus {
 	color: gainsboro;
 }
 
-.menu2 {
+.menu3 {
 	border-left-color: black !important;
 }
 
-.user_ {
-	/* margin: 20px 0px 0px 0px;
-    padding: 0px 0px 0px 10%;
-    border: 0; */
-	margin-top: 3%;
-	align-items: center;
-	font-size: 24px
-}
-
-.j_from {
-	width: 80%;
-	display: grid;
-	grid-template-columns: auto auto;
-	grid-gap: 20px;
-	margin: 5% 3% 0 2%;
-}
-
-.pwd {
-	display: inline-block;
-	text-align: left;
-	font-size: 15px;
-	width: 100px;
-}
-
-.pwd2 {
-	display: inline-block;
-	text-align: left;
-	padding-left: 0;
-}
-
-.ok_ {
-	width: 100%;
-	grid-column: 2/1 span;
-	margin-top: 3%;
-	display: inline-block;
-	text-align: left;
-}
-
-input[type=password] {
+.profile {
+	grid-column: 1/2 span;
 	padding: 10px;
-	background-color: rgb(233, 227, 227);
-	border: 0px;
 }
 
-input[type=submit] {
+.profile p:nth-child(1) {
+	font-size: 20px;
+}
+
+.profile p:nth-child(2) {
+	color: #3897f0;
+	font-size: 13px;
+}
+
+.liner:nth-child(1n) {
 	display: inline-block;
-	width: 30%;
+}
+
+.profile div {
+	display: inline-block;
+	height: 40px;
+}
+
+.a_check {
 	height: 100%;
-	padding: 10px;
-	background-color: rgb(56, 151, 240);
-	color: white;
-	border: 0px;
-	border-radius: 3px;
 }
-</style>
 
+.table {
+	display: inline-block;
+}
+
+.login_form {
+	margin-top: 16px;
+	margin-right: 64px;
+	margin-left: 64px;
+	margin-bottom: 16px;
+}
+
+.login_form2 {
+	margin-top: 16px;
+	margin-right: 64px;
+	margin-left: 64px;
+	margin-bottom: 16px;
+}
+
+</style>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 <body>
 	<div>
@@ -220,43 +208,46 @@ input[type=submit] {
         </nav>
     </div>
 
-<main>
+	<main>
 	<div class="main1">
 		<div class="menu1">
-			<a href="/spring/myprofile/account/edit">프로필 편집</a>
+			<a href="/spring/account/edit">프로필 편집</a>
 		</div>
 		<div class="menu2">
-			<a href="/spring/myprofile/account/checkpw">비밀번호 변경</a>
+			<a href="/spring/account/checkpw">비밀번호 변경</a>
 		</div>
 		<div class="menu3">
-			<a href="/spring/myprofile/account/loginActivity">로그인 활동</a>
+			<a href="/spring/account/loginActivity">로그인 활동</a>
 		</div>
 	</div> 
 	<div class="main2">
-	<form action="<c:url value='/myprofile/account/changepw' />" method="POST" onsubmit="return validateJoin()">
-			<div class="pwd">
-				<div  class="password_1">새 비밀번호</div>
-			</div>
-			<div class="pwd2">
-				<input id="pw1" name="pw1" type="password" size="60" 
-				placeholder="새 비밀번호 입력" ></input>
-			</div>
+	<form id="ipForm" action="<c:url value='/account/loginActivity' />" method="POST">
+		<div class="login_form">
+			<h2 class="">로그인 활동</h2>
+		</div>
+		<div class="login_form2">
+			<h4 id="login_place">로그인한 위치</h4>
 			<br>
-
-			<div class="pwd">
-				<div  class="password_1">새 비밀번호 확인</div>
-			</div>
-			<div  class="pwd2">
-				<input id="pw" type="password" size="60" 
-				name="pw" placeholder="새 비밀번호 입력" value="${myprofile.pw}"></input>
-			</div>
-			<div class="ok_">
-				<input type="submit" value="비밀번호 변경"></input>
-			</div>
+				<div id="map" style="width:500px;height:300px;"></div>
+				<br>
+				<div>
+					<c:forEach items="${loginActivity }" var="login" >
+						<br>
+						<div><i class="fas fa-map-marker"></i></div>
+						<div class="test">
+				        ${login.location }
+				        <fmt:formatDate value="${login.loginDate}" pattern="yyyy-MM-dd HH:mm:ss"/>   
+				        <span class="ip">${login.ip }</span> 
+				        <br><br>
+				        </div>
+				        <hr>
+			    	</c:forEach>
+				</div>
+		</div>
 	</form>
 	</div>
-</main>
-<footer>
+	</main>
+	<footer>
 		<div>
 			<a href="#">INSTARGRAM 정보</a>
 		</div>
@@ -295,46 +286,95 @@ input[type=submit] {
 		<div>
 			<p class="copyright">©️2021 INSTARGRAM</p>
 		</div>
-</footer>
-<script type="text/javascript">
-function validateJoin() {
-
-	var oldPw = "${oldpw}";
-	var pw1 = document.querySelector("#pw1");
-	var pw = document.querySelector("#pw");
+	</footer>
 	
-	if (pw1.value == "" || pw.value == "") {
-		alert('비밀번호를 입력해주세요');
-		return false;
-	} else if (pw1.value == oldPw) {
-		alert('현재 비밀번호와 다른 비밀번호를 설정해주세요');
-		return false;
-	} else if (pw1.value === pw.value) {
-		alert('변경 완료');
-		return true;
-	} else {
-		pw1.value = "";
-		pw.value = "";
-		pw1.focus();
-		alert('비밀번호가 일치하지않습니다.');
-		return false;
-	} 
-}
+<script src = "<c:url value='/resources/config/config.js' />"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+//Create the script tag, set the appropriate attributes
+var script = document.createElement('script');
+script.src = 'https://maps.googleapis.com/maps/api/js?key='+ config.MY_KEY +'&callback=initMap';
+script.async = true;
+
+// Attach your callback function to the `window` object
+window.initMap = function() {
+  // JS API is loaded and available
+};
+
+// Append the 'script' element to 'head'
+document.head.appendChild(script);
+
+window.onload = function() {
+	if (!navigator.geolocation) {
+		document.getElementById('login_place').innerHTML = '위치 정보 지원 안됨';
+		return;
+	}
+	navigator.geolocation.getCurrentPosition(function(position) {
+		var lat = position.coords.latitude;
+		var lon = position.coords.longitude;
+		
+		console.log('위도 : ' + lat);
+		console.log('경도 : ' + lon);
+		
+		var initLoc = new google.maps.LatLng(lat,lon);
+		console.log(initLoc);
+		
+		var map = new google.maps.Map(document.getElementById('map'),{
+			zoom:6,
+            mapTypeId : google.maps.MapTypeId.ROADMAP,
+            gestureHandling: "none",
+            zoomControl: false,
+            fullscreenControl: false,
+            streetViewControl: false,
+            mapTypeControl: false,
+		});
+         map.setCenter(initLoc);
+         var marker = new google.maps.Marker({position:initLoc,map:map,title:'현재위치'})
+	});
+};
 
 
+$(".test").click(function() {
+
+	$.get( "https://api.ipify.org?format=json", function(login) {
+    });
+	
+	function showLocationOnMap (location) {
+		  var map;
+	      map = new google.maps.Map(document.getElementById('map'), {
+	          center: {lat: Number(location.latitude), lng: Number(location.longitude)},
+	          zoom: 6,
+	          gestureHandling: "none",
+	          zoomControl: false,
+	          fullscreenControl: false,
+	          streetViewControl: false,
+	          mapTypeControl: false,
+	      });
+	      var marker = new google.maps.Marker({
+	          position: {lat: Number(location.latitude), lng: Number(location.longitude)},
+	          map: map,
+	          title: "Public IP:"+location.ipAddress+" @ "+location.city
+	      });      
+	}
+	
+	$.ajax({
+		  url: "GeoIP",
+		  type: "POST",
+		  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		  data: $.param( {ipAddress : $(this).children(".ip").text()} ),
+		  success: function(data) {
+			  if (data.ipAddress != null) {
+				  console.log ("Success:"+data.ipAddress);    
+			    	showLocationOnMap(data);  	
+			  }
+		  },
+		  error: function(err) {
+		      console.log(err);
+		  },
+	  });
+	
+});
 </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

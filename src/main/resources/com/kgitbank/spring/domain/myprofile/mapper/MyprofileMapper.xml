@@ -4,13 +4,13 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kgitbank.spring.domain.myprofile.mapper.MyprofileMapper">
 	
-	 <update id="updateMyprofile">
+	 <update id="updateMyprofile" parameterType="MemberVO">
 	  	UPDATE
 	  		members
 	  	SET
   		 	name = #{name},
   		 	email = #{email},
-  		 	profile = #{profile, jdbcType=VARCHAR},
+  		 	profile = #{profile},
   		 	phone = #{phone}
   		 WHERE
   		 	id = #{id}
