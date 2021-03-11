@@ -26,7 +26,22 @@
 		<beans:property name="maxUploadSize" value="10485760" />
 	</beans:bean>
 	
+	<!-- 인터셉터 객체 생성 -->
+	<beans:bean id="LoginInterceptor" class="com.kgitbank.spring.domain.interceptors.LoginInterceptor" />
 	
+	<!-- Interceptor 설정 -->
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/**"/>     
+	        <mapping path="/resources/**"/>     
+	        <exclude-mapping path="/"/>
+	        <beans:ref bean="LoginInterceptor"/>
+	    </interceptor>
+	</interceptors>
+ 	
+	
+	
+	<context:component-scan base-package="com.kgitbank.spring.domain.interceptors" />
 	<context:component-scan base-package="com.kgitbank.spring.domain.**.controller" />
 	
 </beans:beans>
