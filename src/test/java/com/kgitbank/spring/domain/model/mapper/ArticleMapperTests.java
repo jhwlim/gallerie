@@ -24,13 +24,13 @@ public class ArticleMapperTests {
 	@Autowired
 	ArticleMapper mapper;
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void selectAllTest() {
 		log.info(mapper.selectAll());
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test
 	public void createNewArticleTest() {
 		
@@ -47,13 +47,13 @@ public class ArticleMapperTests {
 		log.info("createNewArticleTest - Complete");
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void createArticleSamples() {
 		
 		int writerSeqId = 2; // members 테이블에 존재하는 seq_id
 		
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 10; i++) {
 			String content = String.format("테스트 게시글 %03d", i);
 			
 			ArticleVO article = new ArticleVO();

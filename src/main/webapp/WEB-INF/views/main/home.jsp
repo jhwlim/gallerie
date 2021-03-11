@@ -102,18 +102,16 @@
                                              </span>
                                          </div>
                                          <div class="text-bottom" data-visualcompletion="ignore">
-                 
                                          </div>
                                      </div>
                                  </div>
                              </div>
                          </div>
                      </div>
-
-
                         <!-- START OF POSTS -->
                         <div class="d-flex flex-column mt-4 mb-4" id="posts"></div>
                         <!-- END OF POSTS -->
+                        <div class="loader">Loading...</div>
                     </div>
 
                     <div class="col-4">
@@ -187,16 +185,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
-    <script>
-      $(document).ready(function(){
-        $('.content').click(function(){
-          $('.content').toggleClass("heart-active")
-          $('.text').toggleClass("heart-active")
-          $('.numb').toggleClass("heart-active")
-          $('.heart').toggleClass("heart-active")
-        });
-      });
-    </script>
 </footer>
 
 <div class="my-modal" id="writeModal">
@@ -336,27 +324,28 @@ $('#writeBtn').on('click', function(evt) {
 	
 });
 </script>
-<div class="card" id="cardTemplate" style="display: none;">
+
+<div class="card js-card-template" style="display: none; margin-bottom: 20px;">
     <div class="card-header p-3">
         <div class="d-flex flex-row align-items-center">
             <div
                 class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
-                <img id="writerImgPath" src="/spring/resources/css/mainpage/images/profile-1.jpg" alt="..."
+                <img class="js-writer-img" src="" alt="..."
                     style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
             </div>
-            <span class="font-weight-bold" id="writerId">samkolder</span>
+            <span class="font-weight-bold js-writer-id">samkolder</span>
         </div>
     </div>
     <div class="card-body p-0">
-        <div class="embed-responsive embed-responsive-1by1" id="articles">
-            <img class="embed-responsive-item" src="/spring/resources/css/mainpage/images/post-1.jpg" />
+        <div class="embed-responsive embed-responsive-1by1" id="articles" style="height: auto;">
+            <img class="embed-responsive-item js-file" src="" style="width: 100%; height: 100%; object-fit: scale-down"/>
         </div>
 
         <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
             <ul class="list-inline d-flex flex-row align-items-center m-0">
                 <li class="list-inline-item">
                     <button class="btn p-0">
-                        <div class="content">
+                        <div class="content js-heart">
                           <span class="heart"></span>
                         </div>
                     </button>
@@ -400,17 +389,17 @@ $('#writeBtn').on('click', function(evt) {
         </div>
 
         <div class="pl-3 pr-3 pb-2">
-            <strong class="d-block"><span id="likeCount">365.354</span> likes</strong>
-            <p class="d-block mb-1" id="articleContent">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil hic eligendi ea! Odit aliquam quasi iste dolore optio esse pariatur mollitia consectetur nostrum ipsa dolores sed quisquam at expedita quidem.</p>
+            <strong class="d-block"><span class="js-like-count"></span> likes</strong>
+            <p class="d-block mb-1 js-content" style="white-space: pre-wrap; flex-wrap;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil hic eligendi ea! Odit aliquam quasi iste dolore optio esse pariatur mollitia consectetur nostrum ipsa dolores sed quisquam at expedita quidem.</p>
             <button class="btn p-0">
-                <span class="text-muted">View all 2,247 comments</span>
+                <span class="text-muted js-move">View all <span class="js-comment-count"></span> comments</span>
             </button>
 
-            <div id="comments">
-                <div>
-                    <strong class="d-block">a.7.m3ff</strong>
-                    <span>❤️💓💓💓💓💓</span>
-                    <small class="text-muted">4 HOURS AGO</small>
+            <div class="js-comments">
+                <div class="js-comment">
+                    <strong class="d-block js-comment-id">a.7.m3ff</strong>
+                    <span class="js-comment-content">❤️💓💓💓💓💓</span>
+                    <small class="text-muted js-comment-date">4 HOURS AGO</small>
                 </div>
             </div>
 
@@ -418,22 +407,174 @@ $('#writeBtn').on('click', function(evt) {
         </div>
 
         <div class="position-relative comment-box">
-            <form>
-                <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
-                <button class="btn btn-primary position-absolute btn-ig">Post</button>
-            </form>
+            <div class="position-relative comment-box">
+				<form name="commentInsertForm" class="commentInsertForm" action="/spring/comment/insert" method="POST">
+					<input type="hidden" name="id" value="" class="js-form-id"/>
+					<input type="text" name="content" class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
+                    <button name="commentInsertBtn" class="btn btn-primary position-absolute btn-ig">Post</button>
+                </form>
+            </div>
         </div>
 
 
     </div>
 </div>
 <script>
-	for (var i = 0; i < 2; i++) {
-		var card = $('#cardTemplate').clone();
-		card.show();
+function setArticles(articles) {
+	for (var article of articles) {
+		
+		var card = $('.js-card-template').clone();
+		$(card).removeClass('js-card-template');
+		$(card).data('id', article.id);
+		console.log($(card).data('id'));
+		$(card).find('.js-writer-id').text(article.writerId);
+		$(card).find('.js-writer-img').attr('src', "/spring/image/profile/" + article.imgPath + '/');
+		$(card).find('.js-like-count').text(article.likeCount);
+		$(card).find('.js-comment-count').text(article.comments.length);
+		var content = $(card).find('.js-content');
+		content.html(article.content);
+		setTagHref($(content).find('a'));
+		$(card).find('.content').click(function(){
+	          $(this).find('.content').toggleClass("heart-active")
+	          $(this).find('.text').toggleClass("heart-active")
+	          $(this).find('.numb').toggleClass("heart-active")
+	          $(this).find('.heart').toggleClass("heart-active")
+	        });
+		$(card).find('.js-form-id').val(article.id);
+		
+		var comments = $(card).find('.js-comments');
+		var comment = $(card).find('.js-comment');
+		
+		comments.html('');
+		
+		$(card).find('.js-move').on('click', function() {
+			
+			location.href = '/spring/post/' + $(this).closest('.card').data('id');
+		});
+		
+		if (article.files.length > 0) {
+			$(card).find('.js-file').attr('src', '/spring/image/article/' + article.files[0].imgPath + '/');			
+		} else {
+			$(card).find('.js-file').parent().remove();
+		}
+		
+		for (var i in article.comments) {
+			if (i == 3) break;
+			
+			var com = article.comments[i];
+			var c = comment.clone();
+			$(c).find('.js-comment-id').text(com.writerId);
+			$(c).find('.js-comment-content').text(com.content);
+			$(c).find('.js-comment-date').text(com.writeDate);
+			
+			$(comments).append(c);
+		}
+		
+		$(card).show();
+		
 		$('#posts').append(card);
+		
+		var heart = $(card).find('.js-heart');
+		if (article.hasLike) {
+			heart.click();
+		}
+		heart.data('id', article.id);
+		
+		$(heart).on('click', function() {
+			var likeCnt = $(this).closest('.card-body').find('.js-like-count');
+			var hasLike = $(this).children('span').hasClass('heart-active');
+			console.log(hasLike);
+			var data = {
+					articleId : $(this).data('id')
+			};
+			
+			if (!hasLike) { // 좋아요 상태
+				$.ajax({
+					url: "<c:url value = '/article/like'/> ",
+					method: 'delete',
+					contentType : "application/json",
+					data: JSON.stringify(data),
+					success: function() {
+						likeCnt.text(parseInt(likeCnt.text())-1);
+					}
+				});
+			} else {
+				$.ajax({
+					url: "<c:url value = '/article/like'/> ",
+					method: 'POST',
+					contentType : "application/json",
+					data: JSON.stringify(data),
+					success: function() {
+						likeCnt.text(parseInt(likeCnt.text())+1);
+					}
+				});
+			}
+			
+		});
+	}
+}
+	
+
+	let isAjaxFinished = true;
+
+	getGallery = function getGallery() {
+		if ($('.loader').length > 0 && $(window).scrollTop() + $(window).height() >= $('.loader').position().top) {
+			if (isAjaxFinished) { // ajax 처리가 끝난 후에 다시 ajax 처리 진행
+				isAjaxFinished = false;
+				
+			console.log('go');
+				// 다음 페이지 정보 불러오기
+				var cntOfArticle = $('#posts .card').length;
+				console.log(cntOfArticle);
+				const articleCount = 6;
+				var articleIndex = Math.floor(cntOfArticle/articleCount);
+				
+				var data = {
+					articleIndex : articleIndex,
+				};
+				
+				$.ajax({
+					type : "GET",
+					url : "<c:url value='/article/all' />",
+					data : data,
+					success : function(result) {
+						console.log(result);
+						var hasMore = result.hasMore;
+						var articles = result.articles;
+						
+						setArticles(articles);
+						
+						
+						if (hasMore) {
+							isAjaxFinished = true;					
+						} else {
+							$('.loader').remove();
+						}
+						
+						if (result.length == 0) {
+							$('.loader').remove();
+						}
+					}
+				});
+			}
+		}
+	}
+	$(document).ready(getGallery);
+	$(document).on('scroll', getGallery);
+
+	function setTagHref(tags) {
+		console.log(tags);
+		for (var tag of tags) {
+			console.log(tag);
+			var text = tag.innerText;
+			tag.href = "/spring/tag/" + text.substring(1);
+		}
 	}
 
+	
 </script>
+
+
+
 </body>
 </html>

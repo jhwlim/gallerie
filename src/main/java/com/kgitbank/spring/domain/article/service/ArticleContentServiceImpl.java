@@ -16,6 +16,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kgitbank.spring.domain.article.dto.ArticleDto;
+import com.kgitbank.spring.domain.article.dto.ArticlePageDto;
 import com.kgitbank.spring.domain.article.dto.GalleryDto;
 import com.kgitbank.spring.domain.article.dto.GalleryPageDto;
 import com.kgitbank.spring.domain.article.mapper.ArticleContentMapper;
@@ -245,6 +246,23 @@ public class ArticleContentServiceImpl implements ArticleContentService {
 	@Override
 	public int selectTotalCountOfArticles() {
 		return mapper.selectTotalCountOfArticles();
+	}
+
+	@Override
+	public List<ArticleDto> selectArticles(ArticlePageDto page) {
+		List<ArticleDto> list = mapper.selectArticles(page);
+		
+		for (int i = 0; i < list.size(); i++) {
+			String content = list.get(i).getContent();
+			list.get(i).setContent(replaceTagToAnchorTag(content, getTagsFromContent(content)));
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int selectTotalCountOfFollowerArticles(int seqId) {
+		return mapper.selectTotalCountOfFollowerArticles(seqId);
 	}
 
 

@@ -188,4 +188,46 @@
 			article_id = #{articleId} AND member_seq_id = #{memberSeqId}
 	</delete>
 	
+	<select id="selectArticles" resultType="com.kgitbank.spring.domain.article.dto.ArticleDto">
+		SELECT
+		    a.*, 
+		    m.id as writer_id, 
+		    m.name as writer_name, 
+		    m.img_path, 
+		    c.like_count
+		FROM
+		    articles a
+		    INNER JOIN members m
+		    ON a.writer_seq_id = m.seq_id
+		    LEFT OUTER JOIN (SELECT article_id, COUNT(*) as like_count FROM article_like GROUP BY article_id) c
+		    ON a.id = c.article_id
+		WHERE writer_seq_id IN (
+		    SELECT 
+		        f.follow_id
+		    FROM 
+		        follow f 
+		        INNER JOIN members m
+		        ON f.follow_id = m.seq_id
+		    where 
+		        follower_id = #{seqId}
+		) ORDER BY a.id DESC
+		OFFSET #{articleIndex} * #{articleCount} ROWS FETCH NEXT #{articleCount} ROWS ONLY
+	</select>
+	
+	<select id="selectTotalCountOfFollowerArticles" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			articles
+		WHERE 
+			writer_seq_id IN (
+				SELECT 
+			        f.follow_id
+			    FROM 
+			        follow f
+			    where 
+			        follower_id = #{seqId}
+			)
+	</select>
+	
 </mapper>

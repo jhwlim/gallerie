@@ -58,7 +58,7 @@ public class LoginController {
 		
 		// 로그인 세션이 있다면 home으로 이동시킴
 		String loginId = (String) session.getAttribute("user");
-		if(session.getAttribute("user") != null) {
+		if(loginId != null) {
 			System.out.println("이미 로그인한 상태!!");
 			
 			int loginSeqId = accService.selectMemberById(loginId).getSeqId();
@@ -101,6 +101,8 @@ public class LoginController {
 							service.keepLogin(key);
 						}
 					
+						model.addAttribute("follows", followService.selectProfileOfFollow(loginMember.getSeqId()));
+						
 						return "/main/home";
 					}
 				}
@@ -182,6 +184,8 @@ public class LoginController {
 				
 				service.keepLogin(key);
 			}
+			
+			model.addAttribute("follows", followService.selectProfileOfFollow(loginMember.getSeqId()));
 			
 			return "main/home";
 		}else {

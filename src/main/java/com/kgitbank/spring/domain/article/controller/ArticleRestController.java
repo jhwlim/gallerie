@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.domain.article.dto.ArticleDto;
+import com.kgitbank.spring.domain.article.dto.ArticlePageDto;
 import com.kgitbank.spring.domain.article.dto.GalleryPageDto;
 import com.kgitbank.spring.domain.article.service.ArticleCommentService;
 import com.kgitbank.spring.domain.article.service.ArticleContentService;
@@ -172,5 +173,35 @@ public class ArticleRestController {
 		service.deleteLike(vo);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/all", produces="application/json")
+	public ArticlePageDto getMainArticles(ArticlePageDto data, HttpSession session) {
+		log.info("URL : /article/all");
+		log.info("index=" + data.getArticleIndex());
+		
+		data.setSeqId(accService.selectMemberById(((String) session.getAttribute("user"))).getSeqId());
+		
+		data.setArticles(service.selectArticles(data));
+		log.info(data.getArticles());
+		
+		for (int i = 0; i < data.getArticles().size(); i++) {
+			ArticleDto a = data.getArticles().get(i);
+			a.setFiles(service.selectFileByArticleId(a.getId()));
+			ArticleLikeVO likeVO = new ArticleLikeVO(a.getId(), data.getSeqId());
+			
+			a.setHasLike(service.selectCountLikeByMemberSeqIdAndArticleId(likeVO) == 1 ? true : false);
+			a.setComments(commentService.listComment(a.getId()));
+		}
+		
+		int totalCnt = service.selectTotalCountOfFollowerArticles(data.getSeqId());
+		int idx = data.getArticleIndex();
+		
+		boolean hasMore = (idx+1) * data.getArticleCount() < totalCnt;
+		log.info("hasMore ? " + hasMore);
+		data.setHasMore(hasMore);
+		
+		
+		return data;
 	}
 }
