@@ -36,6 +36,9 @@ public class ChatController {
 		}
 		
 		int loginSeqId = service.selectMemberById(loginId).getSeqId();
+		// 최근 대화 상대 목록
+		model.addAttribute("friends", service.selectContactList(loginSeqId));
+		log.info(service.selectContactList(loginSeqId));
 		
 		if (receiverId == null) {
 			return "chat/standBy";
@@ -58,9 +61,6 @@ public class ChatController {
 			}	
 		}
 		
-		// 최근 대화 상대 목록
-		model.addAttribute("friends", service.selectContactList(loginSeqId));
-		log.info(service.selectContactList(loginSeqId));
 		
 		return "chat/main";
 	}

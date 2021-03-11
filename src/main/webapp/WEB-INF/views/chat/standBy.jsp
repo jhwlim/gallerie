@@ -41,7 +41,7 @@
                                     <button class="id-container-btn" type="button">
                                         <div class="id-container-c">
                                             <div class="id-section-a">
-                                                <div class="id-section-b">wookang_minnit</div>
+                                                <div class="id-section-b">${sessionScope.user}</div>
                                             </div>
                                             <div class="icon-section">
                                                 <span style="display: inline-block; transform: rotate(180deg);">
@@ -78,39 +78,44 @@
                                 <div class="friend-list">
                                     <div style="flex-direction: column; padding-bottom: 0px; padding-top: 0px;">
                                         <div class="friend-box">
-                                            <a class="friend-link" href="/direct/t/340282366841710300949128145298194403146" tabindex="0">
-                                                <div aria-labelledby="f3f5b8b2e7dd90c f38b0de929975b8 fcdb6a166078a" class="friend-label">
-                                                    <div class="friend-profile-container">
-                                                        <div class="friend-profile-picture">
-                                                            <span class="friend-profile-span" role="link" tabindex="-1">
-                                                                <img
-                                                                    alt="viva949494님의 프로필 사진" class="friend-profile-img"
-                                                                    crossorigin="anonymous" data-testid="user-avatar"
-                                                                    draggable="false"
-                                                                    src="https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-19/s150x150/147208432_175950497277258_6886039917539978012_n.jpg?tp=1&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_ohc=IjhP7di22bsAX8RTHhz&amp;oh=3691cca1f7e94f8232bf710a7291e2fe&amp;oe=606CB1C9"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="friend-text-box">
-                                                        <div class="friend-text-id-box" id="f3f5b8b2e7dd90c">
-                                                            <div class="friend-text-id">
-                                                                <div class="friend-id-long">
-                                                                    <div class="friend-id-short">
-                                                                        <div class="friend-text-id">viva949494</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="friend-activity-hr" id="f38b0de929975b8">
-                                                            <div class="friend-activity-box">
-                                                                <div class="friend-act-long">
-                                                                    <span class="friend-act-short">
-                                                                        <span class="friend-act-time">최근
-                                                                            활동: 1시간 전</span></span></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a></div>
+                                            <c:forEach var="friend" items="${friends}">
+                                        		<a class="friend-link"
+	                                                href="<c:url value='/message/${friend.userId}'/>" tabindex="0">
+	                                                <div aria-labelledby="f3f5b8b2e7dd90c f38b0de929975b8 fcdb6a166078a"
+	                                                    class="friend-label">
+	                                                    <div class="friend-profile-container">
+	                                                        <div class="friend-profile-picture">
+	                                                            <span class="friend-profile-span" role="link" tabindex="-1">
+	                                                                <img alt="test03님의 프로필 사진"
+	                                                                    class="friend-profile-img" crossorigin="anonymous"
+	                                                                    data-testid="user-avatar" draggable="false"
+	                                                                    src="<c:url value='/image/profile/${friend.imgPath}/'/>"></span>
+	                                                        </div>
+	                                                    </div>
+	                                                    <div class="friend-text-box">
+	                                                        <div class="friend-text-id-box" id="f3f5b8b2e7dd90c">
+	                                                            <div class="friend-text-id">
+	                                                                <div class="friend-id-long">
+	                                                                    <div class="friend-id-short">
+	                                                                        <div class="friend-text-id">${friend.userId}</div>
+	                                                                    </div>
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>
+	                                                        <div class="friend-activity-hr" id="f38b0de929975b8">
+	                                                            <div class="friend-activity-box">
+	                                                                <div class="friend-act-long">
+	                                                                    <span class="friend-act-short">
+	                                                                        <span id="activityChk" class="friend-act-time">최근 대화: <fmt:formatDate value="${friend.sendDate}" type="both"/></span>
+	                                                                     </span>
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                            </a>
+                                        	</c:forEach> 
+                                            </div>
                                         <div class="next-friend-box"></div>
                                     </div>
                                 </div>
