@@ -101,7 +101,7 @@ input[type=text]:focus {
 }
 
 .j_from {
-	margin: 0 0 10% 25%;
+	margin: 10% 0 10% 25%;
 }
 
 .pwd {

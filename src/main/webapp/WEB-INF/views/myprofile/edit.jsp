@@ -261,8 +261,7 @@ input[type=submit] {
 					소개<br />
 				</div>
 				<!-- members테이블의 profile->자기소개글 -->
-				<textarea cols="32" id="profile" name="profile" value="${member.profile}" rows="5">
-				</textarea>
+				<textarea cols="32" id="profile" name="profile" value="${member.profile}" rows="5"></textarea>
 				<br />
 			</div>
 			<div class="line3">
