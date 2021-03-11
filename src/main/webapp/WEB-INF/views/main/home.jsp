@@ -118,12 +118,12 @@
                         <div class="d-flex flex-row align-items-center">
                             <div
                                 class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sidenav-profile-photo">
-                                <img src="/spring/resources/css/mainpage/images/profile-6.jpg" alt="..."
+                                <img src="<c:url value='/image/profile/${sessionScope.userProfile}/'/>" alt="..."
                                     style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
                             </div>
                             <div class="profile-info ml-3">
-                                <span class="profile-info-username">codingvenue</span>
-                                <span class="profile-info-name">Coding Venue</span>
+                                <span class="profile-info-username">${sessionScope.user}</span>
+                                <span class="profile-info-name">${sessionScope.userName }</span>
                             </div>
                         </div>
 
@@ -133,39 +133,19 @@
                                 <small>See All</small>
                             </div>
                             <div>
-                                <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div
-                                            class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
-                                            <img src="/spring/resources/css/mainpage/images/profile-3.jpg" alt="..."
-                                                style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                                        </div>
-                                        <strong class="ml-3 sugest-username">instagram</strong>
-                                    </div>
-                                    <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
-                                </div>
-                                <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div
-                                            class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
-                                            <img src="/spring/resources/css/mainpage/images/profile-4.png" alt="..."
-                                                style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                                        </div>
-                                        <strong class="ml-3 sugest-username">dccomics</strong>
-                                    </div>
-                                    <button class="btn btn-primary btn-sm p-0 btn-ig ">Follow</button>
-                                </div>
-                                <div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div
-                                            class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
-                                            <img src="/spring/resources/css/mainpage/images/profile-5.jpg" alt="..."
-                                                style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                                        </div>
-                                        <strong class="ml-3 sugest-username">thecw</strong>
-                                    </div>
-                                    <button class="btn btn-primary btn-sm p-0 btn-ig">Follow</button>
-                                </div>
+                            	<c:forEach var="f" items="${topFiveFollows}">
+                            		<div class="d-flex flex-row justify-content-between align-items-center mt-3 mb-3">
+	                                    <div class="d-flex flex-row align-items-center">
+	                                        <div
+	                                            class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sugest-profile-photo">
+	                                            <img src="<c:url value='/image/profile/${f.imgPath}/'/>" alt="..."
+	                                                style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+	                                        </div>
+	                                        <strong class="ml-3 sugest-username" onclick="location.href='/spring/myprofile/${f.id}'" style="cursor: pointer;">${f.id}</strong>
+	                                    </div>
+                                        <button class="btn btn-primary btn-sm p-0 btn-ig js-top5-follow-btn" data-seq-id="${f.seqId}">${!f.followed ? 'Follow' : 'Unfollow'}</button>    
+	                                </div>
+                            	</c:forEach>
                             </div>
                         </div>
                     </div>
@@ -325,6 +305,7 @@ $('#writeBtn').on('click', function(evt) {
 });
 </script>
 
+<!-- 게시물 템플릿 -->
 <div class="card js-card-template" style="display: none; margin-bottom: 20px;">
     <div class="card-header p-3">
         <div class="d-flex flex-row align-items-center">
@@ -333,7 +314,7 @@ $('#writeBtn').on('click', function(evt) {
                 <img class="js-writer-img" src="" alt="..."
                     style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
             </div>
-            <span class="font-weight-bold js-writer-id">samkolder</span>
+            <span class="font-weight-bold js-writer-id"></span>
         </div>
     </div>
     <div class="card-body p-0">
@@ -390,16 +371,16 @@ $('#writeBtn').on('click', function(evt) {
 
         <div class="pl-3 pr-3 pb-2">
             <strong class="d-block"><span class="js-like-count"></span> likes</strong>
-            <p class="d-block mb-1 js-content" style="white-space: pre-wrap; flex-wrap;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil hic eligendi ea! Odit aliquam quasi iste dolore optio esse pariatur mollitia consectetur nostrum ipsa dolores sed quisquam at expedita quidem.</p>
+            <p class="d-block mb-1 js-content" style="white-space: pre-wrap; flex-wrap;"></p>
             <button class="btn p-0">
                 <span class="text-muted js-move">View all <span class="js-comment-count"></span> comments</span>
             </button>
 
             <div class="js-comments">
                 <div class="js-comment">
-                    <strong class="d-block js-comment-id">a.7.m3ff</strong>
-                    <span class="js-comment-content">❤️💓💓💓💓💓</span>
-                    <small class="text-muted js-comment-date">4 HOURS AGO</small>
+                    <strong class="d-block js-comment-id"></strong>
+                    <span class="js-comment-content"></span>
+                    <small class="text-muted js-comment-date"></small>
                 </div>
             </div>
 
@@ -571,7 +552,34 @@ function setArticles(articles) {
 		}
 	}
 
-	
+	$('.js-top5-follow-btn').on('click', function() {
+		 var btn = this;
+		 var seqId = $(this).data('seq-id');
+		 var isFollowed = $(this).text() == 'Unfollow';
+		 console.log('isFollowed ? ' + isFollowed);
+		 
+		 if (isFollowed) {
+			 $.ajax({
+				url: "<c:url value = '/follow'/> ",
+				method: 'DELETE',
+				contentType : "application/json",
+				data: JSON.stringify({followId : seqId}),
+				complete : function() {
+					$(btn).text('Follow');
+				}
+			});
+		 } else {
+			 $.ajax({
+				url: "<c:url value = '/follow'/> ",
+				method: 'POST',
+				contentType : "application/json",
+				data: JSON.stringify({followId : seqId}),
+				complete : function() {
+					$(btn).text('Unfollow');
+				}
+			});
+		 }
+	 });	
 </script>
 
 

@@ -34,14 +34,14 @@ public class MemberMapperTests {
 		log.info(memberMapper.selectAll());
 	}
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void insertMemberTest() {
-		String id = "abc1234";
-		String rawPw = "1234";
-		String name = "홍길동";
+		String id = "starbuckskorea";
+		String rawPw = "starbuckskorea";
+		String name = "스타벅스커피 코리아";
 		String phone = "012-1234-1234";
-		String email ="abc1234@test.test.com";
+		String email ="";
 		String profile = "";
 		
 		MemberVO member = new MemberVO();

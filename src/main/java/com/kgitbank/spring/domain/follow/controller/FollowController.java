@@ -79,7 +79,6 @@ public class FollowController {
 			System.out.println("이미팔로우됨");
 		}
 		
-		
 		return "redirect:/myprofile/"+id;
 	}
 	

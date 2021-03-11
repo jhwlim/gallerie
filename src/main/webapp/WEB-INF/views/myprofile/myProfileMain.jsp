@@ -615,7 +615,6 @@ $('#articleModalClose').on('click', function() {
  * 팔로우/팔로워 관련 자바스크립트
  */
 var sessionId = "${user}";
-console.log(sessionId);
 
 var myFollowSeqId = [];
 var myFollowList = {
@@ -628,9 +627,8 @@ var myFollowList = {
 		  </c:forEach>
 		}
 for(obj in myFollowList){
-   	console.log(myFollowList[obj].seqId)
    	myFollowSeqId.push(myFollowList[obj].seqId);
-   }
+}
 
 var followlist = {
 		  <c:forEach items="${follow.dtoFollowList}" var="item">
@@ -642,9 +640,6 @@ var followlist = {
 		  },
 		  </c:forEach>
 		}
-for(obj in followlist){
-   	console.log("팔로우" + followlist[obj].seqId)
-   }
 	
 	 $('#follow').on('click',function(){
 	        $('#followModal').css('display', 'flex');
@@ -652,11 +647,9 @@ for(obj in followlist){
 	        $('#follow_title').text("팔로우");
 	        $('#follow_table').html("");
 	        for(obj in followlist){
-	        	console.log(followlist[obj].name)
 	        	var tmp = myFollowSeqId.includes(followlist[obj].seqId)
 	        	if(sessionId == followlist[obj].id){
         			tmp = true;
-        			console.log("boolean값 바뀜" + tmp);
         		}
 	        	
 	        	$('#follow_table').append(createFollowModalItem(followlist[obj], tmp, followlist[obj].id == "${user}"));	        		
@@ -675,9 +668,7 @@ for(obj in followlist){
 			  },
 			  </c:forEach>
 			}
-	 for(obj in followerlist){
-	    	console.log("팔로우" + followerlist[obj].seqId)
-	    }
+	 
 	 $('#follower').on('click',function(){
 	        $('#followModal').css('display', 'flex');
 	        
@@ -687,7 +678,6 @@ for(obj in followlist){
 	        	var tmp2 = myFollowSeqId.includes(followerlist[obj].seqId)
 	        	if(sessionId == followerlist[obj].id){
         			tmp2 = true;
-        			console.log("boolean값 바뀜" + tmp2);
         		}
 	        	
 	        	var isLoginId = followerlist[obj].id == "${user}";
@@ -695,8 +685,7 @@ for(obj in followlist){
         		$('#follow_table').append(item);
         		
         		var btn = $(item).find('.follow-modal__btn');
-	        	console.log(btn);
-        		$(btn).data('seqId', followerlist[obj].seqId);
+	        	$(btn).data('seqId', followerlist[obj].seqId);
         		
         		$(btn).on('click', $.addFollowEvent);
 	        }
@@ -709,7 +698,6 @@ for(obj in followlist){
 	 $.addFollowEvent = function() {
 		 var btn = this;
 		 var seqId = $(this).data('seqId');
-		 console.log(seqId);
 		 var isFollowed = $(this).hasClass('follow-modal__btn--followed');
 		 
 		 if (isFollowed) {

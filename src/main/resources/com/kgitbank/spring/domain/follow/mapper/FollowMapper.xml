@@ -37,4 +37,27 @@
 			follower_id = #{seqId}
 	</select>
 	
+	<select id="selectTop5Follows" resultType="com.kgitbank.spring.domain.follow.FollowDto">
+		SELECT
+		    m.seq_id, m.id, m.img_path
+		FROM
+		    (SELECT 
+		    	follow_id, COUNT(*) as count 
+		    FROM 
+		    	follow 
+		    GROUP BY follow_id 
+		    ORDER BY count DESC
+		    OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY) f
+		    INNER JOIN members m
+		    ON f.follow_id = m.seq_id
+	</select>
+	
+	<select id="checkFollow" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			follow 
+		WHERE follow_id = #{followId} AND follower_id = #{followerId}
+	</select>
+	
 </mapper>

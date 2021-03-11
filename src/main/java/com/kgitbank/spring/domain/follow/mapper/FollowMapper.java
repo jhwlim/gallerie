@@ -2,6 +2,7 @@ package com.kgitbank.spring.domain.follow.mapper;
 
 import java.util.List;
 
+import com.kgitbank.spring.domain.follow.FollowDto;
 import com.kgitbank.spring.domain.model.FollowVO;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 
@@ -18,5 +19,9 @@ public interface FollowMapper {
 	public List<Integer> selectFollower(ProfileDto vo);
 
 	public List<ProfileDto> selectProfileOfFollow(int seqId);
+	
+	public List<FollowDto> selectTop5Follows();
+	
+	public int checkFollow(FollowVO vo);
 	
 }

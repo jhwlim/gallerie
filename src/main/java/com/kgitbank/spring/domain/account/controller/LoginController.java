@@ -1,6 +1,7 @@
 package com.kgitbank.spring.domain.account.controller;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,9 @@ import com.kgitbank.spring.domain.account.dto.Sessionkey;
 import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.domain.account.service.GetIp;
 import com.kgitbank.spring.domain.account.service.LoginService;
+import com.kgitbank.spring.domain.follow.FollowDto;
 import com.kgitbank.spring.domain.follow.service.FollowService;
+import com.kgitbank.spring.domain.model.FollowVO;
 import com.kgitbank.spring.domain.model.LoginVO;
 import com.kgitbank.spring.domain.model.MemberVO;
 import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
@@ -64,6 +67,16 @@ public class LoginController {
 			int loginSeqId = accService.selectMemberById(loginId).getSeqId();
 			model.addAttribute("follows", followService.selectProfileOfFollow(loginSeqId));
 			
+			List<FollowDto> topFiveFollows = followService.selectTop5Follows();
+			FollowVO vo = new FollowVO();
+			vo.setFollowerId(loginSeqId);
+			for(FollowDto f : topFiveFollows) {
+				vo.setFollowId(f.getSeqId());
+				f.setFollowed(followService.checkFollow(vo));
+			}
+			log.info(topFiveFollows);
+			model.addAttribute("topFiveFollows", topFiveFollows);
+			
 			return"/main/home";
 		}
 		
@@ -82,6 +95,7 @@ public class LoginController {
 						session.setAttribute("user", loginMember.getId());
 						
 						session.setAttribute("userProfile", loginMember.getImgPath()); // 프로필 이미지도 세션 영역에 추가
+						session.setAttribute("name", loginMember.getName());
 						
 						LoginVO logvo = new LoginVO();
 						
@@ -102,6 +116,16 @@ public class LoginController {
 						}
 					
 						model.addAttribute("follows", followService.selectProfileOfFollow(loginMember.getSeqId()));
+						
+						List<FollowDto> topFiveFollows = followService.selectTop5Follows();
+						FollowVO vo = new FollowVO();
+						vo.setFollowerId(loginMember.getSeqId());
+						for(FollowDto f : topFiveFollows) {
+							vo.setFollowId(f.getSeqId());
+							f.setFollowed(followService.checkFollow(vo));
+						}
+						log.info(topFiveFollows);
+						model.addAttribute("topFiveFollows", topFiveFollows);
 						
 						return "/main/home";
 					}
@@ -142,6 +166,7 @@ public class LoginController {
 			session.setAttribute("user", loginMember.getId());
 			
 			session.setAttribute("userProfile", loginMember.getImgPath()); // 프로필 이미지도 세션 영역에 추가
+			session.setAttribute("userName", loginMember.getName());
 			
 			System.out.println(getip.getIp(req));
 			
@@ -186,6 +211,16 @@ public class LoginController {
 			}
 			
 			model.addAttribute("follows", followService.selectProfileOfFollow(loginMember.getSeqId()));
+			
+			List<FollowDto> topFiveFollows = followService.selectTop5Follows();
+			FollowVO vo = new FollowVO();
+			vo.setFollowerId(loginMember.getSeqId());
+			for(FollowDto f : topFiveFollows) {
+				vo.setFollowId(f.getSeqId());
+				f.setFollowed(followService.checkFollow(vo));
+			}
+			log.info(topFiveFollows);
+			model.addAttribute("topFiveFollows", topFiveFollows);
 			
 			return "main/home";
 		}else {
