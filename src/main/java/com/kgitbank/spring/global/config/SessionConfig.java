@@ -31,6 +31,7 @@ public class SessionConfig implements HttpSessionListener {
         if(userId != null && userId.length() > 0){
             sessions.get(userId).invalidate();
             sessions.remove(userId);
+            //sessions.get(userId).setAttribute("Multiplelogin", true);
             System.out.println(sessions.get(userId));
         }
     }
