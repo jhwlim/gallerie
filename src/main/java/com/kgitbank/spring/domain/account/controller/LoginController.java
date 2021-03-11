@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.kgitbank.spring.domain.account.dto.Sessionkey;
+import com.kgitbank.spring.domain.account.service.AccountService;
 import com.kgitbank.spring.domain.account.service.GetIp;
 import com.kgitbank.spring.domain.account.service.LoginService;
+import com.kgitbank.spring.domain.follow.service.FollowService;
 import com.kgitbank.spring.domain.model.LoginVO;
 import com.kgitbank.spring.domain.model.MemberVO;
+import com.kgitbank.spring.domain.myprofile.dto.ProfileDto;
 import com.kgitbank.spring.global.config.SessionConfig;
 import com.kgitbank.spring.global.util.SecurityPwEncoder;
 
@@ -26,6 +29,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 public class LoginController {
+	
 	
 	@Autowired
 	LoginService service;
@@ -36,8 +40,14 @@ public class LoginController {
 	@Autowired
 	GetIp getip;
 	
+	@Autowired
+	AccountService accService;
+	
+	@Autowired
+	FollowService followService;
+	
 	@GetMapping(value = "/")
-	public String main(HttpServletRequest req, HttpServletResponse rep, HttpSession session) {
+	public String main(HttpServletRequest req, HttpServletResponse rep, HttpSession session, Model model) {
 		
 		MemberVO loginMember = null;
 		
@@ -47,8 +57,13 @@ public class LoginController {
 		String sessionId;
 		
 		// 로그인 세션이 있다면 home으로 이동시킴
+		String loginId = (String) session.getAttribute("user");
 		if(session.getAttribute("user") != null) {
 			System.out.println("이미 로그인한 상태!!");
+			
+			int loginSeqId = accService.selectMemberById(loginId).getSeqId();
+			model.addAttribute("follows", followService.selectProfileOfFollow(loginSeqId));
+			
 			return"/main/home";
 		}
 		

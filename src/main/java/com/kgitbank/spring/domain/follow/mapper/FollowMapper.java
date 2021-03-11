@@ -17,4 +17,6 @@ public interface FollowMapper {
 	
 	public List<Integer> selectFollower(ProfileDto vo);
 
+	public List<ProfileDto> selectProfileOfFollow(int seqId);
+	
 }

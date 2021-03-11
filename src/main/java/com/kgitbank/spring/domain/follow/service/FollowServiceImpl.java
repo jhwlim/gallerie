@@ -44,6 +44,11 @@ public class FollowServiceImpl implements FollowService {
 		return mapper.seqsearch(id);
 	}
 
+	@Override
+	public List<ProfileDto> selectProfileOfFollow(int seqId) {
+		return mapper.selectProfileOfFollow(seqId);
+	}
+
 
 	
 

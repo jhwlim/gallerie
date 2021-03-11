@@ -10,7 +10,7 @@
 <title>Home</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=2.0">
+<link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=2.1">
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
@@ -32,56 +32,15 @@
                         <!-- START OF STORIES -->
                         <div class="story-container">
                             <ul>
-                                <li>
-                                    <div class="story">
-                                        <img src="/spring/resources/css/mainpage/images/profile-1.jpg">
-                                    </div>
-                                    <span class="user">Your Story</span>
-                                </li>
-                                <li class="has-story">
-                                    <div class="story">
-                                        <img src="/spring/resources/css/mainpage/images/profile-2.jpg">
-                                    </div>
-                                    <span class="user">John Doe</span>
-                                </li>
-                                <li class="has-story">
-                                    <div class="story">
-                                        <img src="/spring/resources/css/mainpage/images/profile-3.jpg">
-                                    </div>
-                                    <span class="user">Instagram</span>
-                                </li>
-                                <li class="has-story">
-                                    <div class="story">
-                                        <img src="/spring/resources/css/mainpage/images/profile-4.png">
-                                    </div>
-                                    <span class="user">DC</span>
-                                </li>
-                                <li class="has-story">
-                                    <div class="story">
-                                        <img src="/spring/resources/css/mainpage/images/profile-5.jpg">
-                                    </div>
-                                    <span class="user">Nick</span>
-                                </li>
-                                <li class="has-story">
-                                    <div class="story">
-                                        <img src="/spring/resources/css/mainpage/images/profile-6.jpg">
-                                    </div>
-                                    <span class="user">Anna</span>
-                                </li>
-                                <li class="has-story">
-                                    <div class="story">
-                                        <img src="/spring/resources/css/mainpage/images/profile-7.jpg">
-                                    </div>
-                                    <span class="user">Raissa</span>
-                                </li>
-                                <li class="has-story">
-                                    <div class="story">
-                                        <img src="/spring/resources/css/mainpage/images/profile-7.jpg">
-                                    </div>
-                                    <span class="user">Raissa</span>
-                                </li>
+                                <c:forEach var="follow" items="${follows}">
+                                	<li onclick="location.href='/spring/myprofile/${follow.id}'" style="cursor: pointer;">
+	                                    <div class="story">
+	                                        <img src="<c:url value='/image/profile/${follow.imgPath}/'/>" class="story-img">
+	                                    </div>
+	                                    <span class="user">${follow.id}</span>
+	                                </li>
+                                </c:forEach>
                             </ul>
-
                         </div>
                         <!-- END OF STORIES -->
 
@@ -153,107 +112,7 @@
 
 
                         <!-- START OF POSTS -->
-                        <div class="d-flex flex-column mt-4 mb-4">
-
-                            <div class="card">
-                                <div class="card-header p-3">
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div
-                                            class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
-                                            <img src="/spring/resources/css/mainpage/images/profile-1.jpg" alt="..."
-                                                style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                                        </div>
-                                        <span class="font-weight-bold">samkolder</span>
-                                    </div>
-                                </div>
-                                <div class="card-body p-0">
-                                    <div class="embed-responsive embed-responsive-1by1">
-                                        <img class="embed-responsive-item" src="/spring/resources/css/mainpage/images/post-1.jpg" />
-                                    </div>
-
-                                    <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
-                                        <ul class="list-inline d-flex flex-row align-items-center m-0">
-                                            <li class="list-inline-item">
-                                                <button class="btn p-0">
-                                                    <div class="content">
-                                                      <span class="heart"></span>
-                                                      
-                                                      
-                                                    </div>
-                                                </button>
-                                            </li>
-                                            <li class="list-inline-item ml-2">
-                                                <button class="btn p-0">
-                                                    <svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
-                                                        class="bi bi-chat" fill="currentColor"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd"
-                                                            d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
-                                                    </svg>
-                                                </button>
-                                            </li>
-                                            <li class="list-inline-item ml-2">
-                                                <button class="btn p-0">
-                                                    <svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
-                                                        class="bi bi-share" fill="currentColor"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd"
-                                                            d="M11.724 3.947l-7 3.5-.448-.894 7-3.5.448.894zm-.448 9l-7-3.5.448-.894 7 3.5-.448.894z" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M13.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm-11-6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-                                                    </svg>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                        <div>
-                                            <button class="btn p-0">
-                                                <svg width="1.6em" height="1.6em" viewBox="0 0 16 16" class="bi bi-hdd"
-                                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd"
-                                                        d="M14 9H2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1zM2 8a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2z" />
-                                                    <path
-                                                        d="M5 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-2 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                                                    <path fill-rule="evenodd"
-                                                        d="M4.094 4a.5.5 0 0 0-.44.26l-2.47 4.532A1.5 1.5 0 0 0 1 9.51v.99H0v-.99c0-.418.105-.83.305-1.197l2.472-4.531A1.5 1.5 0 0 1 4.094 3h7.812a1.5 1.5 0 0 1 1.317.782l2.472 4.53c.2.368.305.78.305 1.198v.99h-1v-.99a1.5 1.5 0 0 0-.183-.718L12.345 4.26a.5.5 0 0 0-.439-.26H4.094z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="pl-3 pr-3 pb-2">
-                                        <strong class="d-block">365.354 likes</strong>
-                                        <strong class="d-block">samkolder</strong>
-                                        <p class="d-block mb-1">Lil drone shot I got a while back but never posted.</p>
-                                        <button class="btn p-0">
-                                            <span class="text-muted">View all 2,247 comments</span>
-                                        </button>
-
-                                        <div>
-                                            <div>
-                                                <strong class="d-block">a.7.m3ff</strong>
-                                                <span>❤️💓💓💓💓💓</span>
-                                            </div>
-                                            <div>
-                                                <strong class="d-block">adri_rez77</strong>
-                                                <span>Hi</span>
-                                            </div>
-                                        </div>
-
-                                        <small class="text-muted">4 HOURS AGO</small>
-                                    </div>
-
-                                    <div class="position-relative comment-box">
-                                        <form>
-                                            <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
-                                            <button class="btn btn-primary position-absolute btn-ig">Post</button>
-                                        </form>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                        </div>
+                        <div class="d-flex flex-column mt-4 mb-4" id="posts"></div>
                         <!-- END OF POSTS -->
                     </div>
 
@@ -476,6 +335,105 @@ $('#writeBtn').on('click', function(evt) {
 	});
 	
 });
+</script>
+<div class="card" id="cardTemplate" style="display: none;">
+    <div class="card-header p-3">
+        <div class="d-flex flex-row align-items-center">
+            <div
+                class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                <img id="writerImgPath" src="/spring/resources/css/mainpage/images/profile-1.jpg" alt="..."
+                    style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+            </div>
+            <span class="font-weight-bold" id="writerId">samkolder</span>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="embed-responsive embed-responsive-1by1" id="articles">
+            <img class="embed-responsive-item" src="/spring/resources/css/mainpage/images/post-1.jpg" />
+        </div>
+
+        <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
+            <ul class="list-inline d-flex flex-row align-items-center m-0">
+                <li class="list-inline-item">
+                    <button class="btn p-0">
+                        <div class="content">
+                          <span class="heart"></span>
+                        </div>
+                    </button>
+                </li>
+                <li class="list-inline-item ml-2">
+                    <button class="btn p-0">
+                        <svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
+                            class="bi bi-chat" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
+                        </svg>
+                    </button>
+                </li>
+                <li class="list-inline-item ml-2">
+                    <button class="btn p-0">
+                        <svg width="1.6em" height="1.6em" viewBox="0 0 16 16"
+                            class="bi bi-share" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M11.724 3.947l-7 3.5-.448-.894 7-3.5.448.894zm-.448 9l-7-3.5.448-.894 7 3.5-.448.894z" />
+                            <path fill-rule="evenodd"
+                                d="M13.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm-11-6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+            <div>
+                <button class="btn p-0">
+                    <svg width="1.6em" height="1.6em" viewBox="0 0 16 16" class="bi bi-hdd"
+                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M14 9H2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1zM2 8a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2z" />
+                        <path
+                            d="M5 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-2 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                        <path fill-rule="evenodd"
+                            d="M4.094 4a.5.5 0 0 0-.44.26l-2.47 4.532A1.5 1.5 0 0 0 1 9.51v.99H0v-.99c0-.418.105-.83.305-1.197l2.472-4.531A1.5 1.5 0 0 1 4.094 3h7.812a1.5 1.5 0 0 1 1.317.782l2.472 4.53c.2.368.305.78.305 1.198v.99h-1v-.99a1.5 1.5 0 0 0-.183-.718L12.345 4.26a.5.5 0 0 0-.439-.26H4.094z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="pl-3 pr-3 pb-2">
+            <strong class="d-block"><span id="likeCount">365.354</span> likes</strong>
+            <p class="d-block mb-1" id="articleContent">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil hic eligendi ea! Odit aliquam quasi iste dolore optio esse pariatur mollitia consectetur nostrum ipsa dolores sed quisquam at expedita quidem.</p>
+            <button class="btn p-0">
+                <span class="text-muted">View all 2,247 comments</span>
+            </button>
+
+            <div id="comments">
+                <div>
+                    <strong class="d-block">a.7.m3ff</strong>
+                    <span>❤️💓💓💓💓💓</span>
+                    <small class="text-muted">4 HOURS AGO</small>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <div class="position-relative comment-box">
+            <form>
+                <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
+                <button class="btn btn-primary position-absolute btn-ig">Post</button>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+<script>
+	for (var i = 0; i < 2; i++) {
+		var card = $('#cardTemplate').clone();
+		card.show();
+		$('#posts').append(card);
+	}
+
 </script>
 </body>
 </html>

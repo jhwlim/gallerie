@@ -26,4 +26,15 @@
 		select follower_id from follow where follow_id = #{seqId}
 	</select>
 	
+	<select id="selectProfileOfFollow" resultType="com.kgitbank.spring.domain.myprofile.dto.ProfileDto">
+		SELECT 
+		    m.* 
+		FROM 
+		    follow f 
+		    INNER JOIN members m
+		    ON f.follow_id = m.seq_id
+		where 
+			follower_id = #{seqId}
+	</select>
+	
 </mapper>
