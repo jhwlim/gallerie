@@ -46,6 +46,11 @@ public class MyprofileServiceImpl implements MyprofileService {
 	public List<LoginVO> getLoginActivityList(MemberVO mv, LoginVO lv) {
 		return mapper.getLoginActivityList(mv, lv);
 	}
+
+	@Override
+	public String getEditInfo(String id) {
+		return mapper.getEditInfo(id);
+	}
 	
 	
 }

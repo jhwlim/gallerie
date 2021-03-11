@@ -54,6 +54,7 @@ main>div {
 	text-align: center;
 	font-size: 17px;
 	border-left: white solid 2px;
+	font-weight: bold;
 }
 
 .main1>div>a {
@@ -127,6 +128,8 @@ input[type=text]:focus {
 .key {
 	text-align: end;
 	padding-right: 32px;
+	font-weight: bold;
+	font-family: inherit;
 }
 
 .tablediv {
@@ -249,8 +252,9 @@ input[type=submit] {
 				<div class="key">
 					이름<br/>
 				</div>
+				<input type="hidden" id="currentName" />
 				<input class="a_name" type="text" id="name" name="name" 
-				placeholder="이름" value="${member.name}" size="30"><br />
+				placeholder="이름을 입력해주세요." value="${member.name}" size="30"><br />
 			</div>
 			<div class="line2">
 				<div class="key">
@@ -266,14 +270,14 @@ input[type=submit] {
 					이메일<br />
 				</div>
 				<input class="a_email" type="email" id="email" name="email" 
-				placeholder="이메일" size="30" value="${member.email}" ><br />
+				placeholder="이메일을 입력해주세요." size="30" value="${member.email}" ><br />
 			</div>
 			<div class="line4">
 				<div class="key">
 					전화번호<br />
 				</div>
 				<input type="tel" id="phone" name="phone" 
-				placeholder="전화번호" size="30" value="${member.phone}"><br />
+				placeholder="전화번호를 입력해주세요." size="30" value="${member.phone}"><br />
 			</div>
 			<input type="hidden" name="id" value="${member.id}"/>
 			<div class="line5">

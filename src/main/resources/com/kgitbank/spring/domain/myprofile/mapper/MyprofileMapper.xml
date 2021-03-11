@@ -16,6 +16,16 @@
   		 	id = #{id}
 	  </update>
 	  
+	  <!-- edit화면에서 정보 불러오기 -->
+	  <select id="getEditInfo" resultType="String">
+	  	SELECT
+		    *
+		FROM 
+			members
+		WHERE 
+			id = #{id}
+	  </select>
+	  
 	  <update id="updatepw">
 	  	UPDATE
 	  		members

@@ -16,4 +16,6 @@ public interface MyprofileService {
 	
 	public List<LoginVO> getLoginActivityList(MemberVO mv, LoginVO lv);
 	
+	public String getEditInfo(String id);
+	
 }

@@ -18,4 +18,6 @@ public interface MyprofileMapper {
 	
 	// SELECT location, login_date FROM members JOIN logins ON seq_id = member_seq_id
 	public List<LoginVO> getLoginActivityList(MemberVO vo, LoginVO lv);
+	
+	public String getEditInfo(String id);
 }

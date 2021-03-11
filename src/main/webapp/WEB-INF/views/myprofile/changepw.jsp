@@ -53,6 +53,7 @@ main>div {
 	text-align: center;
 	font-size: 17px;
 	border-left: white solid 2px;
+	font-weight: bold;
 }
 
 .main1>div>a {
@@ -100,11 +101,7 @@ input[type=text]:focus {
 }
 
 .j_from {
-	width: 80%;
-	display: grid;
-	grid-template-columns: auto auto;
-	grid-gap: 20px;
-	margin: 5% 3% 0 17%;
+	margin: 0 0 10% 25%;
 }
 
 .pwd {
@@ -114,6 +111,7 @@ input[type=text]:focus {
 	width: 100px;
 	margin-top: 10px;
 	margin-left: 5px;
+	font-weight: bold;
 }
 
 .pwd2 {
@@ -121,6 +119,7 @@ input[type=text]:focus {
 	text-align: left;
 	padding-left: 0;
 	margin-left: 5px;
+	font-weight: bold;
 }
 
 .ok_ {

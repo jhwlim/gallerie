@@ -58,6 +58,15 @@ public class MyprofileController {
 	public String update(MemberVO vo, HttpSession session) {
 		String loginId = (String) session.getAttribute("user");
 		vo.setId(loginId);
+		
+		// 확인해보고 지우기
+//		log.info("vo.getName(): " + vo.getName());
+//		model.addAttribute("currentName", vo.getName());
+//		log.info("vo.getPhone(): " + vo.getPhone());
+//		model.addAttribute("currentPhone", vo.getPhone());
+//		log.info("vo.getEmail(): " + vo.getEmail());
+//		model.addAttribute("currentEmail", vo.getEmail());
+		
 		service.updateMyprofile(vo);
 		return "redirect:/myprofile/edit";
 	}
@@ -113,7 +122,7 @@ public class MyprofileController {
 		LoginVO lv = new LoginVO();
 		
 		List<LoginVO> list = service.getLoginActivityList(mv, lv);
-		log.info(list);
+		log.info("list: " + list);
 		model.addAttribute("loginActivity", list);
 		return "myprofile/loginActivity";
 	}

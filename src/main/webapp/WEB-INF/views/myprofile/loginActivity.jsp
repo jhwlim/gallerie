@@ -50,6 +50,7 @@ main>div {
 	text-align: center;
 	font-size: 17px;
 	border-left: white solid 2px;
+	font-weight: bold;
 }
 
 .main1>div>a {

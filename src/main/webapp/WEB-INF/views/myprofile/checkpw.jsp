@@ -54,6 +54,7 @@ main>div {
 	text-align: center;
 	font-size: 17px;
 	border-left: white solid 2px;
+	font-weight: bold;
 }
 
 .main1>div>a {
@@ -96,6 +97,7 @@ input[type=text]:focus {
 	text-align: left;
 	font-size: 15px;
 	width: 100px;
+	font-weight: bold;
 }
 
 .user_ {
@@ -112,13 +114,14 @@ input[type=text]:focus {
 	display: grid;
 	grid-template-columns: auto auto;
 	grid-gap: 20px;
-	margin: 5% 3% 0 17%;
+	margin: 5% 3% 10% 17%;
 }
 
 .pwd2 {
 	display: inline-block;
 	text-align: left;
 	padding-left: 0;
+	font-weight: bold;
 }
 
 .ok_ {
