@@ -7,8 +7,7 @@
 <title>로그인 페이지</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="/spring/resources/css/signin/signin.css?ver=1.0">
+<link rel="stylesheet" href="/spring/resources/css/signin/signin.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
