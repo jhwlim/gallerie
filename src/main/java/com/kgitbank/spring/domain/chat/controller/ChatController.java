@@ -38,7 +38,7 @@ public class ChatController {
 		int loginSeqId = service.selectMemberById(loginId).getSeqId();
 		
 		if (receiverId == null) {
-			
+			return "chat/standBy";
 		} else {
 			MemberVO receiver = service.selectMemberById(receiverId);
 			if (receiver == null) {

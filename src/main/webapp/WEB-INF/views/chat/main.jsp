@@ -15,7 +15,7 @@
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 <link rel="stylesheet"
-	href="/spring/resources/css/mainpage/main.css?ver=1.0">
+	href="/spring/resources/css/mainpage/main.css?ver=2.0">
 <link rel="stylesheet"
 	href="/spring/resources/css/profile/profile.css?ver=1.1">
 <link rel="stylesheet" href="/spring/resources/css/chat/chat.css?ver=1.0">
@@ -116,6 +116,7 @@ var webSocket = {
 
 </head>
 <body>
+
 <%@ include file="/WEB-INF/include/nav.jspf"%>
 
     <div class="chat-container">
@@ -200,7 +201,7 @@ var webSocket = {
 	                                                            <div class="friend-activity-box">
 	                                                                <div class="friend-act-long">
 	                                                                    <span class="friend-act-short">
-	                                                                        <span class="friend-act-time">최근 대화: <fmt:formatDate value="${friend.sendDate}" type="both"/></span>
+	                                                                        <span id="activityChk" class="friend-act-time">최근 대화: <fmt:formatDate value="${friend.sendDate}" type="both"/></span>
 	                                                                     </span>
 	                                                                </div>
 	                                                            </div>
@@ -242,7 +243,7 @@ var webSocket = {
                                                             <div class="right-profile-id-b">${receiver.id}</div>
                                                         </div>
                                                         <div class="right-profile-id-hr">
-                                                            <div class="right-profile-time">최근 활동: 어제*******</div>
+                                                            <div class="right-profile-time">최근 활동: 어제.... </div>
                                                         </div>
                                                     </div>
                                                 </button>
@@ -338,6 +339,10 @@ var webSocket = {
             </div>
       </div>
 </div>
+
+<script>
+
+</script>
 
 </body>
 </html>

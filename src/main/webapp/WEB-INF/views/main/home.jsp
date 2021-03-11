@@ -367,13 +367,6 @@
     </div>
 </div>
 
-<form action="/spring/logout" method="post">
-
-    <button type="submit">로그아웃</button>
-</form>
-<form action="/spring/sessiondel" method="post">
-    <button type="submit">세션삭제 후 리다이렉트</button>
-</form>
 <script
   src="https://code.jquery.com/jquery-3.6.0.js"
   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
