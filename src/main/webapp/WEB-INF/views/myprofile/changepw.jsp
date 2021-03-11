@@ -101,7 +101,7 @@ input[type=text]:focus {
 }
 
 .j_from {
-	margin: 10% 0 10% 25%;
+	margin: 5% 3% 10% 17%;
 }
 
 .pwd {
@@ -132,9 +132,18 @@ input[type=text]:focus {
 
 input[type=password] {
 	padding: 10px;
-	background-color: rgb(233, 227, 227);
-	border: 0px;
+	background-color: rgb(250, 250, 250);
+	border-radius: 6px;
 	width: 70%;
+	border: 1px solid #dbdbdb
+}
+
+input[type=password]:focus {
+	padding: 10px;
+	background-color: rgb(250, 250, 250);
+	width: 70%;
+	border-radius: 6px;
+	border: 1px solid #1c1e21;
 }
 
 input[type=submit] {

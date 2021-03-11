@@ -144,6 +144,37 @@ input[type=text]:focus {
 .table {
 	display: inline-block;
 }
+
+input[type=text] {
+	border-radius: 6px;
+	border: 1px solid #dbdbdb;
+}	
+
+input[type=text]:focus {
+	border-radius: 6px;
+	border: 2px solid #1c1e21;
+}
+
+input[type=email] {
+	border-radius: 6px;
+	border: 1px solid #dbdbdb;
+}	
+
+input[type=email]:focus {
+	border-radius: 6px;
+	border: 2px solid #1c1e21;
+}
+
+input[type=tel] {
+	border-radius: 6px;
+	border: 1px solid #dbdbdb;
+}	
+
+input[type=tel]:focus {
+	border-radius: 6px;
+	border: 2px solid #1c1e21;
+}
+
 input[type=submit] {
 	display: inline-block;
 	width: 50%;
@@ -151,9 +182,9 @@ input[type=submit] {
 	padding: 10px;
 	background-color: rgb(56, 151, 240);
 	color: white;
-	border: 0px;
-	border-radius: 3px;
+	border-radius: 6px;
 	text-align: center;
+	border: 1px solid #dbdbdb;
 }
 
 </style>
@@ -252,7 +283,6 @@ input[type=submit] {
 				<div class="key">
 					이름<br/>
 				</div>
-				<input type="hidden" id="currentName" />
 				<input class="a_name" type="text" id="name" name="name" 
 				placeholder="이름을 입력해주세요." value="${member.name}" size="30"><br />
 			</div>

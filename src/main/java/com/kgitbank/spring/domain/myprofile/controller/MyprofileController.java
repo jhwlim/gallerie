@@ -59,6 +59,8 @@ public class MyprofileController {
 		String loginId = (String) session.getAttribute("user");
 		vo.setId(loginId);
 		
+//		model.addAttribute("id", loginId);
+		
 		// 확인해보고 지우기
 //		log.info("vo.getName(): " + vo.getName());
 //		model.addAttribute("currentName", vo.getName());
