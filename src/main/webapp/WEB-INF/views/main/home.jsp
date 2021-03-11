@@ -121,7 +121,7 @@
                                 <img src="<c:url value='/image/profile/${sessionScope.userProfile}/'/>" alt="..."
                                     style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
                             </div>
-                            <div class="profile-info ml-3">
+                            <div class="profile-info ml-3" onclick="location.href='/spring/myprofile/${sessionScope.user}';" style="cursor: pointer">
                                 <span class="profile-info-username">${sessionScope.user}</span>
                                 <span class="profile-info-name">${sessionScope.userName }</span>
                             </div>

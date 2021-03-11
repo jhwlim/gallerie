@@ -31,6 +31,8 @@
 	href="<c:url value = '/resources/css/article/article_modal.css?ver=1.0' />" />
 <link rel="stylesheet"
 	href="<c:url value = '/resources/css/article/follow_modal.css?ver=1.0' />" />
+<link rel="stylesheet"
+	href="<c:url value = '/resources/css/article/article_more.css?ver=1.1' />" />
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -137,7 +139,10 @@
 					</div>
 					<div class="col-4" style="padding: 0;">
 						<div class="d-flex flex-column mt-4 mb-4">
-							<div class="card" style="height: 500px;">
+							<div class="card" style="height: 500px; position: relative;">
+								<div class="article__more">
+									<img src="<c:url value='/resources/image/article/more.png'/>" alt="" style="height: 100%;"/>
+								</div>
 								<div class="card-header" style="padding: 12px 16px;">
 									<div class="d-flex flex-row align-items-center">
 										<div
@@ -351,7 +356,7 @@
 	
 	</script>
 	</c:if>
-	<script src="<c:url value='/resources/js/article/gallery.js'/> "></script>
+	<script src="<c:url value='/resources/js/article/gallery.js?ver=1.0'/> "></script>
 	<script>
 let isAjaxFinished = true;
 
@@ -406,6 +411,7 @@ function openArticleModal(id) {
 		url : "<c:url value='/article/' />" + id,
 		success : function(article) {
 			// 모달 값 세팅하기
+			$('#articleModal').data('id', article.id);
 			$('#articleModalWriterImg').attr('src', '/spring/image/profile/' + article.imgPath + "/");
 			$('#articleModalWriterId').text(article.writerId);
 			$('#articleModalContent').html(article.content);
@@ -769,6 +775,38 @@ var followlist = {
 	 }
 	 
 
+</script>
+<div class="more-modal" id="moreModalClose">
+    <div class="more-modal__container">
+        <ul class="more-modal__list">
+            <li class="more-modal__option">게시물로 이동</li>
+            <li class="more-modal__option more-modal__option--delete">게시물 삭제</li>
+            <li class="more-modal__option" id="moreModalClose">취소</li>
+        </ul>
+    </div>
+</div>
+<script>
+$('.article__more').on('click', function() {
+	$('#moreModalClose').css('display', 'flex');
+});
+$('.more-modal__option--delete').on('click', function() {
+	var id = $('#articleModal').data('id');
+	var writerId = $('#articleModalWriterId').text();
+	
+	$.ajax({
+		url: "<c:url value = '/article/'/>",
+		method: 'DELETE',
+		contentType : "application/json",
+		data: JSON.stringify({id : id, writerId : writerId}),
+		complete : function() {
+			alert('게시물이 삭제되었습니다.');
+			location.href = "/spring/myprofile/" + writerId;
+		}
+	});
+})
+$('#moreModalClose').on('click', function() {
+    $('#moreModalClose').hide();
+});
 </script>
 </body>
 </html>

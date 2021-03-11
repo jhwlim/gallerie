@@ -63,7 +63,7 @@
                                             <img src="<c:url value = '/image/profile/${article.imgPath}/'/>" alt="..."
                                                 style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
                                         </div>
-                                        <span class="font-weight-bold">${article.writerId}</span>
+                                        <span class="font-weight-bold" onclick="location.href='/spring/myprofile/${article.writerId}'" style="cursor: pointer;">${article.writerId}</span>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">

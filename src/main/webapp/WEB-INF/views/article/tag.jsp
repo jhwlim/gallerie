@@ -44,7 +44,29 @@
 <body style="overflow-y: scroll;">
 
 	<%@ include file="/WEB-INF/include/nav.jspf"%>
-
+	<header>
+		<div class="container">
+			<div class="profile">
+				<div class="profile-image" style="justify-content: flex-end;">
+					<figure class="summary__image-area" id="profileImgEditOpen">
+						<img src="<c:url value = '/image/profile/tag.png/' />"
+							class="summary__image" id="profileImg" />
+					</figure>
+				</div>
+				<div class="profile-user-settings">
+					<h1 class="profile-user-name">#${tag}</h1>
+				</div>
+				<div class="profile-stats">
+					<ul>
+						<li><span class="profile-stat-count">${totalCount}</span> posts</li>
+					</ul>
+				</div>
+				
+			</div>
+			<!--            End of Profile Section-->
+		</div>
+		<!--        End of Container-->
+	</header>
 	<main>
 		<div class="container">
 			<!-- Gallery-->

@@ -68,9 +68,11 @@ public class ArticleContentController {
 	}
 	
 	@GetMapping(value = "/tag/{tag}")
-	public String searchArticlesByTagName(@PathVariable String tag) {
+	public String searchArticlesByTagName(@PathVariable String tag, Model model) {
 		log.info("URL : /post/ - GET");
 		log.info("tag=" + tag);
+		
+		model.addAttribute("totalCount", service.selectTotalCountOfArticlesByTagName(tag));
 		
 		return "article/tag";
 	}

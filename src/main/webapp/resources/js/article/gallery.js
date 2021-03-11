@@ -29,6 +29,6 @@ function addGalleryItem(article) {
 	galleryItemComments.className = 'gallery-item-comments';
 	galleryItemComments.innerHTML = '<span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden></i> ' + article.commentCount;
 	ul.appendChild(galleryItemComments);
-	
+
 	return galleryItem;
 }

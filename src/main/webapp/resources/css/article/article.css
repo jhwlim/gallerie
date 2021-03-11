@@ -33,6 +33,13 @@
 .article__btn-image {
 	width: 100%;	
 }
+.article__more {
+	position: absolute; 
+	top: 12px; 
+	right: 12px; 
+	height: 32px; 
+	cursor: pointer;
+}
 .comment {
 	box-sizing: border-box;
 }
