@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kgitbank.spring.domain.article.mapper.ArticleCommentMapper;
 import com.kgitbank.spring.domain.model.CommentVO;
+import com.kgitbank.spring.global.util.DateFormatUtils;
 
 @Service
 public class ArticleCommentServiceImpl implements ArticleCommentService {
@@ -17,7 +18,11 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
 	// 댓글목록
 	@Override
 	public List<CommentVO> listComment(int articleId) {
-		return mapper.listComment(articleId);
+		List<CommentVO> result = mapper.listComment(articleId);
+		for (CommentVO c : result) {
+			c.setWriteDateStr(DateFormatUtils.changeDateToAgoStr(c.getWriteDate()));
+		}
+		return result;
 	}
 	// 댓글작성
 	@Override

@@ -66,7 +66,7 @@ function createCommentItem(comment, isLogined) {
 	
 	var dateSpan = document.createElement('span');
 	dateSpan.classList.add('comment__date');
-	dateSpan.innerHTML = comment.writeDate;
+	dateSpan.innerHTML = comment.writeDateStr;
 	text.appendChild(dateSpan);
 	
 	if (isLogined) {

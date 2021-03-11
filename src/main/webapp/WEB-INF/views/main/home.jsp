@@ -446,7 +446,7 @@ function setArticles(articles) {
 			var c = comment.clone();
 			$(c).find('.js-comment-id').text(com.writerId);
 			$(c).find('.js-comment-content').text(com.content);
-			$(c).find('.js-comment-date').text(com.writeDate);
+			$(c).find('.js-comment-date').text(com.writeDateStr);
 			
 			$(comments).append(c);
 		}

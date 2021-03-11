@@ -1,6 +1,6 @@
 package com.kgitbank.spring.domain.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,9 +15,10 @@ public class CommentVO {
 	private int articleId;
 	private int memberSeqId;
 	private String content;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date writeDate;
+	private String writeDateStr;
 	
 	private String writerId;
 	private String imgPath;
-	
 }

@@ -69,7 +69,7 @@
                                 <div class="card-body p-0">
                                     <div class="pl-3 pr-3 pb-2" style="height: 280px; overflow: auto; padding-top: 16px;">
                                             <p class="d-block mb-1" style="white-space: pre-wrap; flex-wrap;" id="articleContent">${article.content}</p>
-	                                        <small class="text-muted">4 HOURS AGO</small>
+	                                        <small class="text-muted">${article.writeDateStr}</small>
     									<div class="comments" style="margin-top: 10px;">
  											<c:forEach var="comment" items="${article.comments}">	   					
 							   					<!-- 작성된 댓글이 보여지는 영역 -->
@@ -81,7 +81,7 @@
 		    											<div class="comment__text">
 		    												<div class="comment__writer">${comment.writerId}</div>
 			    											<div>${comment.content}</div>
-			    											<span class="comment__date">${comment.writeDate}</span>
+			    											<span class="comment__date">${comment.writeDateStr}</span>
 			    											<c:if test="${comment.writerId == sessionScope.user}">
 				    											<button name="commentDeleteBtn" data-id="${comment.id}" class="comment__delete">Delete</button>
 			    											</c:if>

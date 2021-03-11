@@ -1,7 +1,9 @@
 package com.kgitbank.spring.domain.article.dto;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.kgitbank.spring.domain.model.CommentVO;
 import com.kgitbank.spring.domain.model.FileVO;
@@ -14,7 +16,9 @@ public class ArticleDto {
 	private int id;
 	private int writerSeqId;
 	private String content;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date writeDate;
+	private String writeDateStr;
 	
 	private String writerId;
 	private String writerName;
@@ -25,5 +29,5 @@ public class ArticleDto {
 	
 	private int likeCount;
 	private boolean hasLike;
-	
+
 }

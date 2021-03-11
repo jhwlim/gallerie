@@ -25,6 +25,7 @@ import com.kgitbank.spring.domain.article.service.ArticleContentService;
 import com.kgitbank.spring.domain.model.ArticleLikeVO;
 import com.kgitbank.spring.domain.model.ArticleVO;
 import com.kgitbank.spring.domain.model.CommentVO;
+import com.kgitbank.spring.global.util.DateFormatUtils;
 
 import lombok.extern.log4j.Log4j;
 
@@ -192,6 +193,7 @@ public class ArticleRestController {
 			
 			a.setHasLike(service.selectCountLikeByMemberSeqIdAndArticleId(likeVO) == 1 ? true : false);
 			a.setComments(commentService.listComment(a.getId()));
+			a.setWriteDateStr(DateFormatUtils.changeDateToAgoStr(a.getWriteDate()));
 		}
 		
 		int totalCnt = service.selectTotalCountOfFollowerArticles(data.getSeqId());
