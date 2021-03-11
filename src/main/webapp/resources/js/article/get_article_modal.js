@@ -1,4 +1,3 @@
-
 function createArticleItems() {
 	articleItems = document.createElement('div');
 	articleItems.classList.add('article__items');
@@ -73,6 +72,7 @@ function createCommentItem(comment, isLogined) {
 	if (isLogined) {
 		var btn = document.createElement('button');
 		btn.name = "commentDeleteBtn";
+		btn.classList.add('comment__delete');
 		btn.dataset.id = comment.id;
 		btn.innerHTML = 'delete';
 		text.appendChild(btn);

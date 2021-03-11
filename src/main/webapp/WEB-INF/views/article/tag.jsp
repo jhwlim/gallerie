@@ -36,7 +36,7 @@
 <link rel="stylesheet"
 	href="<c:url value = '/resources/css/profile/profile_img_edit.css?ver=1.0' />" />
 <link rel="stylesheet"
-	href="<c:url value = '/resources/css/article/article.css?ver=2.0' />" />
+	href="<c:url value = '/resources/css/article/article.css?ver=2.2' />" />
 <link rel="stylesheet"
 	href="<c:url value = '/resources/css/article/article_modal.css?ver=1.0' />" />
 
@@ -317,7 +317,7 @@ $('#articleModalClose').on('click', function() {
     $('body').css('overflow-y', 'scroll');
 });
 </script>
-<script src="<c:url value ='/resources/js/article/get_article_modal.js' />"></script>
+<script src="<c:url value ='/resources/js/article/get_article_modal.js?ver=1.0' />"></script>
 	<script>
 	$(document).ready(function(){
 		$('.content').click(function(){

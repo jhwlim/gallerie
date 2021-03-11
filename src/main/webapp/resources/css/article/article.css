@@ -61,3 +61,8 @@
 .comment__date {
 	font-size: 0.5em;
 }
+.comment__delete {
+	margin-left: 10px; 
+	border: none; 
+	padding: 1px 5px;
+}
