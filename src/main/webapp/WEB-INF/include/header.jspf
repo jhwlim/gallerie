@@ -25,7 +25,8 @@
 </header>
 
 <script>
-
+	
+	
 
 	var logout = document.getElementById('logout');
 	logout.addEventListener('click', function() {
