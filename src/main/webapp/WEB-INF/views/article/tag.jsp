@@ -107,7 +107,7 @@
 									<div class="pl-3 pr-3 pb-2"
 										style="height: 280px; overflow: auto; padding-top: 16px;">
 										<p class="d-block mb-1" style="white-space: pre-wrap;" id="articleModalContent"></p>
-										<small class="text-muted">4 HOURS AGO</small>
+										<small class="text-muted" id="articleModalWriterDate"></small>
 										<div class="comments" id="comments" style="margin-top: 10px;"></div>
 									</div>
 
@@ -263,6 +263,7 @@ function openArticleModal(id) {
 				$('#articleModalHeart, #articleModalHeart span').removeClass('heart-active');
 			}
 			$('#articleModalLikeCnt span').text(article.likeCount);
+			$('#articleModalWriterDate').text(article.writeDateStr);
 			
 			// 이미지 값 설정하기
 			var files = article.files;

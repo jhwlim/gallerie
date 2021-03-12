@@ -143,7 +143,9 @@
 	                                        </div>
 	                                        <strong class="ml-3 sugest-username" onclick="location.href='/spring/myprofile/${f.id}'" style="cursor: pointer;">${f.id}</strong>
 	                                    </div>
-                                        <button class="btn btn-primary btn-sm p-0 btn-ig js-top5-follow-btn" data-seq-id="${f.seqId}">${!f.followed ? 'Follow' : 'Unfollow'}</button>    
+	                                    <c:if test="${f.id != sessionScope.user}">
+	                                        <button class="btn btn-primary btn-sm p-0 btn-ig js-top5-follow-btn" data-seq-id="${f.seqId}">${!f.followed ? 'Follow' : 'Unfollow'}</button>    
+	                                    </c:if>
 	                                </div>
                             	</c:forEach>
                             </div>

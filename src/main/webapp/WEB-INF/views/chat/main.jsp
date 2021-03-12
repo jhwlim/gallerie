@@ -243,7 +243,7 @@ var webSocket = {
                                                             <div class="right-profile-id-b">${receiver.id}</div>
                                                         </div>
                                                         <div class="right-profile-id-hr">
-                                                            <div class="right-profile-time">최근 활동: 어제.... </div>
+                                                            <div class="right-profile-time"></div>
                                                         </div>
                                                     </div>
                                                 </button>

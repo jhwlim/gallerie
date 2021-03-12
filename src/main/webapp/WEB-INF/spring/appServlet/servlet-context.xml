@@ -39,6 +39,10 @@
 		    <exclude-mapping path="/**/*.css"/>
 		    <exclude-mapping path="/**/*.js"/>
 		    <exclude-mapping path="/resources/**"/>
+	        <exclude-mapping path="/memberIdChk"/>
+            <exclude-mapping path="/memberEmailChk/"/>
+            <exclude-mapping path="/mailCheck**"/>
+            <exclude-mapping path="/success"/>
 	        <beans:ref bean="LoginInterceptor"/>
 	    </interceptor>
 	</interceptors>

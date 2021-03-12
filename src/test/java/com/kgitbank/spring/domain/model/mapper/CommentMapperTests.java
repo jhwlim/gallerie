@@ -53,9 +53,9 @@ public class CommentMapperTests {
 	@Test
 	public void createCommentSamples() {
 		
-		int articleId = 34; // articles 테이블에 존재하는 id
+		int articleId = 54; // articles 테이블에 존재하는 id
 		
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 30; i++) {
 			
 			int memberSeqId = 2 + i; // members 테이블에 존재하는 seq_id
 			String content = "테스트 댓글 " + i;
