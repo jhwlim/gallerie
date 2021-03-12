@@ -1,14 +1,20 @@
 package com.kgitbank.spring.domain.myprofile.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +29,7 @@ import lombok.extern.log4j.Log4j;
 
 
 @Controller
-@RequestMapping(value = "/myprofile")
+@RequestMapping(value = "/account")
 @Log4j
 public class MyprofileController {
 	@Autowired
@@ -37,78 +43,88 @@ public class MyprofileController {
 	SecurityPwEncoder encoder;
 	
 	// 프로필 메인 페이지
-	@GetMapping(value = "/myprofilemain")
-	public String main() {
-		return "myprofile/myprofilemain";
-	}
+//	@GetMapping(value = "/myprofilemain")
+//	public String main() {
+//		return "myprofile/myprofilemain";
+//	}
 	
 	// 프로필 수정하는 페이지
-	@RequestMapping(value = "/update")
+	@RequestMapping(value = "/edit")
 	public String update() {
-		return "myprofile/update";
+		return "myprofile/edit";
 	}
 	
-	@PostMapping(value = "/update")
-	public String update(MemberVO vo) {
-		vo.setId("abc5678");
+	@RequestMapping(value = "/edit", method=RequestMethod.POST)
+	public String update(MemberVO vo, HttpSession session) {
+		String loginId = (String) session.getAttribute("user");
+		vo.setId(loginId);
+		
+//		model.addAttribute("id", loginId);
+		
+		// 확인해보고 지우기
+//		log.info("vo.getName(): " + vo.getName());
+//		model.addAttribute("currentName", vo.getName());
+//		log.info("vo.getPhone(): " + vo.getPhone());
+//		model.addAttribute("currentPhone", vo.getPhone());
+//		log.info("vo.getEmail(): " + vo.getEmail());
+//		model.addAttribute("currentEmail", vo.getEmail());
+		
 		service.updateMyprofile(vo);
-		return "redirect:/myprofile/update";
+		return "redirect:/myprofile/edit";
 	}
 	
-	// 비밀번호 변경 페이지
-	@GetMapping(value = "/updatepw")
+	// 비밀번호 확인 페이지
+	@GetMapping(value = "/checkpw")
 	public String currentpw() {
-		return "myprofile/updatepw";
+		return "myprofile/checkpw";
 	}
 	
-	@PostMapping(value = "/updatepw")
-	public String currentpw(MemberVO vo, Model model, @RequestParam("test") String test) {
-		vo.setId("abc5678");
-		log.info(test);
+	@PostMapping(value = "/checkpw")
+	public String currentpw(MemberVO vo, HttpSession session, Model model, HttpServletResponse response) throws IOException {
+		String loginId = (String) session.getAttribute("user");
+		vo.setId(loginId);
 		
 		if (encoder.matches(vo.getPw(), service.currentpw(vo))) {
 			log.info("일치");
 			log.info(vo.getPw());
 			model.addAttribute("oldpw", vo.getPw());
-			model.addAttribute("test", test);
 			return "myprofile/changepw";
 		} else {
 			log.info("불일치");
-			return "redirect:/myprofile/updatepw";
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('비밀번호를 확인해주세요.');</script>");
+			out.flush();
+			return "myprofile/checkpw";
 		}
 	}
 	
+	// 비밀번호 변경 페이지
 	@GetMapping(value = "/changepw")
 	public String updatepw(@RequestParam(name="test", required=false) String test) {
-//		log.info(testDto);
-//		if (testDto.getTest() == null) {
-//			return "redirect:/myprofile/updatepw";
-//		}
 		if (test == null) {
-			return "redirect:/myprofile/updatepw";
+			return "myprofile/checkpw";
 		}
 		return "myprofile/changepw";
 	}
 	
 	@PostMapping(value = "/changepw")
-	public String updatepw(MemberVO vo) {
-		vo.setId("abc5678");
+	public String updatepw(MemberVO vo, HttpSession session) {
+		String loginId = (String) session.getAttribute("user");
+		vo.setId(loginId);
 		
 		service.updatepw(vo);
-		return "redirect:/myprofile/updatepw";
-
+		return "myprofile/checkpw";
 	}
 	
 	// 로그인활동 페이지
 	@GetMapping(value = "/loginActivity")
 	public String loginActivity(Model model) {
 		MemberVO mv = new MemberVO();
-		mv.setSeqId(1);
 		LoginVO lv = new LoginVO();
-		lv.setMemberSeqId(1);
 		
 		List<LoginVO> list = service.getLoginActivityList(mv, lv);
-		log.info(list);
+		log.info("list: " + list);
 		model.addAttribute("loginActivity", list);
 		return "myprofile/loginActivity";
 	}

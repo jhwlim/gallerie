@@ -50,7 +50,7 @@
 
 						<div class="login-box">
 							<h3 class="info2">
-								<a href="./login">로그인으로 돌아가기</a>
+								<a href="/spring/">로그인으로 돌아가기</a>
 							</h3>
 						</div>
 					</div>

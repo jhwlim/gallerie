@@ -1,5 +1,7 @@
 package com.kgitbank.spring.domain.chat.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kgitbank.spring.domain.chat.dto.ChattingRoom;
+import com.kgitbank.spring.domain.chat.dto.ContactDto;
 import com.kgitbank.spring.domain.chat.service.ChatService;
 import com.kgitbank.spring.domain.model.MemberVO;
+import com.kgitbank.spring.global.util.DateFormatUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -37,8 +41,12 @@ public class ChatController {
 		
 		int loginSeqId = service.selectMemberById(loginId).getSeqId();
 		// 최근 대화 상대 목록
-		model.addAttribute("friends", service.selectContactList(loginSeqId));
-		log.info(service.selectContactList(loginSeqId));
+		List<ContactDto> friends = service.selectContactList(loginSeqId);
+		for (ContactDto c : friends) {
+			c.setSendDateStr(DateFormatUtils.changeDateToAgoStr(c.getSendDate()));
+		}
+		model.addAttribute("friends", friends);
+		log.info(friends);
 		
 		if (receiverId == null) {
 			return "chat/standBy";

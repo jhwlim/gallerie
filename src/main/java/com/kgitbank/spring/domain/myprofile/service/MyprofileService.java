@@ -8,12 +8,14 @@ import com.kgitbank.spring.domain.model.MemberVO;
 
 public interface MyprofileService {
 
-	public int updateMyprofile(MemberVO vo);
+	public void updateMyprofile(MemberVO vo);
 	
 	public String currentpw(MemberVO vo);
 
 	public int updatepw(MemberVO vo);
 	
 	public List<LoginVO> getLoginActivityList(MemberVO mv, LoginVO lv);
+	
+	public String getEditInfo(String id);
 	
 }

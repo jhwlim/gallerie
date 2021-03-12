@@ -23,8 +23,8 @@ public class MyprofileServiceImpl implements MyprofileService {
 	private SecurityPwEncoder encoder;
 	
 	// 회원정보 수정
-	public int updateMyprofile(MemberVO vo) {
-		return mapper.updateMyprofile(vo);
+	public void updateMyprofile(MemberVO vo) {
+		mapper.updateMyprofile(vo);
 	}
 	
 	// 현재 비밀번호 비교하려고 가져오는 쿼리문
@@ -45,6 +45,11 @@ public class MyprofileServiceImpl implements MyprofileService {
 	// 위치 정보 가져오는 쿼리문
 	public List<LoginVO> getLoginActivityList(MemberVO mv, LoginVO lv) {
 		return mapper.getLoginActivityList(mv, lv);
+	}
+
+	@Override
+	public String getEditInfo(String id) {
+		return mapper.getEditInfo(id);
 	}
 	
 	

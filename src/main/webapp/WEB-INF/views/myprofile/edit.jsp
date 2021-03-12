@@ -6,7 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>프로필 편집</title>
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=1.0">
 <style>
 * {
 	margin: 0;
@@ -16,23 +19,13 @@
 
 body {
 	min-width: 630px;
-	background-color: #fafafa;
-	min-height: 1200px;
+	min-height: 1000px;
 }
 
 a {
 	color: black;
 	text-decoration: none;
 }
-
-.material-icons {
-	position: absolute;
-	left: 37%;
-	top: 15%;
-	font-size: 15px;
-	color: gainsboro;
-}
-
 
 hr {
 	height: 40px;
@@ -44,11 +37,13 @@ hr {
 
 main {
 	height: 100%;
-	margin: 106px 15% 40px;
+	width: 44%;
+	margin: 100px 28% 340px;
 	background-color: white;
 	border: 1px solid gainsboro;
 	display: grid;
 	grid-template-columns: 1fr 3fr;
+	text-align: center;
 }
 
 main>div {
@@ -59,6 +54,7 @@ main>div {
 	text-align: center;
 	font-size: 17px;
 	border-left: white solid 2px;
+	font-weight: bold;
 }
 
 .main1>div>a {
@@ -132,6 +128,8 @@ input[type=text]:focus {
 .key {
 	text-align: end;
 	padding-right: 32px;
+	font-weight: bold;
+	font-family: inherit;
 }
 
 .tablediv {
@@ -146,57 +144,85 @@ input[type=text]:focus {
 .table {
 	display: inline-block;
 }
+
+input[type=text] {
+	border-radius: 6px;
+	border: 1px solid #dbdbdb;
+}	
+
+input[type=text]:focus {
+	border-radius: 6px;
+	border: 2px solid #1c1e21;
+}
+
+input[type=email] {
+	border-radius: 6px;
+	border: 1px solid #dbdbdb;
+}	
+
+input[type=email]:focus {
+	border-radius: 6px;
+	border: 2px solid #1c1e21;
+}
+
+input[type=tel] {
+	border-radius: 6px;
+	border: 1px solid #dbdbdb;
+}	
+
+input[type=tel]:focus {
+	border-radius: 6px;
+	border: 2px solid #1c1e21;
+}
+
 input[type=submit] {
 	display: inline-block;
-	width: 100%;
+	width: 50%;
 	height: 100%;
 	padding: 10px;
 	background-color: rgb(56, 151, 240);
 	color: white;
-	border: 0px;
-	border-radius: 3px;
+	border-radius: 6px;
+	text-align: center;
+	border: 1px solid #dbdbdb;
 }
 
 </style>
 
 </head>
 <body>
+	
+	<%@ include file="/WEB-INF/include/nav.jspf"%>
+
 	<main>		
 	<div class="main1">
 		<div class="menu1">
-			<a href="/spring/myprofile/update">프로필 편집</a>
+			<a href="/spring/account/edit">프로필 편집</a>
 		</div>
 		<div class="menu2">
-			<a href="/spring/myprofile/updatepw">비밀번호 변경</a>
+			<a href="/spring/account/checkpw">비밀번호 변경</a>
 		</div>
 		<div class="menu3">
-			<a href="/spring/myprofile/loginActivity">로그인 활동</a>
+			<a href="/spring/account/loginActivity">로그인 활동</a>
 		</div>
 	</div>
 	<div class="main2">
-	<form action="<c:url value='/myprofile/update' />" method="POST" onsubmit="return validateUpdate()">
+	<form action="<c:url value='/account/edit' />" method="POST" onsubmit="return validateUpdate()">
 		<div class="liner">
-		<!--  
-			<div class="profile">
-					<div>
-						<h1>vivaviva</h1>
-					</div>
-			</div>
-		-->
+		
 			<div class="line1">
 				<div class="key">
-					이름<br />
+					이름<br/>
 				</div>
-				<input class="a_name" type="text" id="name" name="name" 
-				placeholder="이름" value="${member.name}" size="30"><br />
+				<input class="a_name" type="text" id="name" name="name" autocomplete="off" 
+				placeholder="이름을 입력해주세요." value="${member.name}" size="30"><br />
 			</div>
 			<div class="line2">
 				<div class="key">
 					소개<br />
 				</div>
-				<textarea cols="32" name="bio" ${member.something} rows="5">
-				${member.something}
-				</textarea>
+				<!-- members테이블의 profile->자기소개글 -->
+				<textarea cols="32" id="profile" name="profile" value="${member.profile}" rows="5"></textarea>
 				<br />
 			</div>
 			<div class="line3">
@@ -204,72 +230,38 @@ input[type=submit] {
 					이메일<br />
 				</div>
 				<input class="a_email" type="email" id="email" name="email" 
-				placeholder="이메일" size="30" value="${member.email}" ><br />
+				placeholder="이메일을 입력해주세요." size="30" value="${member.email}" ><br />
 			</div>
 			<div class="line4">
 				<div class="key">
 					전화번호<br />
 				</div>
 				<input type="tel" id="phone" name="phone" 
-				placeholder="전화번호" size="30" value="${member.phone}"><br />
+				placeholder="전화번호를 입력해주세요." size="30" value="${member.phone}"><br />
 			</div>
-		
+			<input type="hidden" name="id" value="${member.id}"/>
 			<div class="line5">
+				<div class="key">
+				</div>
 				<input type="submit" value="제출">
 			</div>
 	</div>
 	</form>	
 	</main>
-	<footer>
-		<div>
-			<a href="#">INSTARGRAM 정보</a>
-		</div>
-		<div>
-			<a href="#">지원</a>
-		</div>
-		<div>
-			<a href="#">홍보 센터</a>
-		</div>
-		<div>
-			<a href="#">API</a>
-		</div>
-		<div>
-			<a href="#">채용 정보</a>
-		</div>
-
-		<div>
-			<a href="#">개인정보처리방침</a>
-		</div>
-		<div>
-			<a href="#">약관</a>
-		</div>
-		<div>
-			<a href="#">디렉터리</a>
-		</div>
-		<div>
-			<a href="#">프로필</a>
-		</div>
-		<div>
-			<a href="#">해시태그</a>
-		</div>
-
-		<div>
-			<a href="#">언어</a>
-		</div>
-		<div>
-			<p class="copyright">©️2021 INSTARGRAM</p>
-		</div>
-	</footer>
+	
 	<script>
 		function validateUpdate() {
 			
 			var name = document.querySelector("#name");
+			var profile = document.querySelector("#profile");
 			var email = document.querySelector("#email");
 			var phone = document.querySelector("#phone");
 			
 			if (name.value === "" || email.value === "" || phone.value === "") {
 				alert('내용을 입력해주세요.');
 				return false;
+			} else {
+				alert('프로필을 저장했습니다.');
 			}
 			
 		}

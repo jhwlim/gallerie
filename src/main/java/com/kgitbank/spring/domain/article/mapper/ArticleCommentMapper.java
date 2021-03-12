@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.kgitbank.spring.domain.model.CommentVO;
 
-//@Repository("com.kgitbank.spring.domain.article.mapper.ArticleCommentMapper")
 public interface ArticleCommentMapper {
 
 	// 댓글 목록

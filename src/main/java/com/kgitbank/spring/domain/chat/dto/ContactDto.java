@@ -9,6 +9,7 @@ public class ContactDto {
 	
 	private int seqId;
 	private Date sendDate;
+	private String sendDateStr;
 	private int roomId;
 	
 	private int userSeqId;

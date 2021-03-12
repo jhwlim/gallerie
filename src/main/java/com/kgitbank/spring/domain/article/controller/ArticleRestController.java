@@ -88,6 +88,7 @@ public class ArticleRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
+		article.setWriteDateStr(DateFormatUtils.changeDateToAgoStr(article.getWriteDate()));
 		article.setFiles(service.selectFileByArticleId(article.getId()));
 		
 		// 해당 게시물에 로그인한 아이디가 좋아요를 눌렀는지 확인
@@ -95,6 +96,10 @@ public class ArticleRestController {
 		article.setHasLike(service.selectCountLikeByMemberSeqIdAndArticleId(likeVO) == 1 ? true : false);
 		
 		List<CommentVO> comments = commentService.listComment(article.getId());
+		for (CommentVO c : comments) {
+			c.setWriteDateStr(DateFormatUtils.changeDateToAgoStr(c.getWriteDate()));
+		}
+		
 		article.setComments(comments);
 		log.info(article);
 		

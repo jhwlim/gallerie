@@ -6,7 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 변경</title>
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=1.0">
 <style>
 * {
 	margin: 0;
@@ -16,23 +19,13 @@
 
 body {
 	min-width: 630px;
-	background-color: #fafafa;
-	min-height: 1200px;
+	min-height: 1000px;
 }
 
 a {
 	color: black;
 	text-decoration: none;
 }
-
-.material-icons {
-	position: absolute;
-	left: 37%;
-	top: 15%;
-	font-size: 15px;
-	color: gainsboro;
-}
-
 
 hr {
 	height: 40px;
@@ -44,7 +37,8 @@ hr {
 
 main {
 	height: 100%;
-	margin: 106px 15% 40px;
+	width: 44%;
+	margin: 100px 28% 530px;
 	background-color: white;
 	border: 1px solid gainsboro;
 	display: grid;
@@ -59,6 +53,7 @@ main>div {
 	text-align: center;
 	font-size: 17px;
 	border-left: white solid 2px;
+	font-weight: bold;
 }
 
 .main1>div>a {
@@ -106,11 +101,7 @@ input[type=text]:focus {
 }
 
 .j_from {
-	width: 80%;
-	display: grid;
-	grid-template-columns: auto auto;
-	grid-gap: 20px;
-	margin: 5% 3% 0 2%;
+	margin: 5% 3% 10% 17%;
 }
 
 .pwd {
@@ -118,12 +109,17 @@ input[type=text]:focus {
 	text-align: left;
 	font-size: 15px;
 	width: 100px;
+	margin-top: 10px;
+	margin-left: 5px;
+	font-weight: bold;
 }
 
 .pwd2 {
 	display: inline-block;
 	text-align: left;
 	padding-left: 0;
+	margin-left: 5px;
+	font-weight: bold;
 }
 
 .ok_ {
@@ -136,8 +132,18 @@ input[type=text]:focus {
 
 input[type=password] {
 	padding: 10px;
-	background-color: rgb(233, 227, 227);
-	border: 0px;
+	background-color: rgb(250, 250, 250);
+	border-radius: 6px;
+	width: 70%;
+	border: 1px solid #dbdbdb
+}
+
+input[type=password]:focus {
+	padding: 10px;
+	background-color: rgb(250, 250, 250);
+	width: 70%;
+	border-radius: 6px;
+	border: 1px solid #1c1e21;
 }
 
 input[type=submit] {
@@ -149,26 +155,31 @@ input[type=submit] {
 	color: white;
 	border: 0px;
 	border-radius: 3px;
+	margin-left: 5px;
+	text-align: center;
+	margin-bottom: 10px;
 }
 </style>
 
 </head>
 <body>
 
+<%@ include file="/WEB-INF/include/nav.jspf"%>
+
 <main>
 	<div class="main1">
 		<div class="menu1">
-			<a href="/spring/myprofile/update">프로필 편집</a>
+			<a href="/spring/account/edit">프로필 편집</a>
 		</div>
 		<div class="menu2">
-			<a href="/spring/myprofile/updatepw">비밀번호 변경</a>
+			<a href="/spring/account/checkpw">비밀번호 변경</a>
 		</div>
 		<div class="menu3">
-			<a href="/spring/myprofile/loginActivity">로그인 활동</a>
+			<a href="/spring/account/loginActivity">로그인 활동</a>
 		</div>
 	</div> 
 	<div class="main2">
-	<form action="<c:url value='/myprofile/changepw' />" method="POST" onsubmit="return validateJoin()">
+	<form class="j_from" action="<c:url value='/account/changepw' />" method="POST" onsubmit="return validateJoin()">
 			<div class="pwd">
 				<div  class="password_1">새 비밀번호</div>
 			</div>
@@ -191,46 +202,7 @@ input[type=submit] {
 	</form>
 	</div>
 </main>
-<footer>
-		<div>
-			<a href="#">INSTARGRAM 정보</a>
-		</div>
-		<div>
-			<a href="#">지원</a>
-		</div>
-		<div>
-			<a href="#">홍보 센터</a>
-		</div>
-		<div>
-			<a href="#">API</a>
-		</div>
-		<div>
-			<a href="#">채용 정보</a>
-		</div>
 
-		<div>
-			<a href="#">개인정보처리방침</a>
-		</div>
-		<div>
-			<a href="#">약관</a>
-		</div>
-		<div>
-			<a href="#">디렉터리</a>
-		</div>
-		<div>
-			<a href="#">프로필</a>
-		</div>
-		<div>
-			<a href="#">해시태그</a>
-		</div>
-
-		<div>
-			<a href="#">언어</a>
-		</div>
-		<div>
-			<p class="copyright">©️2021 INSTARGRAM</p>
-		</div>
-</footer>
 <script type="text/javascript">
 function validateJoin() {
 
@@ -241,7 +213,7 @@ function validateJoin() {
 	if (pw1.value == "" || pw.value == "") {
 		alert('비밀번호를 입력해주세요');
 		return false;
-	} else if (pw1.value == oldPw) {
+	} else if (pw1.value === oldPw) {
 		alert('현재 비밀번호와 다른 비밀번호를 설정해주세요');
 		return false;
 	} else if (pw1.value === pw.value) {
@@ -255,8 +227,6 @@ function validateJoin() {
 		return false;
 	} 
 }
-
-
 </script>
 
 </body>

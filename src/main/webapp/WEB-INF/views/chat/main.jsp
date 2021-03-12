@@ -201,7 +201,7 @@ var webSocket = {
 	                                                            <div class="friend-activity-box">
 	                                                                <div class="friend-act-long">
 	                                                                    <span class="friend-act-short">
-	                                                                        <span id="activityChk" class="friend-act-time">최근 대화: <fmt:formatDate value="${friend.sendDate}" type="both"/></span>
+	                                                                        <span id="activityChk" class="friend-act-time">최근 대화: ${friend.sendDateStr}</span>
 	                                                                     </span>
 	                                                                </div>
 	                                                            </div>

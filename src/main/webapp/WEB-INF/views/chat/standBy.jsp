@@ -86,7 +86,7 @@
 	                                                    <div class="friend-profile-container">
 	                                                        <div class="friend-profile-picture">
 	                                                            <span class="friend-profile-span" role="link" tabindex="-1">
-	                                                                <img alt="test03님의 프로필 사진"
+	                                                                <img alt=""
 	                                                                    class="friend-profile-img" crossorigin="anonymous"
 	                                                                    data-testid="user-avatar" draggable="false"
 	                                                                    src="<c:url value='/image/profile/${friend.imgPath}/'/>"></span>
@@ -106,7 +106,7 @@
 	                                                            <div class="friend-activity-box">
 	                                                                <div class="friend-act-long">
 	                                                                    <span class="friend-act-short">
-	                                                                        <span id="activityChk" class="friend-act-time">최근 대화: <fmt:formatDate value="${friend.sendDate}" type="both"/></span>
+	                                                                        <span id="activityChk" class="friend-act-time">최근 대화: ${friend.sendDateStr}</span>
 	                                                                     </span>
 	                                                                </div>
 	                                                            </div>

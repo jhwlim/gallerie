@@ -52,9 +52,7 @@
 			<div class="loader"></div>
 		</div>
 	</main>
-	<footer>
-		<h1>FOOTER</h1>
-	</footer>
+
 	<!-- Article Modal -->
 	<button id="articleModalOpen" style="display: none">모달버튼</button>
 

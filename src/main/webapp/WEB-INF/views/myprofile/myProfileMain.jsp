@@ -61,7 +61,7 @@
 				<div class="profile-user-settings">
 					<h1 class="profile-user-name">${member.id}</h1>
 					<c:if test="${member.signedIn}">
-						<button class="profile-btn profile-edit-btn">Edit Profile</button>
+						<button class="profile-btn profile-edit-btn" onclick="location.href='<c:url value='/account/edit'/>'">Edit Profile</button>
 					</c:if>
 					<c:if test="${!member.signedIn}">
 						<button class="profile-btn profile-edit-btn">
@@ -112,9 +112,6 @@
 			<div class="loader"></div>
 		</div>
 	</main>
-	<footer>
-		<h1>FOOTER</h1>
-	</footer>
 
 	<!-- Follow Modal -->
 	<div class="follow-modal" id="followModal">
@@ -159,7 +156,7 @@
 										style="height: 280px; overflow: auto; padding-top: 16px;">
 										<p class="d-block mb-1" style="white-space: pre-wrap;"
 											id="articleModalContent"></p>
-										<small class="text-muted">4 HOURS AGO</small>
+										<small class="text-muted" id="articleModalWriteDate">4 HOURS AGO</small>
 										<div class="comments" id="comments" style="margin-top: 10px;"></div>
 									</div>
 
@@ -423,6 +420,7 @@ function openArticleModal(id) {
 				$('#articleModalHeart, #articleModalHeart span').removeClass('heart-active');
 			}
 			$('#articleModalLikeCnt span').text(article.likeCount);
+			$('#articleModalWriteDate').text(article.writeDateStr);
 			
 			// 이미지 값 설정하기
 			var files = article.files;
@@ -658,8 +656,16 @@ var followlist = {
         			tmp = true;
         		}
 	        	
-	        	$('#follow_table').append(createFollowModalItem(followlist[obj], tmp, followlist[obj].id == "${user}"));	        		
+	        	var isLoginId = followlist[obj].id == "${user}";
+	        	var item = createFollowModalItem(followlist[obj], tmp, isLoginId);
+        		
+	        	$('#follow_table').append(item);	        		
 	        	
+	        	var btn = $(item).find('.follow-modal__btn');
+        		console.log(btn);
+	        	$(btn).data('seqId', followlist[obj].seqId);
+        		
+        		$(btn).on('click', $.addFollowEvent);
 	        }
 	        
 	        
@@ -691,6 +697,7 @@ var followlist = {
         		$('#follow_table').append(item);
         		
         		var btn = $(item).find('.follow-modal__btn');
+        		console.log(btn);
 	        	$(btn).data('seqId', followerlist[obj].seqId);
         		
         		$(btn).on('click', $.addFollowEvent);
@@ -702,6 +709,7 @@ var followlist = {
 	 });
 	
 	 $.addFollowEvent = function() {
+		 console.log('클릭됨');
 		 var btn = this;
 		 var seqId = $(this).data('seqId');
 		 var isFollowed = $(this).hasClass('follow-modal__btn--followed');
@@ -779,7 +787,7 @@ var followlist = {
 <div class="more-modal" id="moreModalClose">
     <div class="more-modal__container">
         <ul class="more-modal__list">
-            <li class="more-modal__option">게시물로 이동</li>
+            <li class="more-modal__option more-modal__option--move">게시물로 이동</li>
             <li class="more-modal__option more-modal__option--delete">게시물 삭제</li>
             <li class="more-modal__option" id="moreModalClose">취소</li>
         </ul>
@@ -792,7 +800,6 @@ $('.article__more').on('click', function() {
 $('.more-modal__option--delete').on('click', function() {
 	var id = $('#articleModal').data('id');
 	var writerId = $('#articleModalWriterId').text();
-	
 	$.ajax({
 		url: "<c:url value = '/article/'/>",
 		method: 'DELETE',
@@ -804,6 +811,10 @@ $('.more-modal__option--delete').on('click', function() {
 		}
 	});
 })
+$('.more-modal__option--move').on('click', function() {
+	var id = $('#articleModal').data('id');
+	location.href = '/spring/post/' + id;
+});
 $('#moreModalClose').on('click', function() {
     $('#moreModalClose').hide();
 });

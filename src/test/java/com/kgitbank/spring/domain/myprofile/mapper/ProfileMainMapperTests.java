@@ -10,9 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.kgitbank.spring.domain.article.dto.GalleryPageDto;
 import com.kgitbank.spring.domain.model.MemberVO;
-import com.kgitbank.spring.domain.model.mapper.ArticleLikeMapperTests;
 
 import lombok.extern.log4j.Log4j;
 
@@ -31,7 +29,6 @@ public class ProfileMainMapperTests {
 	@Autowired
 	ProfileImageMapper imgMapper;
 	
-	@Ignore
 	@Test
 	public void selectMemberByIdTest() {
 		
@@ -63,3 +60,11 @@ public class ProfileMainMapperTests {
 	}
 	
 }
+
+
+
+
+
+
+
+
