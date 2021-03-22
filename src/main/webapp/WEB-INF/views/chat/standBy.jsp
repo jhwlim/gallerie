@@ -18,12 +18,12 @@
 <link rel="stylesheet"
 	href="/spring/resources/css/profile/profile.css?ver=1.1">
 <link rel="stylesheet" href="/spring/resources/css/chat/standby.css?ver=1.0">
+<link rel="stylesheet" href="<c:url value = '/resources/css/chat/search_modal.css?ver=1.0' />" />
 <script
   src="https://code.jquery.com/jquery-1.12.4.js"
   integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
   crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
 
@@ -138,7 +138,7 @@
                             class="send-message-btn-container">
                             <div
                                 class="send-message-btn-box">
-                                <button class="send-message-btn" type="button">메시지 보내기</button></div>
+                                <button class="send-message-btn" type="button" id="searchModalBtn">메시지 보내기</button></div>
                         </div>
                     </div>
                 </div>
@@ -146,5 +146,58 @@
         </div>
     </div>
 
+	<!-- Follow Modal -->
+	<div class="search-modal" id="searchModal">
+        <div class="search-modal__container">
+            <header class="search-modal__header">새로운 메시지</header>
+            <div class="search-modal__input-box">
+            	<span class="search-modal__input-text">받는 사람</span>
+	            <input type="text" placeholder="검색" class="search-modal__input">
+            </div>
+            <ul class="search-modal__list">
+            	<li class="search-modal__item">
+            		<figure class="search-modal__figure">
+            			<img src="/spring/image/profile/123" alt="" class="search-modal__image" />
+            		</figure>
+           			<div class="search-modal__user">
+           				<p class="search-modal__id">test01</p>
+           				<span class="search-modal__name">테스트01</span>
+           				<button class="search-modal__btn">메시지 보내기</button>
+           			</div>
+            	</li>
+            	<li class="search-modal__item">
+            		<figure class="search-modal__figure">
+            			<img src="/spring/image/profile/123" alt="" class="search-modal__image" />
+            		</figure>
+           			<div class="search-modal__user">
+           				<p class="search-modal__id">test01</p>
+           				<span class="search-modal__name">테스트01</span>
+           				<button class="search-modal__btn">메시지 보내기</button>
+           			</div>
+            	</li>
+            	<li class="search-modal__item">
+            		<figure class="search-modal__figure">
+            			<img src="/spring/image/profile/123" alt="" class="search-modal__image" />
+            		</figure>
+           			<div class="search-modal__user">
+           				<p class="search-modal__id">test01</p>
+           				<span class="search-modal__name">테스트01</span>
+           				<button class="search-modal__btn">메시지 보내기</button>
+           			</div>
+            	</li>
+            </ul>
+            <button class="search-modal__close" id="searchClose">X</button>
+        </div>
+    </div>
+    <script>
+	    $('#searchModalBtn').on('click', function(){
+	        $('#searchModal').css('display', 'flex');
+	    });
+	
+	    $('#searchClose').on('click', function() {
+	        $('#searchModal').hide();
+	    });
+	    
+    </script>
 </body>
 </html>
