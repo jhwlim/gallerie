@@ -146,46 +146,15 @@
         </div>
     </div>
 
-	<!-- Follow Modal -->
+	<!-- Search Modal -->
 	<div class="search-modal" id="searchModal">
         <div class="search-modal__container">
             <header class="search-modal__header">새로운 메시지</header>
             <div class="search-modal__input-box">
             	<span class="search-modal__input-text">받는 사람</span>
-	            <input type="text" placeholder="검색" class="search-modal__input">
+	            <input type="text" placeholder="검색" class="search-modal__input" id="searchInput">
             </div>
-            <ul class="search-modal__list">
-            	<li class="search-modal__item">
-            		<figure class="search-modal__figure">
-            			<img src="/spring/image/profile/123" alt="" class="search-modal__image" />
-            		</figure>
-           			<div class="search-modal__user">
-           				<p class="search-modal__id">test01</p>
-           				<span class="search-modal__name">테스트01</span>
-           				<button class="search-modal__btn">메시지 보내기</button>
-           			</div>
-            	</li>
-            	<li class="search-modal__item">
-            		<figure class="search-modal__figure">
-            			<img src="/spring/image/profile/123" alt="" class="search-modal__image" />
-            		</figure>
-           			<div class="search-modal__user">
-           				<p class="search-modal__id">test01</p>
-           				<span class="search-modal__name">테스트01</span>
-           				<button class="search-modal__btn">메시지 보내기</button>
-           			</div>
-            	</li>
-            	<li class="search-modal__item">
-            		<figure class="search-modal__figure">
-            			<img src="/spring/image/profile/123" alt="" class="search-modal__image" />
-            		</figure>
-           			<div class="search-modal__user">
-           				<p class="search-modal__id">test01</p>
-           				<span class="search-modal__name">테스트01</span>
-           				<button class="search-modal__btn">메시지 보내기</button>
-           			</div>
-            	</li>
-            </ul>
+            <ul class="search-modal__list"></ul>
             <button class="search-modal__close" id="searchClose">X</button>
         </div>
     </div>
@@ -197,6 +166,68 @@
 	    $('#searchClose').on('click', function() {
 	        $('#searchModal').hide();
 	    });
+	    
+	    $('#searchInput').on('input keyup', function(e) {
+	    	var list = $('.search-modal__list');
+	    	var value = $(this).val();
+	    	if (value.length > 0) {
+	    		$.ajax({
+		    		url: "<c:url value = '/search/user' />",
+		    		method: 'GET',
+		    		contentType: "application/json",
+		    		data: {keyword : value},
+		    		success : function(result) {
+		    			$(list).html('');
+		    			for (obj of result) {
+		    				if (obj.id != '${sessionScope.user}') {
+			    				$(list).append(createSearchModalItem(obj));		    					
+		    				}
+		    			}
+		    		}
+		    	});
+	    	} else {
+	    		$(list).html('');
+	    	}
+	    });
+	    
+	    function createSearchModalItem(obj) {
+	    	item = document.createElement('li');
+	    	item.classList.add('search-modal__item');
+	    	
+	    	figure = document.createElement('figure');
+	    	figure.classList.add('search-modal__figure');
+	    	item.appendChild(figure);
+	    	
+	    	img = document.createElement('img');
+	    	img.src = '/spring/image/profile/' + obj.imgPath + '/';
+	    	img.classList.add('search-modal__image');
+	    	figure.appendChild(img);
+	    	
+	    	user = document.createElement('div');
+	    	user.classList.add('search-modal__user');
+	    	item.appendChild(user);
+	    	
+	    	id = document.createElement('p');
+	    	id.classList.add('search-modal__id');
+	    	id.innerText = obj.id;
+	    	user.appendChild(id);
+	    	
+	    	span = document.createElement('span');
+	    	span.classList.add('search-modal__name');
+	    	span.innerText = obj.name;
+	    	user.append(span);
+	    	
+	    	btn = document.createElement('button');
+	    	btn.classList.add('search-modal__btn');
+	    	btn.innerText = '메시지 보내기';
+	    	user.appendChild(btn);
+	    	btn.addEventListener('click', function() {
+	    		location.href = '/spring/message/' + obj.id;
+	    	});
+	    	
+	    	return item;
+	    }
+	    
 	    
     </script>
 </body>
