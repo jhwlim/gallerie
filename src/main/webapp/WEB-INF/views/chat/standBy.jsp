@@ -18,12 +18,12 @@
 <link rel="stylesheet"
 	href="/spring/resources/css/profile/profile.css?ver=1.1">
 <link rel="stylesheet" href="/spring/resources/css/chat/standby.css?ver=1.0">
+<link rel="stylesheet" href="<c:url value = '/resources/css/chat/search_modal.css?ver=1.0' />" />
 <script
   src="https://code.jquery.com/jquery-1.12.4.js"
   integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
   crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
 
@@ -138,7 +138,7 @@
                             class="send-message-btn-container">
                             <div
                                 class="send-message-btn-box">
-                                <button class="send-message-btn" type="button">메시지 보내기</button></div>
+                                <button class="send-message-btn" type="button" id="searchModalBtn">메시지 보내기</button></div>
                         </div>
                     </div>
                 </div>
@@ -146,5 +146,89 @@
         </div>
     </div>
 
+	<!-- Search Modal -->
+	<div class="search-modal" id="searchModal">
+        <div class="search-modal__container">
+            <header class="search-modal__header">새로운 메시지</header>
+            <div class="search-modal__input-box">
+            	<span class="search-modal__input-text">받는 사람</span>
+	            <input type="text" placeholder="검색" class="search-modal__input" id="searchInput">
+            </div>
+            <ul class="search-modal__list"></ul>
+            <button class="search-modal__close" id="searchClose">X</button>
+        </div>
+    </div>
+    <script>
+	    $('#searchModalBtn').on('click', function(){
+	        $('#searchModal').css('display', 'flex');
+	    });
+	
+	    $('#searchClose').on('click', function() {
+	        $('#searchModal').hide();
+	    });
+	    
+	    $('#searchInput').on('input keyup', function(e) {
+	    	var list = $('.search-modal__list');
+	    	var value = $(this).val();
+	    	if (value.length > 0) {
+	    		$.ajax({
+		    		url: "<c:url value = '/search/user' />",
+		    		method: 'GET',
+		    		contentType: "application/json",
+		    		data: {keyword : value},
+		    		success : function(result) {
+		    			$(list).html('');
+		    			for (obj of result) {
+		    				if (obj.id != '${sessionScope.user}') {
+			    				$(list).append(createSearchModalItem(obj));		    					
+		    				}
+		    			}
+		    		}
+		    	});
+	    	} else {
+	    		$(list).html('');
+	    	}
+	    });
+	    
+	    function createSearchModalItem(obj) {
+	    	item = document.createElement('li');
+	    	item.classList.add('search-modal__item');
+	    	
+	    	figure = document.createElement('figure');
+	    	figure.classList.add('search-modal__figure');
+	    	item.appendChild(figure);
+	    	
+	    	img = document.createElement('img');
+	    	img.src = '/spring/image/profile/' + obj.imgPath + '/';
+	    	img.classList.add('search-modal__image');
+	    	figure.appendChild(img);
+	    	
+	    	user = document.createElement('div');
+	    	user.classList.add('search-modal__user');
+	    	item.appendChild(user);
+	    	
+	    	id = document.createElement('p');
+	    	id.classList.add('search-modal__id');
+	    	id.innerText = obj.id;
+	    	user.appendChild(id);
+	    	
+	    	span = document.createElement('span');
+	    	span.classList.add('search-modal__name');
+	    	span.innerText = obj.name;
+	    	user.append(span);
+	    	
+	    	btn = document.createElement('button');
+	    	btn.classList.add('search-modal__btn');
+	    	btn.innerText = '메시지 보내기';
+	    	user.appendChild(btn);
+	    	btn.addEventListener('click', function() {
+	    		location.href = '/spring/message/' + obj.id;
+	    	});
+	    	
+	    	return item;
+	    }
+	    
+	    
+    </script>
 </body>
 </html>

@@ -98,7 +98,7 @@ public class ProfileImageServiceImpl implements ProfileImageService {
 			in = new FileInputStream(uploadPath + savedFileName);
 			imgBytes = IOUtils.toByteArray(in);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.warn("FILE NOT FOUND");
 		}
 		
 		return imgBytes;
