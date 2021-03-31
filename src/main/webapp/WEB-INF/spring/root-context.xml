@@ -84,5 +84,6 @@
 	<mybatis-spring:scan base-package="com.kgitbank.spring.domain.follow.mapper" />
 	<mybatis-spring:scan base-package="com.kgitbank.spring.domain.myprofile.mapper" />
 	
+	
 	 
 </beans>

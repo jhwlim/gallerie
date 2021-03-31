@@ -7,12 +7,15 @@
 
 body{
     font-family: sans-serif;
+    background-color: #faebd7;
 
 }
 
 img {
     pointer-events: none;
 }
+
+
 
 .story-container ul{
     list-style-type: none;
@@ -216,6 +219,8 @@ input, select, textarea {
     background-color: #fff;
     color: #1c1e21;
 }
+
+
 
 input {
     -webkit-writing-mode: horizontal-tb !important;

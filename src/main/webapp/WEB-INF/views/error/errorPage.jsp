@@ -2,16 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/include/jstl.jspf" %>
 
-<!DOCTYPE html>
+
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+<title>Error Page</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="/spring/resources/js/errorPage.js"></script>
 
+<link rel="stylesheet" href="/spring/resources/css/mainpage/main.css?ver=2.1">
 <link rel="stylesheet" href="/spring/resources/css/error/errorPage.css?ver=1.0">
 
 

@@ -2,14 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/include/jstl.jspf" %>
 
-<!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>	
+	
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
 <link rel="stylesheet"
@@ -24,6 +26,13 @@
   integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
   crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/d3d6f2df1f.js" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
 
 <c:if test="${!empty receiverId}">
 <script type="text/javascript" src="<c:url value="/resources/js/sockjs.js"/>"></script>

@@ -34,7 +34,7 @@ public class MemberMapperTests {
 		log.info(memberMapper.selectAll());
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void insertMemberTest() {
 		String id = "starbuckskorea";
@@ -56,7 +56,7 @@ public class MemberMapperTests {
 		log.info("insertMemberTest - Complete");
 	}
 	
-	@Ignore
+	
 	@Test
 	public void createMemberSamples() {
 		

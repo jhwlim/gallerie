@@ -21,6 +21,14 @@ body{
 
 }
 
+#svg-color{
+	color: #404040;
+}
+
+#svg-color:hover{
+	color: #ffffff;
+}
+
 .autocomplete {
   /*the container must be positioned relative:*/
   
@@ -64,7 +72,10 @@ input {
   font-size: 16px;
 }
 
-
+input[type=text] {
+	width: 100%;
+	
+}
 
 input[type=submit] {
   background-color: DodgerBlue;
@@ -160,9 +171,13 @@ input[type=submit] {
 
 
 a, a:visited {
-    color: #00376b;
-    color: rgba(var(--fe0,0,55,107),1);
+    color: #404040;    
     text-decoration: none;
+}
+
+a:hover{
+	color: #ffffff;
+	text-decoration: none;
 }
 
 img {
@@ -170,8 +185,10 @@ img {
 }
 
 .link-menu {
-    color: black;
+    color: #ffffff;
 }
+
+
 
 .topbar-profile-photo {
     width: 1.5em; 
@@ -360,5 +377,9 @@ input[type="file" i] {
 	border-left: 7px solid transparent;
 	border-right: 7px solid transparent;
 	border-bottom: 7px solid #fff;
+}
+
+.navbar {
+    background-color: #8e6549;
 }
 

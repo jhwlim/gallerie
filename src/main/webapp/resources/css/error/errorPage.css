@@ -1,16 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
 
-*{
+*,
+*:after,
+*:before {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-}
-
-*,
-*:after,
-*:before {
-    box-sizing: border-box;
 }
 
 body{
@@ -18,143 +14,6 @@ body{
     font: 16px Arial;
 
 }
-
-.autocomplete {
-  /*the container must be positioned relative:*/
-  
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 1 auto;
-  -ms-flex: 0 1 auto;
-  flex: 0 1 auto;
-  min-width: 125px;
-  width: 215px;
-  height: 28px;
-     
-}
-
-.myinput{
-  box-sizing: border-box;
-  height: 100%;
-  width: 100%;
-  border: solid 1px #dbdbdb;
-  border: solid 1px rgba(var(--b6a,219,219,219),1);
-  border-radius: 3px;
-  color: #262626;
-  color: rgba(var(--i1d,38,38,38),1);
-  outline: 0;
-  padding: 3px 10px 3px 26px;
-  z-index: 2;
-  -webkit-appearance: none;
-  font-size: 14px;
-  background: #fafafa;
-  background: rgba(var(--b3f,250,250,250),1);
-  line-height: 18px;
-}
-
-.myinput:placeholder-shown{
-	font-size: 16px;
-}
-
-input {
-  border: 1px solid transparent;
-  background-color: #f1f1f1;
-  padding: 10px;
-  font-size: 16px;
-}
-input[type=text] {
-  background-color: #f1f1f1;
-  width: 100%;
-}
-input[type=submit] {
-  background-color: DodgerBlue;
-  color: #fff;
-}
-.autocomplete-items {
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 0;
-  right: 0;
-}
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff;
-  border-bottom: 1px solid #d4d4d4;
-  width: 300px;
-}
-.autocomplete-items div:hover {
-  /*when hovering an item:*/
-  background-color: #e9e9e9;
-}
-.autocomplete-active {
-  /*when navigating through the items using the arrow keys:*/
-  background-color: DodgerBlue !important;
-  color: #ffffff;
-}
-
-
-#action{
-    position: absolute;
-}
-
-#action .menu{
-    margin-top: 20px;
-    padding: 5px 10px;
-    background: #fff;
-    width: 200px;
-    box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-    border-radius: 6px;
-    transition: 0.5s;
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    transform-origin: top center;
-    opacity: 1;
-    box-shadow: 0 0 5px 1px rgba(var(--jb7,0,0,0),.0975);
-    z-index: 3;
-}
-
-#action .menu.active{
-    visibility: visible;
-    opacity: 1;
-}
-
-#action .menu ul li{
-    list-style: none;
-    padding: 10px 0;
-    
-    display: flex;
-    align-items: center;
-
-}
-
-#action .menu ul li:last-child{
-    border-top: 1px solid rgba(0,0,0,0.05);
-}
-
-#action .menu ul li img{
-    max-width: 20px;
-    margin-right: 10px;
-    opacity: 0.5;
-    transition: 0.5s;
-}
-
-#action .menu ul li:hover img{
-    opacity: 1;
-}
-
-#action .menu ul li a {
-    display: inline-block;
-    text-decoration: none;
-    color: #555;
-    font-weight: 500;
-    transition: 0.5s;
-}
-
 
 .warning-box{
     align-content: stretch;
@@ -181,7 +40,6 @@ input[type=submit] {
     
 }
 
-
 .error-message{
     font-size: 16px;
     line-height: 24px;
@@ -192,206 +50,14 @@ input[type=submit] {
     text-align: center;
 }
 
-a, a:visited {
-    color: #00376b;
-    color: rgba(var(--fe0,0,55,107),1);
-    text-decoration: none;
-}
-
-img {
-    pointer-events: none;
-}
-
-.link-menu {
-    color: black;
-}
-
-.topbar-profile-photo {
-    width: 1.5em; 
-    height: 1.5em; 
-    position: relative;
-}
-
-.story-profile-photo {
-    width: 56px; 
-    height: 56px; 
-    position: relative; 
-    border-width: 2px !important;
-}
-
-.post-profile-photo {
-    width: 46px; 
-    height: 46px; 
-    position: relative; 
-    border-width: 2px !important;
-}
-
-.sidenav-profile-photo {
-    width: 56px; 
-    height: 56px; 
-    position: relative; 
-}
-
-.comment-box {
-    border-top: 1px solid lightgray;
-}
-
-.input-post {
-    outline: none;
-}
-
-.btn-ig {
-    background-color: transparent;
-    border: 0;
-    color: #007bff;
-    font-weight: 600;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    outline: none !important;
-}
-
-.btn-ig:hover,
-.btn-ig:focus {
-    background-color: transparent !important;
-    color: #007bff !important;
-}
-
-.profile-info {
-    font-size: 14px;
-}
-
-.profile-info-username {
-    display: block;
-    font-weight: 700;
-}
-
-.sugest-profile-photo {
-    width: 46px; 
-    height: 46px;  
-    position: relative;
-}
-
-.sugest-username {
-    font-size: 14px
-}
 
 
-.text{
-  font-size: 21px;
-  margin-left: 30px;
-  color: grey;
-  font-family: 'Montserrat',sans-serif;
-}
 
 
-i {
-    font-style: italic;
-}
 
-input, select, textarea {
-    background-color: #fff;
-    color: #1c1e21;
-}
 
-input {
-    -webkit-writing-mode: horizontal-tb !important;
-    text-rendering: auto;
-    color: -internal-light-dark(black, white);
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: start;
-    appearance: textfield;
-    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
-    -webkit-rtl-ordering: logical;
-    cursor: text;
-    margin: 0em;
-    font: 400 13.3333px Arial;
-    padding: 1px 2px;
-    border-width: 2px;
-    border-style: inset;
-    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
-    border-image: initial;
-}
 
-input[type="file" i] {
-    appearance: initial;
-    background-color: initial;
-    cursor: default;
-    align-items: baseline;
-    color: inherit;
-    text-overflow: ellipsis;
-    white-space: pre;
-    text-align: start !important;
-    padding: initial;
-    border: initial;
-    overflow: hidden !important;
-}
 
-#facebook ._-kb button, #facebook ._-kb input, #facebook ._-kb label, #facebook ._-kb select, #facebook ._-kb td, #facebook ._-kb textarea {
-    font-family: inherit;
-}
 
-.my-profile{
-    position: relative;
-}
 
-.profile-img{
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
-    border-bottom-left-radius: 50%;
-    display: block;
-
-}
-
-.profile-img-inside{
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
-    border-bottom-left-radius: 50%;
-    --T68779821: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: var(--T68779821);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    left: 0;
-    top: 0
-}
-
-.profile-img-inside:hover{
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.profile-img-middle{
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
-    border-bottom-left-radius: 50%;
-    bottom: 0;
-    right: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition-duration: var(--fds-duration-extra-extra-short-out);
-    transition-property: opacity;
-    transition-timing-function: var(--fds-animation-fade-out);
-    background-color: #f0f2f5;
-}
-
-.arrow {
-	position: absolute;
-	top: 111px;
-	margin-left: 225px;
-	width: 0;
-	height: 0;
-	border-left: 7px solid transparent;
-	border-right: 7px solid transparent;
-	border-bottom: 7px solid #fff;
-}
 

@@ -30,6 +30,7 @@
 	<beans:bean id="LoginInterceptor" class="com.kgitbank.spring.domain.interceptors.LoginInterceptor" />
 	
 	<!-- Interceptor 설정 -->
+	<!-- 
 	<interceptors>
 	    <interceptor>
 	        <mapping path="/**"/>
@@ -46,6 +47,8 @@
 	        <beans:ref bean="LoginInterceptor"/>
 	    </interceptor>
 	</interceptors>
+	
+	 -->
  	
 	
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,10 +12,65 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
+	
 </head>
 
 
 <body>
+
+	<script src = "<c:url value='/resources/config/config.js' />"></script>
+	<script>
+
+
+  function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+    console.log('statusChangeCallback');
+    console.log(response);                   // The current login status of the person.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+      testAPI();  
+      var accessToken = response.authResponse.accessToken;
+      
+      window.location.href='facebook.login?access_token='+response.authResponse.accessToken; 
+      
+    } else {                                 // Not logged into your webpage or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this webpage.';
+    }
+  }
+
+
+  function checkLoginState() {               // Called when a person is finished with the Login Button.
+    FB.getLoginStatus(function(response) {   // See the onlogin handler
+      statusChangeCallback(response);
+    });
+  }
+
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : config.FB_KEY,
+      cookie     : true,                     // Enable cookies to allow the server to access the session.
+      xfbml      : true,                     // Parse social plugins on this webpage.
+      version    : 'v10.0'           // Use this Graph API version for this call.
+    });
+
+
+    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      statusChangeCallback(response);        // Returns the login status.
+    });
+  };
+ 
+  function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+
+</script>
+	
+	
 
 	<div class="container">
 		<div class="row">
@@ -33,13 +89,12 @@
 
 					<form id="loginForm" method="post">
 
-						<img src="/spring/resources/css/member/images/instagram.png"
+						<img src="/spring/resources/css/member/images/gallerie-logo-s.png"
 							class="instagram-logo">
 						<h2 class="info">친구들의 사진과 동영상을 보려면 로그인하세요.</h2>
-						<button type="submit" class="btn btn-primary btn-block">
-							<img src="/spring/resources/css/member/images/facebook.jpg">Facebook으로
-							로그인
-						</button>
+						
+						<div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="true" scope="public_profile,email" onlogin="checkLoginState();"></div>
+												
 						<div class="bar">
 							<div class="left-right"></div>
 							<div class="or-center">또는</div>
@@ -131,12 +186,8 @@
 	 	        
 	    });
 	});
-		
-	
-		
-		
-		
+				
 	</script>
-
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v10.0" nonce="XvzubL4a"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.kgitbank.spring.domain.account.dto.FbProfile;
 import com.kgitbank.spring.domain.account.service.AccountService;
+import com.kgitbank.spring.domain.account.service.TokenService;
 import com.kgitbank.spring.domain.model.MemberVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -32,10 +37,38 @@ public class AccountController {
 
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private TokenService serviceT;
 
 	@Resource(name="mailSender")
 	private JavaMailSenderImpl jms;
+	
+	
+	@GetMapping(value = "/facebook.login")
+	public String fbLogin(String access_token , Model model, HttpSession session) throws Exception {
+		
+		if(service.idCheck(serviceT.call_me(access_token).getUser_name()) == 0) {
+			MemberVO mem = new MemberVO();
+			
+			mem.setId(serviceT.call_me(access_token).getUser_name());
+			mem.setPw("1234");
+			mem.setPhone("010-1234-1234");
+			mem.setEmail(serviceT.call_me(access_token).getEmail());
+			mem.setName(serviceT.call_me(access_token).getUser_name());
+			
+			log.info(mem);
+			
+			service.signUp(mem);
+		}
+		
+		session.setAttribute("user", serviceT.call_me(access_token).getUser_name());
+		return "redirect:/";
+	}
 
+	
+
+	
 	@GetMapping(value = "/signup")
 	public String join() {
 		return "account/signUp";
