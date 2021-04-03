@@ -32,7 +32,7 @@
                         <div class="story-container">
                             <ul>
                                 <c:forEach var="follow" items="${follows}">
-                                	<li onclick="location.href='/spring/myprofile/${follow.id}'" style="cursor: pointer;">
+                                	<li onclick="location.href='/spring/myprofile/${follow.id}'" style="cursor: pointer;" class="has-story">
 	                                    <div class="story">
 	                                        <img src="<c:url value='/image/profile/${follow.imgPath}/'/>" class="story-img">
 	                                    </div>
@@ -48,17 +48,13 @@
                              <div aria-label="게시물 작성" class="post-label" role="region">
                                 <div class="post-feeling">
                                     <h3 class="head-line" dir="auto">게시물 작성</h3>
-                                    <a aria-label="Taewook Kang님의 타임라인" class="timeline" href="https://www.facebook.com/profile" role="link" tabindex="0"> <!--.php?id= 프로필 뒤에 아이디 넣기-->
-                                     <div class="my-profile">
-                                         <img class="profile-img" height="40" src="https://scontent-ssn1-1.xx.fbcdn.net/v/t1.30497-1/cp0/p40x40/143086968_2856368904622192_1959732218791162458_n.png?_nc_cat=1&amp;ccb=3&amp;_nc_sid=7206a8&amp;_nc_ohc=oRlR2bi78voAX_wZ1nf&amp;_nc_ht=scontent-ssn1-1.xx&amp;_nc_tp=30&amp;oh=7053e428da80ec059f1993fa56bb99a7&amp;oe=6063E723" width="40" alt="">
-                                         <div class="profile-img-inside" style="height: 40px; width: 40px;">
-                 
-                                         </div>
-                                     </div>
-                                     <div class="profile-img-middle" data-visualcompletion="ignore">
-                 
-                                     </div>
-                                 </a>
+                                    <div class="write__writer" style = "padding-right: 10px;" onclick="location.href='/spring/myprofile/${sessionScope.user}';">
+                                  
+						                <figure class="write__writer-figure">
+						                    <img src="<c:url value = '/image/profile/${sessionScope.userProfile}/' />" alt="" class="write__writer-image">
+						                </figure>
+						                  
+						            </div>
                                  <div class="text-box" role="button" tabindex="0">
                                          <div class="text-box-inside">
                                              <span class="text-text" id="writeOpenBtn" style="-webkit-box-orient: vertical; -webkit-line-clamp: 2; display: -webkit-box;">${sessionScope.user}님, 무슨 생각을 하고 계신가요?</span>
@@ -400,6 +396,9 @@ $('#writeBtn').on('click', function(evt) {
     </div>
 </div>
 <script>
+
+
+
 function setArticles(articles) {
 	for (var article of articles) {
 		
