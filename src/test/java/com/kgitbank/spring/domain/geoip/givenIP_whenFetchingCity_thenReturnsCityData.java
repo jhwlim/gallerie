@@ -6,7 +6,7 @@ import java.net.InetAddress;
 
 import org.junit.Test;
 
-import com.kgitbank.spring.domain.myprofile.service.MyprofileServiceTest;
+
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
