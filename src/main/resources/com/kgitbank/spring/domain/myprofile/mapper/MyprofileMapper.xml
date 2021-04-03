@@ -45,16 +45,25 @@
 	   </select>
 	   
 	   <select id="getLoginActivityList" resultType="com.kgitbank.spring.domain.model.LoginVO">
-	   		SELECT 
+	   		SELECT distinct
 	   			location, login_date, ip
 	   		FROM 
 	   			members 
 	   		JOIN 
 	   			logins
 	   		ON 
-	   			seq_id = member_seq_id
-	   		ORDER BY 
+	   			logins.member_seq_id = #{memberSeqId}
+	   		ORDER BY
 	   			login_date desc
+	   </select>
+	   
+	   <select id="getSeqId" resultType="Integer">
+	   	SELECT
+		    seq_id
+		FROM 
+			members
+		WHERE
+			id = #{id}
 	   </select>
 
 </mapper>

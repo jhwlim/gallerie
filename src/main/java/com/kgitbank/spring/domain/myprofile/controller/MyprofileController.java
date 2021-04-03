@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -119,11 +120,19 @@ public class MyprofileController {
 	
 	// 로그인활동 페이지
 	@GetMapping(value = "/loginActivity")
-	public String loginActivity(Model model) {
+	public String loginActivity(Model model, HttpSession session) {
+		String loginId = (String) session.getAttribute("user");
+//		log.info("loginId: " + loginId);
+		
 		MemberVO mv = new MemberVO();
 		LoginVO lv = new LoginVO();
 		
-		List<LoginVO> list = service.getLoginActivityList(mv, lv);
+		int memberSeqId = service.getSeqId(loginId);
+		log.info("memberSeqId: " + memberSeqId);
+		
+		lv.setMemberSeqId(memberSeqId);
+		
+		List<LoginVO> list = service.getLoginActivityList(lv);
 		log.info("list: " + list);
 		model.addAttribute("loginActivity", list);
 		return "myprofile/loginActivity";

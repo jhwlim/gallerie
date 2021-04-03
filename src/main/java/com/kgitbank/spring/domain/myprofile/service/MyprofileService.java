@@ -14,8 +14,10 @@ public interface MyprofileService {
 
 	public int updatepw(MemberVO vo);
 	
-	public List<LoginVO> getLoginActivityList(MemberVO mv, LoginVO lv);
+	public List<LoginVO> getLoginActivityList(LoginVO lv);
 	
 	public String getEditInfo(String id);
+	
+	public int getSeqId(String id);
 	
 }
