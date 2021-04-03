@@ -58,8 +58,8 @@ img {
 }
 
 .story-container ul li .story img{
-    padding: 4px;
-    background: currentColor;
+    padding: 2px;
+    background: white;
     border-radius: 50%;
     width: 100%;
     height: 100%;
