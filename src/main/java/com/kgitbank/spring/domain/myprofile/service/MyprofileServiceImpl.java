@@ -43,13 +43,18 @@ public class MyprofileServiceImpl implements MyprofileService {
 	}
 	
 	// 위치 정보 가져오는 쿼리문
-	public List<LoginVO> getLoginActivityList(MemberVO mv, LoginVO lv) {
-		return mapper.getLoginActivityList(mv, lv);
+	public List<LoginVO> getLoginActivityList(LoginVO lv) {
+		return mapper.getLoginActivityList(lv);
 	}
 
 	@Override
 	public String getEditInfo(String id) {
 		return mapper.getEditInfo(id);
+	}
+
+	@Override
+	public int getSeqId(String id) {
+		return mapper.getSeqId(id);
 	}
 	
 	

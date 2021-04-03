@@ -17,7 +17,9 @@ public interface MyprofileMapper {
 	public int updatepw(MemberVO vo);
 	
 	// SELECT location, login_date FROM members JOIN logins ON seq_id = member_seq_id
-	public List<LoginVO> getLoginActivityList(MemberVO vo, LoginVO lv);
+	public List<LoginVO> getLoginActivityList(LoginVO lv);
 	
 	public String getEditInfo(String id);
+	
+	public int getSeqId(String id);
 }
